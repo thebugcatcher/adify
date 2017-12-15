@@ -3,6 +3,6 @@ defmodule AdifierTest do
   doctest Adifier
 
   test "greets the world" do
-    assert Adifier.hello() == :world
+    # assert Adifier.hello() == :world
   end
 end
