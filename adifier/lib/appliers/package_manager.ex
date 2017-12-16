@@ -2,6 +2,8 @@ defmodule Adifier.Applier.PackageManager do
   @moduledoc """
   """
 
+  @behaviour Adifier.Applier
+
   import Adifier.PackageManager
 
   def run(os) do
