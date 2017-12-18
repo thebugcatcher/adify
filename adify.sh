@@ -24,6 +24,7 @@ sudo yum install -y git
 brew install git
 
 ex_version="1.5.2"
+otp_version="20.0"
 asdf_version="0.4.0"
 
 if [ ! -d "$HOME/dot-adify" ]; then
@@ -56,6 +57,14 @@ if [ ! -d "$HOME/dot-adify" ]; then
   """
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v${asdf_version}
 
+
+  echo """
+  ==========================================================
+  Installing ERLANG $otp_version to run Adifier app....
+  ==========================================================
+  """
+  asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+  asdf install erlang ${otp_version}
 
   echo """
   ==========================================================
