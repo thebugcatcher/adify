@@ -14,6 +14,11 @@
 
 ### GIT ###
 # Running all three package manager commands.
+echo """
+==========================================================
+Installing Git to get adify.
+==========================================================
+"""
 sudo apt-get install -y git
 sudo yum install -y git
 brew install git
@@ -31,14 +36,6 @@ if [ ! -d "$HOME/dot-adify" ]; then
   This script doesn't not include the tools required to do 'work' elated stuff by default
   ==========================================================
   """
-
-  echo """
-  ==========================================================
-  Installing Git to get adify.
-  ==========================================================
-  """
-  sudo apt-get install -y git
-
 
   echo """
   ==========================================================
@@ -65,7 +62,7 @@ if [ ! -d "$HOME/dot-adify" ]; then
   Installing ELIXIR $ex_version to run Adifier app....
   ==========================================================
   """
-  asdf add-plugin elixir asdf-elixir
+  asdf add-plugin elixir https://github.com/asdf-vm/asdf-elixir.git
   asdf install elixir ${ex_version}
 
   echo """
