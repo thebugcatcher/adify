@@ -22,3 +22,15 @@ ________________________________________________________________________
 # ADD ALIASES: 
 # alias pbcopy='xclip -selection clipboard'
 # alias pbpaste='xclip -selection clipboard -o'
+
+
+### ALIASES TO ADD ###
+# alias genki='ssh-keygen -t rsa -C "<your-email>"'
+
+
+### CURL ####
+# sudo apt install curl
+
+
+### ZSH ###
+# sudo apt-get -y install zsh

@@ -21,7 +21,7 @@ brew install git
 ex_version="1.5.2"
 asdf_version="0.4.0"
 
-if [ ! -d "$HOME/.adify" ]; then
+if [ ! -d "$HOME/dot-adify" ]; then
   echo """
   ==========================================================
   Adifying for the first time....
@@ -45,7 +45,7 @@ if [ ! -d "$HOME/.adify" ]; then
   Fetching Adifying files...
   ==========================================================
   """
-  git clone --depth=1 https://github.com/aditya7iyengar/adify.git "$HOME/.adify"
+  git clone --depth=1 https://github.com/aditya7iyengar/adify.git "$HOME/dot-adify"
 
   cd "$HOME/.adify"
   [ "$1" = "ask" ] && export ADIFYASK="true"
