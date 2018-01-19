@@ -8,9 +8,9 @@
 
 ### USAGE ###
 # From the terminal:
-# $ wget -0 - https://github.com/aditya7iyengar/adify/blob/master/adify.sh | bash
+# $ wget https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.s | bash
 # OR
-# $ curl -s https://github.com/aditya7iyengar/adify/blob/master/adify.sh | bash
+# $ curl -s https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.s | bash
 
 # TODO: Make it runnable on other OS.
 # This Script is setup to run only on Ubuntu computers
@@ -88,7 +88,7 @@ echo """
 Installing Curl.. Can't live without that!
 ==========================================================
 """
-$pm install curl
+$pm install -y curl
 
 
 ### GIT ###
