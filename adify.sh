@@ -4,7 +4,7 @@
 # This script is responsible for running all the commands required to setup an
 # Ubuntu/CentOS/MacOS computer for me to work effectively.
 # In other words, it "adifies" the computer.
-# This script doesn't not include the tools required to do "Work" related stuff
+# This script doesn't include the tools required to do "Work" related stuff
 
 ### USAGE ###
 # From the terminal:
@@ -137,7 +137,7 @@ Adifying for the first time....
 
 This script is responsible for running all the commands required to setup an ubuntu computer
 for me to work effectively. Hence, it adifies the computer.
-This script doesn't not include the tools required to do 'work' elated stuff by default
+This script doesn't include the tools required to do 'work' elated stuff by default
 ==========================================================
   """
 
