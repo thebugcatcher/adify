@@ -9,5 +9,12 @@ defmodule Adifier.Applier.ToolsInstaller do
   @required ~w(chromium-browser wget neovim)
   @optional ~w(google-chrome-stable)
 
-  def run(os), do: Enum.map(@required ++ @optional, &install(os, &1))
+  def run(os), do: Enum.map(@required ++ @optional, &install_with_prompt(os, &1))
+
+  defp install_with_prompt(os, package) do
+    IO.puts """
+    Installing package #{package}...
+    """
+    install(os, package)
+  end
 end

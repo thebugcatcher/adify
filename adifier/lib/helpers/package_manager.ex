@@ -11,7 +11,8 @@ defmodule Adifier.PackageManager do
   def package_managers(:mac), do: ~w(brew)
 
   def invoke_cmd(pm, with: str) when pm in @needsudo do
-    System.cmd("sudo", [pm | String.split(str)], @cmdopts)
+    System.cmd("sudo", ["-A", pm | String.split(str)],
+              [env: [{"SUDO_ASKPASS", "/usr/bin/ssh-askpass"}]] ++ @cmdopts)
   end
   def invoke_cmd(pm, with: str) do
     System.cmd(pm, String.split(str), @cmdopts)

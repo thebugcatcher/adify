@@ -3,7 +3,7 @@ defmodule Adifier do
   Documentation for Adifier.
   """
 
-  @defaultmods ~w(PackageManagerUpdater Tools Configurations)
+  @defaultmods ~w(PackageManagerUpdater ToolsInstaller Configurations)
   @default_os :ubuntu
 
   def adify(on: os, apply: mods) do

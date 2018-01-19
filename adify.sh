@@ -238,6 +238,16 @@ Installing ELIXIR $ex_version to run Adifier app....
 	asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
   asdf install elixir ${ex_version}
 
+  case $OS in
+    "\"Ubuntu\"")
+  echo """
+==========================================================
+Installing askpass ofr Linux machines
+==========================================================
+  """
+  $pm -y install ssh-askpass
+    ;;
+  esac
   echo """
 ==========================================================
 Running Adifier... (mix adify)
