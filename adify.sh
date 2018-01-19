@@ -1,7 +1,12 @@
 ### PRELUDE ###
-# This script is responsible for running all the commands required to setup an ubuntu computer
-# for me to work effectively. Hence, it adifies the computer.
+# This script is responsible for running all the commands required to setup an
+# Ubuntu/CentOS/MacOS computer for me to work effectively.
+# In other words, it "adifies" the computer.
 # This script doesn't not include the tools required to do "Work" related stuff
+
+### USAGE ###
+# From the terminal:
+# $ wget -0 - https://github.com/aditya7iyengar/adify/blob/master/adify.sh | bash
 
 # TODO: Make it runnable on other OS.
 # This Script is setup to run only on Ubuntu computers
@@ -19,6 +24,7 @@ echo """
 Installing Git to get adify.
 ==========================================================
 """
+# TODO: Use "uname" command or "$OSTYPE" env
 sudo apt-get install -y git
 sudo yum install -y git
 brew install git
