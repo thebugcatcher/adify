@@ -24,6 +24,11 @@
 ### PRELUDE ###
 # Installing `curl` if not installed already
 # Detecting OS
+echo """
+==========================================================
+Detecting OS.........
+==========================================================
+"""
 OS="`uname`"
 case $OS in
   'Linux')
@@ -81,6 +86,27 @@ OS is AIX.. Adify isn't supported for AIX.
 	;;
 esac
 
+
+echo """
+==========================================================
+Detecting Shell type.........
+==========================================================
+"""
+case $SHELL in
+	"/bin/zsh")
+	shell="zsh"
+	echo """
+Shell is $shell.. Adify is supported for $shell! :)
+	"""
+	;;
+	"/bin/bash")
+	shell="bash"
+	echo """
+Shell is $shell.. Adify is supported for $shell! :)
+	"""
+	;;
+esac
+
 ### CURL ###
 # Install curl, as it's an important tool!!
 echo """
@@ -134,6 +160,23 @@ Installing Asdf $asdf_version for Elixir and Erlang...
   """
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v${asdf_version}
 
+	case $OS in
+		'Mac')
+		echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.${shell}rc
+    echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.${shell}rc
+		source ~/.${shell}rc
+		;;
+		"\"Ubuntu\"")
+		echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.${shell}rc
+    echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.${shell}rc
+		source ~/.${shell}rc
+		;;
+		"\"Centos\"")
+		echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.${shell}rc
+    echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.${shell}rc
+		source ~/.${shell}rc
+		;;
+	esac
 
   echo """
 ==========================================================
