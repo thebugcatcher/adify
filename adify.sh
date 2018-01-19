@@ -199,7 +199,7 @@ Installing dependencies for ERLANG $otp_version....
 		sudo add-apt-repository ppa:webupd8team/java
 		sudo apt update; sudo apt install oracle-java8-installer
 		javac -version
-		sudo apt install oracle-java8-set-default
+		sudo apt install -y oracle-java8-set-default
 		$pm -y install build-essential git wget libssl-dev libreadline-dev libncurses5-dev zlib1g-dev m4 curl wx-common libwxgtk3.0-dev autoconf
 		;;
 		"\"Centos\"")
