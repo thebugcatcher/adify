@@ -98,8 +98,7 @@ echo """
 Installing Git to get adify.
 ==========================================================
 """
-# TODO: Use "uname" command or "$OSTYPE" env
-$pm apt-get install -y git
+$pm install -y git
 
 ex_version="1.5.2"
 otp_version="20.0"
