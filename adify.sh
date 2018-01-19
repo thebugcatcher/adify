@@ -127,7 +127,7 @@ Installing Git to get adify.
 $pm install -y git
 
 ex_version="1.5.2"
-otp_version="20.0"
+otp_version="20.2"
 asdf_version="0.4.0"
 
 if [ ! -d "$HOME/adify" ]; then
@@ -197,7 +197,7 @@ Installing ERLANG $otp_version to run Adifier app....
 Installing ELIXIR $ex_version to run Adifier app....
 ==========================================================
   """
-  asdf add-plugin elixir https://github.com/asdf-vm/asdf-elixir.git
+	asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
   asdf install elixir ${ex_version}
 
   echo """
