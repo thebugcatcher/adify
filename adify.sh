@@ -186,6 +186,31 @@ Installing Asdf $asdf_version for Elixir and Erlang...
 
   echo """
 ==========================================================
+Preparing to install ERLANG $otp_version.
+Installing dependencies for ERLANG $otp_version....
+==========================================================
+  """
+	$pm -y install build-essential
+	$pm -y install autoconf
+	$pm -y install m4
+	$pm -y install libncurses5-dev
+	case $OS in
+		'Mac')
+		$pm install wxmac
+		;;
+		"\"Ubuntu\"")
+		$pm -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3
+		;;
+		"\"Centos\"")
+		$pm -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3
+		;;
+	esac
+	$pm -y install libssh-dev
+	$pm -y install unixodbc-dev
+
+
+  echo """
+==========================================================
 Installing ERLANG $otp_version to run Adifier app....
 ==========================================================
   """
