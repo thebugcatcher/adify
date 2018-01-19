@@ -178,21 +178,24 @@ Installing Asdf $asdf_version for Elixir and Erlang...
 		;;
 	esac
 
+	. $HOME/.asdf/asdf.sh
+	. $HOME/.asdf/completions/asdf.bash
+
   echo """
 ==========================================================
 Installing ERLANG $otp_version to run Adifier app....
 ==========================================================
   """
-  ~/.asdf/asdf.sh plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
-  ~/.asdf/asdf.sh install erlang ${otp_version}
+  asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+  asdf install erlang ${otp_version}
 
   echo """
 ==========================================================
 Installing ELIXIR $ex_version to run Adifier app....
 ==========================================================
   """
-  ~/.asdf/asdf.sh add-plugin elixir https://github.com/asdf-vm/asdf-elixir.git
-  ~/.asdf/asdf.sh install elixir ${ex_version}
+  asdf add-plugin elixir https://github.com/asdf-vm/asdf-elixir.git
+  asdf install elixir ${ex_version}
 
   echo """
 ==========================================================
