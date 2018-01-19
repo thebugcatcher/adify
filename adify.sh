@@ -218,8 +218,17 @@ Installing dependencies for ERLANG $otp_version....
 Installing ERLANG $otp_version to run Adifier app....
 ==========================================================
   """
-  asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
-  asdf install erlang ${otp_version}
+	case $OS in
+		"\"Ubuntu\"")
+		wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+		sudo dpkg -i erlang-solutions_1.0_all.deb
+		sudo apt-get update
+		sudo apt-get install erlang
+		;;
+		*)
+		asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+		asdf install erlang ${otp_version}
+	esac
 
   echo """
 ==========================================================
