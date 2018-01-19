@@ -196,11 +196,9 @@ Installing dependencies for ERLANG $otp_version....
 		$pm install wxmac
 		;;
 		"\"Ubuntu\"")
-		sudo add-apt-repository ppa:webupd8team/java
-		sudo apt update; sudo apt install oracle-java8-installer
-		javac -version
-		sudo apt install -y oracle-java8-set-default
-		$pm -y install build-essential git wget libssl-dev libreadline-dev libncurses5-dev zlib1g-dev m4 curl wx-common libwxgtk3.0-dev autoconf
+		$pm -y install build-essential git wget libssl-dev libreadline-dev \
+			libncurses5-dev zlib1g-dev m4 curl wx-common libwxgtk3.0-dev autoconf \
+			openjdk-8-jdk fop xsltproc
 		;;
 		"\"Centos\"")
 		$pm -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3
