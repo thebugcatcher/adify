@@ -194,7 +194,7 @@ Installing dependencies for ERLANG $otp_version....
 	$pm -y install autoconf
 	$pm -y install m4
 	$pm -y install libncurses5-dev
-	$pm -y install openjdk-9-jdk fop xmllint xsltproc
+	$pm -y install openjdk-9-jdk fop xsltproc
 	case $OS in
 		'Mac')
 		$pm install wxmac
