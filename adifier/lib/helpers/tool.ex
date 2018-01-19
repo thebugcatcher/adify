@@ -2,6 +2,8 @@ defmodule Adifier.Tool do
   @moduledoc """
   """
 
+  import Adifier.PackageManager
+
   @aptget ~w(chromium-browser google-chrome-stable neovim)
   @apt ~w(wget)
   @yum ~w(wget)

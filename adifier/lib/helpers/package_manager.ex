@@ -20,5 +20,5 @@ defmodule Adifier.PackageManager do
   def update_cmd(pm), do: invoke_cmd(pm, with: "update")
 
   def install_pkg(pm, pkg) when pm in @needyes, do: invoke_cmd(pm, with: "install -y #{pkg}")
-  def install_pkg(pm, pkg) do: invoke_cmd(pm, with: "install #{pkg}")
+  def install_pkg(pm, pkg), do: invoke_cmd(pm, with: "install #{pkg}")
 end

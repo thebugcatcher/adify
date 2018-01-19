@@ -1,4 +1,4 @@
-defmodule Adifier.Applier.PackageManagerUpdater do
+defmodule Adifier.Applier.ToolsInstaller do
   @moduledoc """
   """
 
