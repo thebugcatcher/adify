@@ -8,9 +8,9 @@
 
 ### USAGE ###
 # From the terminal:
-# $ wget https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.s | bash
+# $ bash <(wget -qO- https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.sh)
 # OR
-# $ curl -s https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.s | bash
+# $ bash <(curl -s https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.sh)
 
 # TODO: Make it runnable on other OS.
 # This Script is setup to run only on Ubuntu computers
@@ -183,16 +183,16 @@ Installing Asdf $asdf_version for Elixir and Erlang...
 Installing ERLANG $otp_version to run Adifier app....
 ==========================================================
   """
-  asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
-  asdf install erlang ${otp_version}
+  ~/.asdf/asdf.sh plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+  ~/.asdf/asdf.sh install erlang ${otp_version}
 
   echo """
 ==========================================================
 Installing ELIXIR $ex_version to run Adifier app....
 ==========================================================
   """
-  asdf add-plugin elixir https://github.com/asdf-vm/asdf-elixir.git
-  asdf install elixir ${ex_version}
+  ~/.asdf/asdf.sh add-plugin elixir https://github.com/asdf-vm/asdf-elixir.git
+  ~/.asdf/asdf.sh install elixir ${ex_version}
 
   echo """
 ==========================================================
