@@ -190,20 +190,31 @@ Preparing to install ERLANG $otp_version.
 Installing dependencies for ERLANG $otp_version....
 ==========================================================
   """
-	$pm -y install build-essential
-	$pm -y install autoconf
-	$pm -y install m4
-	$pm -y install libncurses5-dev
-	$pm -y install openjdk-9-jdk fop xsltproc
 	case $OS in
 		'Mac')
+		xcode-select --install
 		$pm install wxmac
 		;;
 		"\"Ubuntu\"")
+		wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+		sudo dpkg -i erlang-solutions_1.0_all.deb
+		sudo apt-get update
+		sudo apt-get -y install erlang
+		sudo apt-get -y remove erlang
 		$pm -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3
+		$pm -y install build-essential
+		$pm -y install autoconf
+		$pm -y install m4
+		$pm -y install libncurses5-dev
+		$pm -y install openjdk-9-jdk fop xsltproc
 		;;
 		"\"Centos\"")
 		$pm -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3
+		$pm -y install build-essential
+		$pm -y install autoconf
+		$pm -y install m4
+		$pm -y install libncurses5-dev
+		$pm -y install openjdk-9-jdk fop xsltproc
 		;;
 	esac
 	$pm -y install libssh-dev
