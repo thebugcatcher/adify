@@ -81,6 +81,16 @@ OS is AIX.. Adify isn't supported for AIX.
 	;;
 esac
 
+### CURL ###
+# Install curl, as it's an important tool!!
+echo """
+==========================================================
+Installing Curl.. Can't live without that!
+==========================================================
+"""
+$pm install curl
+
+
 ### GIT ###
 # Running all three package manager commands.
 echo """
@@ -147,6 +157,7 @@ Installing ELIXIR $ex_version to run Adifier app....
 Running Adifier... (mix adify)
 ==========================================================
   """
+	cd adifier
   mix adify
 else
   echo """
