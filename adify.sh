@@ -46,6 +46,12 @@ OS is $OS.. Adify is supported for $OS! :)
 		"""
 		pm="sudo yum"
 		;;
+		"\"Fedora\"")
+    echo """
+OS is $OS.. Adify is supported for $OS! :)
+		"""
+		pm="sudo yum"
+		;;
 		esac
     ;;
   'FreeBSD')
