@@ -19,7 +19,7 @@ ________________________________________________________________________
 
 # COMMANDS:
 # sudo apt-get install xclip -y
-# ADD ALIASES: 
+# ADD ALIASES:
 # alias pbcopy='xclip -selection clipboard'
 # alias pbpaste='xclip -selection clipboard -o'
 
@@ -34,3 +34,6 @@ ________________________________________________________________________
 
 ### ZSH ###
 # sudo apt-get -y install zsh
+
+### Virtual Box ###
+# 5.1
