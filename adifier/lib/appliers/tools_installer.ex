@@ -6,25 +6,36 @@ defmodule Adifier.Applier.ToolsInstaller do
 
   import Adifier.Tool
 
-  @required_package_modules ~w(Chromium Docker GoogleChrome Mysql Neovim Nodejs
-    Postgresql Spideroak)a
+  @required_package_modules ~w(Wget Chromium Docker GoogleChrome Mysql Neovim
+    Nodejs Postgresql Spideroak)a
 
-  @required_packages ~w(wget) ++ @required_package_modules
-
-  def run(os), do: Enum.map(@required ++ @optional, &install_with_prompt(os, &1))
-
-  defp install_with_prompt(os, package), when is_binary(package) do
-    IO.puts """
-    Installing package #{package}...
-    """
-    install(os, package)
+  def run(os) do
+    Enum.map(@required_package_modules, &install_with_prompt(os, &1))
   end
+
   defp install_with_prompt(os, package) do
-    IO.puts """
-    Installing package #{package}...
+    proceed = IO.gets """
+    Adify wants to install package, #{package}.
+    Proceed? (Y/N)
     """
-    Elixir
-    |> Module.concat(package)
-    |> apply(:install_cmd, [os])
+
+    case proceed do
+      "Y" ->
+        IO.puts """
+        Installing package #{package}
+        """
+        Elixir
+        |> Module.concat(package)
+        |> apply(:install_cmd, [os])
+      "N" ->
+        IO.warn """
+        Skipping package #{package}
+        """
+      _ ->
+        IO.warn """
+        Unknown input #{proceed}, expected either Y or N.
+        Skipping package #{package}
+        """
+    end
   end
 end

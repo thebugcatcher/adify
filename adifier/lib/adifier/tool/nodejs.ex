@@ -2,7 +2,7 @@ defmodule Adifier.Tool.Nodejs do
   @moduledoc """
   """
 
-  use Adify.Tool
+  use Adifier.Tool
 
   def install_cmd(:ubuntu) do
     """

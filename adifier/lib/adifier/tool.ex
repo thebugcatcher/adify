@@ -23,7 +23,7 @@ defmodule Adifier.Tool do
         """
       end
 
-      defoverridable [install: 1, description: 0]
+      defoverridable [install_cmd: 1, description: 0]
     end
   end
 end
