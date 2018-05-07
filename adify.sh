@@ -24,6 +24,7 @@
 ### PRELUDE ###
 # Installing `curl` if not installed already
 # Detecting OS
+
 echo """
 ==========================================================
 Detecting OS.........
@@ -32,27 +33,38 @@ Detecting OS.........
 OS="`uname`"
 case $OS in
   'Linux')
-		OS="`nawk -F= '/^NAME/{print $2}' /etc/os-release`"
+		OS="`gawk -F= '/^NAME/{print $2}' /etc/os-release`"
+
 		case $OS in
 		"\"Ubuntu\"")
-    echo """
+      echo """
 OS is $OS.. Adify is supported for $OS! :)
-		"""
-		pm="sudo apt-get"
-		;;
+      """
+      source "./linux/ubuntu.sh"
+      pm="sudo apt-get"
+      ;;
 		"\"Centos\"")
-    echo """
+      echo """
 OS is $OS.. Adify is supported for $OS! :)
-		"""
-		pm="sudo yum"
-		;;
+      """
+      source "./linux/centos.sh"
+    ;;
 		"\"Fedora\"")
-    echo """
+      echo """
 OS is $OS.. Adify is supported for $OS! :)
-		"""
-		pm="sudo yum"
+      """
+      pm="sudo yum"
+      source "./linux/fedora.sh"
+		;;
+		"\"Arch Linux\"")
+      echo """
+OS is $OS.. Adify is supported for $OS! :)
+      """
+      pm="sudo yum"
+      source "./linux/arch.sh"
 		;;
 		esac
+
     ;;
   'FreeBSD')
     OS='FreeBSD'
