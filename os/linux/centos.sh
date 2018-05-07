@@ -44,17 +44,6 @@ Adifying for the first time....
 
   echo """
 ==========================================================
-Fetching Adifying files...
-==========================================================
-  """
-  git clone --depth=1 https://github.com/aditya7iyengar/adify.git "$HOME/adify"
-
-  cd "$HOME/adify"
-  [ "$1" = "ask" ] && export ADIFYASK="true"
-  [ "$1" = "work" ] && export ADIFYWORK="true"
-
-  echo """
-==========================================================
 Installing Asdf $asdf_version for Elixir and Erlang...
 ==========================================================
   """
