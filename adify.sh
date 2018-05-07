@@ -60,7 +60,6 @@ OS is $OS.. Adify is supported for $OS! :)
       echo """
 OS is $OS.. Adify is supported for $OS! :)
       """
-      pm="sudo yum"
       source "./linux/arch.sh"
 		;;
 		esac

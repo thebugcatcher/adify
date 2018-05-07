@@ -6,10 +6,10 @@
 
 echo """
 ==============================================================================
-Installing tools for CentOS....
+Installing tools for Arch....
 ==============================================================================
 """
-pm="sudo yum"
+pm="sudo pacman"
 
 echo """
 ==========================================================
@@ -90,14 +90,14 @@ Preparing to install ERLANG $otp_version.
 Installing dependencies for ERLANG $otp_version....
 ==========================================================
   """
-  $pm -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3
-  $pm -y install build-essential
-  $pm -y install autoconf
-  $pm -y install m4
-  $pm -y install libncurses5-dev
-  $pm -y install openjdk-9-jdk fop xsltproc
-  $pm -y install libssh-dev
-  $pm -y install unixodbc-dev
+  $pm -S libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3 --noconfirm
+  $pm -S build-essential --noconfirm
+  $pm -S autoconf --noconfirm
+  $pm -S m4 --noconfirm
+  $pm -S libncurses5-de --noconfirmv
+  $pm -S openjdk-9-jdk fop xsltproc --noconfirm
+  $pm -S libssh-dev --noconfirm
+  $pm -S unixodbc-dev --noconfirm
 
   echo """
 ==========================================================
