@@ -5,9 +5,9 @@
 # This ruby script installs asdf, erlang and elixir. Once installed it
 # delegates the call to the elixir app, adifier.
 #############
-ELIXIR_VERSION=1.6.6.freeze
-ERLANG_VERSION=21.0.freeze
-ASDF_VERSION=0.5.0.freeze
+ELIXIR_VERSION="1.6.6".freeze
+ERLANG_VERSION="21.0".freeze
+ASDF_VERSION="0.5.0".freeze
 SHELL=$1.freeze
 
 def _announce(msg)

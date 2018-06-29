@@ -3,10 +3,7 @@
 #############
 ### ABOUT ###
 #############
-# This script is responsible for running all the commands required to setup an
-# Ubuntu/CentOS/MacOS computer for me to work effectively.
-# In other words, it "adifies" the computer.
-# This script doesn't include the tools required to do "Work" related stuff
+# TODO: Better Description
 
 #############
 ### USAGE ###
@@ -20,133 +17,373 @@
 ### SUPPORTED OS ###
 ####################
 # This Script is setup to run only on the following OS (Kernels):
-# - Arch Linux
+# - Arch Linux (Manjaro, Antergos, Anacrchy)
 # - Mac OS
 # - Ubuntu
+# - PopOS
+# - Debian
 # - CentOS
 # - Fedora
 
 ####################
 ### REQUIREMENTS ###
 ####################
+# - CUrl/Wget to call this script
 # - Internet Connection
-# - Ruby (~> 2.0)
+# - One of the Supported OS
 # - Admin Privilleges of the computer being adified
 
 ###############
 ### PRELUDE ###
 ###############
-# Detect Shell Type
-# Delegate to Ruby
-# Installing `curl` if not installed already
+# Detects Shell Type
+# Detects
 
-echo """
+################
+### VERSIONS ###
+################
+ADIFY_VERSION="0.2.0"
+ELIXIR_VERSION="1.6.6"
+ERLANG_VERSION="21.0"
+ASDF_VERSION="0.5.0"
+
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+BOLD=$(tput bold)
+NORMAL=$(tput sgr0)
+
+_announce_step() {
+  echo -e """$BLUE
 ==========================================================
-Detecting Shell type.........
-==========================================================
-"""
-case $SHELL in
-	"/bin/zsh")
-	shell="zsh"
-	echo """
-  Detected shell: "zsh"! :)
-	"""
-	;;
-	"/bin/bash")
-	shell="bash"
-	echo """
-  Detected shell: "bash"! :)
-	"""
-	;;
-esac
+$1.......
+==========================================================$NC"""
+}
 
-echo """
-==========================================================
-Cloning Adify and calling the ruby script....
-==========================================================
-"""
-git clone git@github.com:aditya7iyengar/adify.git ~/.adify
-cd ~/.adify
-git checkout tags/v0.1.0
-ruby adify.rb $shell
+_announce_error(){
+  echo -e """
+$RED[\u2717] $1 $NC
+  """
+  exit 1
+}
 
+_announce_success() {
+  echo -e """
+$GREEN[\u2713] $1 $NC
+  """
+}
 
-echo """
-==========================================================
-Detecting OS.........
-==========================================================
-"""
+_announce_info() {
+  echo -e """$BLUE
+---> $1 $NC
+  """
+}
 
-OS="`uname`"
+check_adify() {
+  _announce_step "Checking if already Adified"
 
-case $OS in
-  'Linux')
-		OS="`gawk -F= '/^NAME/{print $2}' /etc/os-release`"
+  if [ ! -d "$HOME/.adify" ]; then
+    _announce_success "No adification detected; Adifying for the first time.. Let's begin!"
+  else
+    _announce_error "Already Adified. Can't overwrite it!"
+  fi
+}
 
-		case $OS in
-		"\"Ubuntu\"")
-      echo """
-OS is $OS.. Adify is supported for $OS! :)
-      """
-      source "./linux/ubuntu.sh"
-      pm="sudo apt-get"
-      ;;
-		"\"Centos\"")
-      echo """
-OS is $OS.. Adify is supported for $OS! :)
-      """
-      source ".os/linux/centos.sh"
+check_os() {
+  _announce_step "Detecting OS"
+
+  kernel="`uname`"
+
+  case $kernel in
+    'Linux')
+      check_linux
     ;;
-		"\"Fedora\"")
-      echo """
-OS is $OS.. Adify is supported for $OS! :)
-      """
-      pm="sudo yum"
-      source "./linux/fedora.sh"
-		;;
-		"\"Arch Linux\"")
-      echo """
-OS is $OS.. Adify is supported for $OS! :)
-      """
-      source ".os/linux/arch.sh"
-		;;
-		esac
+    'Darwin')
+      OS='mac'
+      _announce_success "OS is $OS. Adify is supported for $OS"
+    ;;
+    *)
+      _announce_error "Adify isn't supported for kernel, $kernel"
+    ;;
+  esac
+}
 
+check_linux() {
+  OS="`cat /etc/os-release | grep ^NAME`"
+
+  case $OS in
+    *Arch*)
+      OS='arch_linux'
+      _announce_success "OS is $OS. Adify is supported for $OS"
     ;;
-  'FreeBSD')
-    OS='FreeBSD'
-    echo """
-OS is FreeBSD.. Adify isn't supported for FreeBSD. :(
-		"""
-		exit 1
+    *Ubuntu*)
+      OS='ubuntu'
+      _announce_success "OS is $OS. Adify is supported for $OS"
     ;;
-  'WindowsNT')
-    OS='Windows'
-    echo """
-OS is Windows.. Adify isn't supported for Windows. :(
-		"""
-		exit 1
+    *Debian*)
+      OS='debian'
+      _announce_success "OS is $OS. Adify is supported for $OS"
     ;;
-  'Darwin')
-    OS='Mac'
-    echo """
-OS is Mac.. Adify is supported for Mac! :)
-		"""
-    pm="brew"
+    *Pop!_OS*)
+      OS='pop_os'
+      _announce_success "OS is $OS. Adify is supported for $OS"
     ;;
-  'SunOS')
-    OS='Solaris'
-    echo """
-OS is Solaris.. Adify isn't supported for Solaris.
-		"""
-		exit 1
+    # *Centos*)
+    #   OS='centos'
+    #   _announce_success "OS is $OS. Adify is supported for $OS"
+    # ;;
+    # *Fedora*)
+    #   OS='fedora'
+    #   _announce_success "OS is $OS. Adify is supported for $OS"
+    # ;;
+    *)
+      _announce_error "Adify isn't supported for Linux OS: $OS"
     ;;
-  'AIX')
-    echo """
-OS is AIX.. Adify isn't supported for AIX.
-		"""
-		exit 1
-		;;
+  esac
+}
+
+check_shell() {
+  _announce_step "Detecting Shell Type"
+
+  case $SHELL in
+    *zsh)
+      shell="zsh"
+      _announce_success "Detected shell: '$shell' is supported by Adify! "
+    ;;
+    *bash)
+      shell="bash"
+      _announce_success "Detected shell: '$shell' is supported by Adify! "
+    ;;
   *)
-	;;
-esac
+      _announce_error "Shell: '$SHELL' not supported"
+  esac
+
+}
+
+check_asdf() {
+  _announce_step "Checking ASDF-VM"
+
+  if [ -d "$HOME/.asdf" ]; then
+    _announce_success "ASDF already installed"
+    asdf=true
+  else
+    _announce_success "No ASDF Found"
+    asdf=false
+  fi
+}
+
+install_asdf() {
+  _announce_step "Installing ASDF ${ASDF_VERSION}"
+  `git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf --branch v${ASDF_VERSION}`
+  `echo -e "\n. ${HOME}/.asdf/asdf.sh" >> ~/.${1}rc`
+  `echo -e "\n. ${HOME}/.asdf/completions/asdf.bash" >> ~/.${1}rc`
+  asdf=true
+}
+
+install_arch_linux_tools() {
+  _announce_step "Installing Tools required for OTP for Arch Linux"
+
+  _announce_info "Installing 'base-devel' for most of the OTP needed tools"
+  `sudo pacman -S --needed base-devel --noconfirm`
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'curses' for terminal handling"
+    `sudo pacman -S curses --noconfirm`
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'glu', 'mesa', 'wxgtk2' and 'libpng' for For building with wxWidgets (start observer or debugger!)"
+    `sudo pacman -S glu mesa wxgtk2 libpng --noconfirm`
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'libssh' for building ssl"
+    `sudo pacman -S libssh --noconfirm`
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'unixodbc' for ODBC support"
+    `sudo pacman -S unixodbc --noconfirm`
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_success "System is Ready for OTP"
+  else
+    _announce_error "Failed!"
+  fi
+}
+
+install_debian_ubuntu_pop_os_tools() {
+  _announce_info "Installing 'build-essential' for most of OTP tools"
+  `sudo apt-get -y install build-essential`
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'autoconf' for script builder"
+    `sudo apt-get -y install autoconf`
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'm4' for Native Code support"
+    `sudo apt-get -y install m4`
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'libncurses5' for Terminal handling"
+    `sudo apt-get -y install libncurses5-dev`
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing tools for building wxWidgets (for Erlang observer and debugger)"
+    `sudo apt-get -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3`
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'libssh-dev' for ssl"
+    `sudo apt-get -y install libssh-dev`
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'unixodbc' for ODBC support"
+    `sudo apt-get -y install unixodbc-dev`
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'fop' for docs building"
+    `sudo apt-get -y install xsltproc fop`
+  else
+    _announce_error "Failed!"
+  fi
+}
+
+install_debian_tools(){
+  _announce_step "Installing Tools required for OTP for Debian"
+  install_debian_ubuntu_pop_os_tools
+}
+
+install_ubuntu_tools(){
+  _announce_step "Installing Tools required for OTP for Ubuntu"
+  install_debian_ubuntu_pop_os_tools
+}
+
+install_pop_os_tools() {
+  _announce_step "Installing Tools required for OTP for Pop!_OS"
+  install_debian_ubuntu_pop_os_tools
+}
+
+install_erlang() {
+  _announce_step "Installing Erlang ${ERLANG_VERSION}"
+
+  if $asdf; then
+    `asdf plugin-add erlang`
+    `asdf install erlang $ERLANG_VERSION`
+    _announce_success "Successfully install erlang: ${ERLANG_VERSION}"
+  else
+    _announce_error "Need ASDF to install erlang"
+  fi
+
+}
+
+set_global_erlang() {
+  _announce_step "Setting Global Erlang to ${ERLANG_VERSION}"
+
+  if $asdf; then
+    `asdf global erlang ${ERLANG_VERSION}`
+    _announce_success "Successfully set global erlang to ${ERLANG_VERSION}"
+  else
+    _announce_error "Need ASDF to set erlang"
+  fi
+}
+
+set_global_elixir() {
+  _announce_step "Setting Global Elixir to ${ELIXIR_VERSION}"
+
+  if $asdf; then
+    `asdf global elixir ${ELIXIR_VERSION}`
+    _announce_success "Successfully set global elixir to ${ELIXIR_VERSION}"
+  else
+    _announce_error "Need ASDF to set elixir"
+  fi
+}
+
+install_elixir() {
+  _announce_step "Installing Elixir ${ELIXIR_VERSION}"
+
+  if $asdf; then
+    `asdf plugin-add elixir`
+    `asdf install elixir ${ELIXIR_VERSION}`
+    _announce_success "Successfully install elixir: ${ELIXIR_VERSION}"
+  else
+    _announce_error "Need ASDF to install elixir"
+  fi
+}
+
+fetch_adify_files(){
+  _announce_step "Fetching Adify files with version ${ADIFY_VERSION}"
+}
+
+mix_adify(){
+  _announce_step "Calling adifier app with: '$ mix adify'"
+}
+
+main () {
+  # check_adify
+  check_os
+  check_shell
+  check_asdf
+
+  if $asdf; then
+    _announce_success "No need to install ASDF"
+  else
+    install_asdf $shell
+  fi
+
+  $"install_${OS}_tools"
+  install_erlang
+  set_global_erlang
+  install_elixir
+  set_global_elixir
+
+  fetch_adify_files
+  mix_adify
+}
+
+main
+
+# echo """
+# ==========================================================
+# Cloning Adify and calling the ruby script....
+# ==========================================================
+# """
+# git clone git@github.com:aditya7iyengar/adify.git ~/.adify
+# cd ~/.adify
+# git checkout tags/v0.1.0
+# ruby adify.rb $shell
+#
+#
+# echo """
+# ==========================================================
+# Detecting OS.........
+# ==========================================================
+# """
