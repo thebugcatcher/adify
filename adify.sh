@@ -198,7 +198,7 @@ install_arch_linux_tools() {
 
   if [ $? -eq 0 ]; then
     _announce_info "Installing 'curses' for terminal handling"
-    sudo pacman -S curses --noconfirm
+    sudo pacman -S ncurses --noconfirm
   else
     _announce_error "Failed!"
   fi
