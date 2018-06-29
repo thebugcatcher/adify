@@ -179,7 +179,8 @@ install_asdf() {
   git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf --branch v${ASDF_VERSION}
   echo -e "\n. ${HOME}/.asdf/asdf.sh" >> ~/.${1}rc
   echo -e "\n. ${HOME}/.asdf/completions/asdf.bash" >> ~/.${1}rc
-  source ~/.${1}rc
+  ${HOME}/.asdf/asdf.sh
+  ${HOME}/.asdf/completions/asdf.bash
   asdf=true
 }
 
