@@ -1,22 +1,13 @@
 defmodule Adifier.Tool.Neovim do
   @moduledoc """
+	Neovim is a refactor, and sometimes redactor, in the tradition of Vim
   """
 
-  use Adifier.Tool
+  use Adifier.Tool, name: "nvim"
 
-  def install_cmd(:ubuntu) do
-    """
-    sudo apt-get install neovim
-    sudo apt-get install python-neovim
-    sudo apt-get install python3-neovim
-    """
-  end
+  @impl true
+  def install_cmd(os), do: super(os)
 
-  def description() do
-    """
-		Neovim is a refactor, and sometimes redactor, in the tradition of Vim
-
-		This is my main text editor!
-		"""
-  end
+  @impl true
+  def description, do: @moduledoc
 end

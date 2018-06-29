@@ -1,22 +1,20 @@
 defmodule Adifier.Tool.Mysql do
   @moduledoc """
+	The most popular Open-source Relational Database Mangement System.
   """
 
-  use Adifier.Tool
+  use Adifier.Tool, name: "mysql"
 
+  @impl true
   def install_cmd(:ubuntu) do
     """
-    sudo apt-get update sudo apt-get install mysql-server
+    sudo apt-get -y install mysql-server
 		/usr/bin/mysql_secure_installation
-		sudo service mysql start
+		sudo systemctl start mysql
     """
   end
+  def install_cmd(os), do: super(os)
 
-  def description() do
-    """
-		The most popular RDMS!
-
-		You WILL need it!
-		"""
-  end
+  @impl true
+  def description, do: @moduledoc
 end

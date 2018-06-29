@@ -1,36 +1,84 @@
 #!/usr/bin/env bash
 
+#############
 ### ABOUT ###
+#############
 # This script is responsible for running all the commands required to setup an
 # Ubuntu/CentOS/MacOS computer for me to work effectively.
 # In other words, it "adifies" the computer.
 # This script doesn't include the tools required to do "Work" related stuff
 
+#############
 ### USAGE ###
+#############
 # From the terminal:
 # $ bash <(wget -qO- https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.sh)
 # OR
 # $ bash <(curl -s https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.sh)
 
-# TODO: Make it runnable on other OS.
-# This Script is setup to run only on Ubuntu computers
+####################
+### SUPPORTED OS ###
+####################
+# This Script is setup to run only on the following OS (Kernels):
+# - Arch Linux
+# - Mac OS
+# - Ubuntu
+# - CentOS
+# - Fedora
 
-
+####################
 ### REQUIREMENTS ###
+####################
 # - Internet Connection
+# - Ruby (~> 2.0)
 # - Admin Privilleges of the computer being adified
-# - Adi (for credentials)
 
+###############
 ### PRELUDE ###
+###############
+# Detect Shell Type
+# Delegate to Ruby
 # Installing `curl` if not installed already
-# Detecting OS
+
+echo """
+==========================================================
+Detecting Shell type.........
+==========================================================
+"""
+case $SHELL in
+	"/bin/zsh")
+	shell="zsh"
+	echo """
+  Detected shell: "zsh"! :)
+	"""
+	;;
+	"/bin/bash")
+	shell="bash"
+	echo """
+  Detected shell: "bash"! :)
+	"""
+	;;
+esac
+
+echo """
+==========================================================
+Cloning Adify and calling the ruby script....
+==========================================================
+"""
+git clone git@github.com:aditya7iyengar/adify.git ~/.adify
+cd ~/.adify
+git checkout tags/v0.1.0
+ruby adify.rb $shell
+
 
 echo """
 ==========================================================
 Detecting OS.........
 ==========================================================
 """
+
 OS="`uname`"
+
 case $OS in
   'Linux')
 		OS="`gawk -F= '/^NAME/{print $2}' /etc/os-release`"
@@ -102,4 +150,3 @@ OS is AIX.. Adify isn't supported for AIX.
   *)
 	;;
 esac
-

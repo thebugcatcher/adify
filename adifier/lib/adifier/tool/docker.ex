@@ -1,9 +1,14 @@
 defmodule Adifier.Tool.Docker do
   @moduledoc """
+	Docker enables true independence between applications and infrastructure
+	and developers and IT ops to unlock their potential and creates a model
+	for better collaboration and innovation.
   """
 
-  use Adifier.Tool
+  use Adifier.Tool, name: "docker"
 
+  @impl true
+  def install_cmd(:mac), do: "brew install docker"
   def install_cmd(:ubuntu) do
     """
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -14,14 +19,9 @@ defmodule Adifier.Tool.Docker do
 		sudo systemctl status docker
     """
   end
+  def install_cmd(:debian), do: "sudo apt install -y docker"
+  def install_cmd(os), do: super(os)
 
-  def description() do
-    """
-		Docker enables true independence between applications and infrastructure
-		and developers and IT ops to unlock their potential and creates a model
-		for better collaboration and innovation.
-
-		I use docker for many things! Including elixir builds
-		"""
-  end
+  @impl true
+  def description, do: @moduledoc
 end
