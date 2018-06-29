@@ -9,9 +9,7 @@
 ### USAGE ###
 #############
 # From the terminal:
-# $ bash <(wget -qO- https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.sh)
-# OR
-# $ bash <(curl -s https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.sh)
+# `$ git clone git@github.com:aditya7iyengar/adify.git ~/.adify && cd .adify && ./adify.sh`
 
 ####################
 ### SUPPORTED OS ###
@@ -28,8 +26,8 @@
 ####################
 ### REQUIREMENTS ###
 ####################
-# - CUrl/Wget to call this script
 # - Internet Connection
+# - Git
 # - One of the Supported OS
 # - Admin Privilleges of the computer being adified
 
@@ -115,6 +113,14 @@ check_linux() {
 
   case $OS in
     *Arch*)
+      OS='arch_linux'
+      _announce_success "OS is $OS. Adify is supported for $OS"
+    ;;
+    *Antergos*)
+      OS='arch_linux'
+      _announce_success "OS is $OS. Adify is supported for $OS"
+    ;;
+    *Manjaro*)
       OS='arch_linux'
       _announce_success "OS is $OS. Adify is supported for $OS"
     ;;
@@ -272,6 +278,13 @@ install_debian_ubuntu_pop_os_tools() {
   fi
 
   if [ $? -eq 0 ]; then
+    _announce_info "Installing 'unixodbc' for ODBC support"
+    sudo apt-get -y install libxml2-utils
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
     _announce_info "Installing 'fop' for docs building"
     sudo apt-get -y install xsltproc fop
   else
@@ -372,20 +385,3 @@ main () {
 }
 
 main
-
-# echo """
-# ==========================================================
-# Cloning Adify and calling the ruby script....
-# ==========================================================
-# """
-# git clone git@github.com:aditya7iyengar/adify.git ~/.adify
-# cd ~/.adify
-# git checkout tags/v0.1.0
-# ruby adify.rb $shell
-#
-#
-# echo """
-# ==========================================================
-# Detecting OS.........
-# ==========================================================
-# """
