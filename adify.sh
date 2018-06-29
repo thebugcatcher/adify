@@ -250,7 +250,7 @@ install_debian_ubuntu_pop_os_tools() {
 
   if [ $? -eq 0 ]; then
     _announce_info "Installing tools for building wxWidgets (for Erlang observer and debugger)"
-    sudo apt-get -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng12-dev
+    sudo apt-get -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev
   else
     _announce_error "Failed!"
   fi
