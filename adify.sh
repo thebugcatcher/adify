@@ -188,33 +188,17 @@ install_arch_linux_tools() {
   _announce_info "Installing 'base-devel' for most of the OTP needed tools"
   `sudo pacman -S --needed base-devel --noconfirm`
 
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'curses' for terminal handling"
-    `sudo pacman -S curses --noconfirm`
-  else
-    _announce_error "Failed!"
-  fi
+  _announce_info "Installing 'curses' for terminal handling"
+  `sudo pacman -S curses --noconfirm`
 
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'glu', 'mesa', 'wxgtk2' and 'libpng' for For building with wxWidgets (start observer or debugger!)"
-    `sudo pacman -S glu mesa wxgtk2 libpng --noconfirm`
-  else
-    _announce_error "Failed!"
-  fi
+  _announce_info "Installing 'glu', 'mesa', 'wxgtk2' and 'libpng' for For building with wxWidgets (start observer or debugger!)"
+  `sudo pacman -S glu mesa wxgtk2 libpng --noconfirm`
 
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'libssh' for building ssl"
-    `sudo pacman -S libssh --noconfirm`
-  else
-    _announce_error "Failed!"
-  fi
+  _announce_info "Installing 'libssh' for building ssl"
+  `sudo pacman -S libssh --noconfirm`
 
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'unixodbc' for ODBC support"
-    `sudo pacman -S unixodbc --noconfirm`
-  else
-    _announce_error "Failed!"
-  fi
+  _announce_info "Installing 'unixodbc' for ODBC support"
+  `sudo pacman -S unixodbc --noconfirm`
 
   if [ $? -eq 0 ]; then
     _announce_success "System is Ready for OTP"
@@ -227,51 +211,29 @@ install_debian_ubuntu_pop_os_tools() {
   _announce_info "Installing 'build-essential' for most of OTP tools"
   `sudo apt-get -y install build-essential`
 
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'autoconf' for script builder"
-    `sudo apt-get -y install autoconf`
-  else
-    _announce_error "Failed!"
-  fi
+  _announce_info "Installing 'autoconf' for script builder"
+  `sudo apt-get -y install autoconf`
+
+  _announce_info "Installing 'm4' for Native Code support"
+  `sudo apt-get -y install m4`
+
+  _announce_info "Installing 'libncurses5' for Terminal handling"
+  `sudo apt-get -y install libncurses5-dev`
+
+  _announce_info "Installing tools for building wxWidgets (for Erlang observer and debugger)"
+  `sudo apt-get -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3`
+
+  _announce_info "Installing 'libssh-dev' for ssl"
+  `sudo apt-get -y install libssh-dev`
+
+  _announce_info "Installing 'unixodbc' for ODBC support"
+  `sudo apt-get -y install unixodbc-dev`
+
+  _announce_info "Installing 'fop' for docs building"
+  `sudo apt-get -y install xsltproc fop`
 
   if [ $? -eq 0 ]; then
-    _announce_info "Installing 'm4' for Native Code support"
-    `sudo apt-get -y install m4`
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'libncurses5' for Terminal handling"
-    `sudo apt-get -y install libncurses5-dev`
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing tools for building wxWidgets (for Erlang observer and debugger)"
-    `sudo apt-get -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3`
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'libssh-dev' for ssl"
-    `sudo apt-get -y install libssh-dev`
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'unixodbc' for ODBC support"
-    `sudo apt-get -y install unixodbc-dev`
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'fop' for docs building"
-    `sudo apt-get -y install xsltproc fop`
+    _announce_success "System is Ready for OTP"
   else
     _announce_error "Failed!"
   fi
