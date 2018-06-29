@@ -176,9 +176,9 @@ check_asdf() {
 
 install_asdf() {
   _announce_step "Installing ASDF ${ASDF_VERSION}"
-  `git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf --branch v${ASDF_VERSION}`
-  `echo -e "\n. ${HOME}/.asdf/asdf.sh" >> ~/.${1}rc`
-  `echo -e "\n. ${HOME}/.asdf/completions/asdf.bash" >> ~/.${1}rc`
+  git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf --branch v${ASDF_VERSION}
+  echo -e "\n. ${HOME}/.asdf/asdf.sh" >> ~/.${1}rc
+  echo -e "\n. ${HOME}/.asdf/completions/asdf.bash" >> ~/.${1}rc
   asdf=true
 }
 
@@ -186,19 +186,35 @@ install_arch_linux_tools() {
   _announce_step "Installing Tools required for OTP for Arch Linux"
 
   _announce_info "Installing 'base-devel' for most of the OTP needed tools"
-  `sudo pacman -S --needed base-devel --noconfirm`
+  sudo pacman -S --needed --noconfirm base-devel
 
-  _announce_info "Installing 'curses' for terminal handling"
-  `sudo pacman -S curses --noconfirm`
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'curses' for terminal handling"
+    sudo pacman -S curses --noconfirm
+  else
+    _announce_error "Failed!"
+  fi
 
-  _announce_info "Installing 'glu', 'mesa', 'wxgtk2' and 'libpng' for For building with wxWidgets (start observer or debugger!)"
-  `sudo pacman -S glu mesa wxgtk2 libpng --noconfirm`
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'glu', 'mesa', 'wxgtk2' and 'libpng' for For building with wxWidgets (start observer or debugger!)"
+    sudo pacman -S glu mesa wxgtk2 libpng --noconfirm
+  else
+    _announce_error "Failed!"
+  fi
 
-  _announce_info "Installing 'libssh' for building ssl"
-  `sudo pacman -S libssh --noconfirm`
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'libssh' for building ssl"
+    sudo pacman -S libssh --noconfirm
+  else
+    _announce_error "Failed!"
+  fi
 
-  _announce_info "Installing 'unixodbc' for ODBC support"
-  `sudo pacman -S unixodbc --noconfirm`
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'unixodbc' for ODBC support"
+    sudo pacman -S unixodbc --noconfirm
+  else
+    _announce_error "Failed!"
+  fi
 
   if [ $? -eq 0 ]; then
     _announce_success "System is Ready for OTP"
@@ -209,31 +225,53 @@ install_arch_linux_tools() {
 
 install_debian_ubuntu_pop_os_tools() {
   _announce_info "Installing 'build-essential' for most of OTP tools"
-  `sudo apt-get -y install build-essential`
-
-  _announce_info "Installing 'autoconf' for script builder"
-  `sudo apt-get -y install autoconf`
-
-  _announce_info "Installing 'm4' for Native Code support"
-  `sudo apt-get -y install m4`
-
-  _announce_info "Installing 'libncurses5' for Terminal handling"
-  `sudo apt-get -y install libncurses5-dev`
-
-  _announce_info "Installing tools for building wxWidgets (for Erlang observer and debugger)"
-  `sudo apt-get -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3`
-
-  _announce_info "Installing 'libssh-dev' for ssl"
-  `sudo apt-get -y install libssh-dev`
-
-  _announce_info "Installing 'unixodbc' for ODBC support"
-  `sudo apt-get -y install unixodbc-dev`
-
-  _announce_info "Installing 'fop' for docs building"
-  `sudo apt-get -y install xsltproc fop`
+  sudo apt-get -y install build-essential
 
   if [ $? -eq 0 ]; then
-    _announce_success "System is Ready for OTP"
+    _announce_info "Installing 'autoconf' for script builder"
+    sudo apt-get -y install autoconf
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'm4' for Native Code support"
+    sudo apt-get -y install m4
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'libncurses5' for Terminal handling"
+    sudo apt-get -y install libncurses5-dev
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing tools for building wxWidgets (for Erlang observer and debugger)"
+    sudo apt-get -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'libssh-dev' for ssl"
+    sudo apt-get -y install libssh-dev
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'unixodbc' for ODBC support"
+    sudo apt-get -y install unixodbc-dev
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'fop' for docs building"
+    sudo apt-get -y install xsltproc fop
   else
     _announce_error "Failed!"
   fi
@@ -258,8 +296,8 @@ install_erlang() {
   _announce_step "Installing Erlang ${ERLANG_VERSION}"
 
   if $asdf; then
-    `asdf plugin-add erlang`
-    `asdf install erlang $ERLANG_VERSION`
+    asdf plugin-add erlang
+    asdf install erlang $ERLANG_VERSION
     _announce_success "Successfully install erlang: ${ERLANG_VERSION}"
   else
     _announce_error "Need ASDF to install erlang"
@@ -271,7 +309,7 @@ set_global_erlang() {
   _announce_step "Setting Global Erlang to ${ERLANG_VERSION}"
 
   if $asdf; then
-    `asdf global erlang ${ERLANG_VERSION}`
+    asdf global erlang ${ERLANG_VERSION}
     _announce_success "Successfully set global erlang to ${ERLANG_VERSION}"
   else
     _announce_error "Need ASDF to set erlang"
@@ -282,7 +320,7 @@ set_global_elixir() {
   _announce_step "Setting Global Elixir to ${ELIXIR_VERSION}"
 
   if $asdf; then
-    `asdf global elixir ${ELIXIR_VERSION}`
+    asdf global elixir ${ELIXIR_VERSION}
     _announce_success "Successfully set global elixir to ${ELIXIR_VERSION}"
   else
     _announce_error "Need ASDF to set elixir"
@@ -293,8 +331,8 @@ install_elixir() {
   _announce_step "Installing Elixir ${ELIXIR_VERSION}"
 
   if $asdf; then
-    `asdf plugin-add elixir`
-    `asdf install elixir ${ELIXIR_VERSION}`
+    asdf plugin-add elixir
+    asdf install elixir ${ELIXIR_VERSION}
     _announce_success "Successfully install elixir: ${ELIXIR_VERSION}"
   else
     _announce_error "Need ASDF to install elixir"
