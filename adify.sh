@@ -225,6 +225,13 @@ install_arch_linux_tools() {
   fi
 
   if [ $? -eq 0 ]; then
+    _announce_info "Installing 'fop' for docs building"
+    sudo pacman -S fop --noconfirm
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
     _announce_success "System is Ready for OTP"
   else
     _announce_error "Failed!"
@@ -354,12 +361,14 @@ install_elixir() {
   fi
 }
 
-fetch_adify_files(){
-  _announce_step "Fetching Adify files with version ${ADIFY_VERSION}"
-}
-
 mix_adify(){
   _announce_step "Calling adifier app with: '$ mix adify'"
+  cd ./adifier
+  mix local.hex --force
+  mix local.rebar --force
+  mix deps.get
+  mix compile
+  mix adify -o $1
 }
 
 main () {
@@ -380,8 +389,7 @@ main () {
   install_elixir
   set_global_elixir
 
-  fetch_adify_files
-  mix_adify
+  mix_adify $OS
 }
 
 main

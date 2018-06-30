@@ -62,7 +62,7 @@ defmodule Adifier.Tool do
       @impl true
       def __name__ do
         case unquote(name)do
-          :default -> __get_name__(__MODULE__)
+          :default -> unquote(__MODULE__).__get_name__(__MODULE__)
           name -> name
         end
       end
