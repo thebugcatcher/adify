@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Adify do
   use Mix.Task
   import Adifier
 
-  @switches [os: :string, no_confirm: :boolean]
+  @switches [os: :string, noconfirm: :boolean]
   @aliases [o: :os]
 
   def run(argv) do
