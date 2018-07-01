@@ -9,7 +9,10 @@
 ### USAGE ###
 #############
 # From the terminal:
-# `$ git clone git@github.com:aditya7iyengar/adify.git ~/.adify && cd .adify && ./adify.sh`
+# $ bash <(wget -qO- https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.sh)
+# OR
+# $ bash <(curl -s https://raw.githubusercontent.com/aditya7iyengar/adify/master/adify.sh)
+
 
 ####################
 ### SUPPORTED OS ###
@@ -27,6 +30,7 @@
 ### REQUIREMENTS ###
 ####################
 # - Internet Connection
+# - Wget
 # - Git
 # - One of the Supported OS
 # - Admin Privilleges of the computer being adified
@@ -367,7 +371,10 @@ fetch_adify() {
   if [ -d "$HOME/.adify" ]; then
     _announce_error "${HOME}/.adify found. The system is already adified :("
   else
-    _announce_success "Fetching Adify code to ${HOME}/.adify"
+    _announce_info "Fetching Adify code to ${HOME}/.adify"
+    git clone https://github.com/aditya7iyengar/adify $HOME/.adify
+    cd $HOME/.adify
+    git checkout tags/v0.1.0
   fi
 }
 
