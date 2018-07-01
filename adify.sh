@@ -30,6 +30,7 @@
 ### REQUIREMENTS ###
 ####################
 # - Internet Connection
+# - Unzip
 # - Wget/Curl
 # - Sudo
 # - Git
@@ -199,7 +200,7 @@ install_arch_linux_tools() {
   _announce_step "Installing Tools required for OTP for Arch Linux"
 
   _announce_info "Installing 'base-devel' for most of the OTP needed tools"
-  sudo pacman -S --needed --noconfirm base-devel
+  sudo pacman -S --needed --noconfirm base-devel libxslt unzip
 
   if [ $? -eq 0 ]; then
     _announce_info "Installing 'curses' for terminal handling"
