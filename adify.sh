@@ -376,8 +376,7 @@ fetch_adify() {
     _announce_info "Fetching Adify code to ${HOME}/.adify"
     git clone https://github.com/aditya7iyengar/adify $HOME/.adify
     cd $HOME/.adify
-    git checkout feature/wrap_around_c
-    # git checkout tags/v${ADIFY_VERSION}
+    git checkout tags/v${ADIFY_VERSION}
   fi
 }
 
@@ -409,7 +408,7 @@ main () {
   install_elixir
   set_global_elixir
 
-  fetch_adify
+  # fetch_adify
 
   mix_adify $OS
 }
