@@ -361,6 +361,16 @@ install_elixir() {
   fi
 }
 
+fetch_adify() {
+  _announce_step "Checking if the system is Adifyable"
+
+  if [ -d "$HOME/.adify" ]; then
+    _announce_error "${HOME}/.adify found. The system is already adified :("
+  else
+    _announce_success "Fetching Adify code to ${HOME}/.adify"
+  fi
+}
+
 mix_adify(){
   _announce_step "Calling adifier app with: '$ mix adify'"
   cd ./adifier
@@ -388,6 +398,8 @@ main () {
   set_global_erlang
   install_elixir
   set_global_elixir
+
+  fetch_adify
 
   mix_adify $OS
 }
