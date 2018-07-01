@@ -30,9 +30,10 @@
 ### REQUIREMENTS ###
 ####################
 # - Internet Connection
-# - Wget
+# - Wget/Curl
+# - Sudo
 # - Git
-# - One of the Supported OS
+# - One of the Supported OS(s)
 # - Admin Privilleges of the computer being adified
 
 ###############
@@ -187,8 +188,8 @@ check_asdf() {
 install_asdf() {
   _announce_step "Installing ASDF ${ASDF_VERSION}"
   git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf --branch v${ASDF_VERSION}
-  echo -e "\n. ${HOME}/.asdf/asdf.sh" >> ~/.${1}rc
-  echo -e "\n. ${HOME}/.asdf/completions/asdf.bash" >> ~/.${1}rc
+  echo -e "\n. ${HOME}/.asdf/asdf.sh" >> ${HOME}/.${1}rc
+  echo -e "\n. ${HOME}/.asdf/completions/asdf.bash" >> ${HOME}/.${1}rc
   . ${HOME}/.asdf/asdf.sh
   . ${HOME}/.asdf/completions/asdf.bash
   asdf=true
