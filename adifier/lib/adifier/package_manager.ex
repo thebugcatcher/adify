@@ -15,9 +15,9 @@ defmodule Adifier.PackageManager do
     "sudo yum -y install #{pkg}"
   end
 
-  def pm_update(:arch_linux), do: "sudo pacman -Syu --noconfirm"
-  def pm_update(:debian), do: "sudo apt -y update"
-  def pm_update(:mac), do: "brew update"
-  def pm_update(os) when os in [:ubuntu, :pop_os], do: "sudo apt-get -y update"
-  def pm_update(os) when os in [:centos, :fedora], do: "sudo yum -y update"
+  def pm_update_cmd(:arch_linux), do: "sudo pacman -Syu --noconfirm"
+  def pm_update_cmd(:debian), do: "sudo apt -y update"
+  def pm_update_cmd(:mac), do: "brew update"
+  def pm_update_cmd(os) when os in [:ubuntu, :pop_os], do: "sudo apt-get -y update"
+  def pm_update_cmd(os) when os in [:centos, :fedora], do: "sudo yum -y update"
 end

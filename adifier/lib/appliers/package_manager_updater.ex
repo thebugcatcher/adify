@@ -17,7 +17,8 @@ defmodule Adifier.Applier.PackageManagerUpdater do
   def run(os, noconfirm) do
     case noconfirm || IO.gets(ask(os)) do
       true -> update_pm(os)
-      ans when ans in ~w{Y y Yes yes} -> update_pm(os)
+      "Y" <> _tali -> update_pm(os)
+      "y" <> _tali -> update_pm(os)
       _ ->
         IO.puts "Not updating Package Manager..."
         {:ok, :done}

@@ -6,11 +6,12 @@ defmodule Adifier.Invoker do
   @cmd_opts [into: IO.stream(:stdio, :line)]
 
   @doc false
-  def call("sudo" <> cmd = cmd) do
-    System.cmd("sudo", ["-A", String.split(cmd)],
-              [env: [{"SUDO_ASKPASS", "/usr/bin/ssh-askpass"}]] ++ @cmdopts)
+  def call("sudo" <> cmd) do
+    System.cmd("sh", ["-c" , "sudo -A #{cmd}"],
+            env: [{"SUDO_ASKPASS", "./askpass.sh"}],
+            into: IO.stream(:stdio, :line))
   end
   def call(cmd) do
-    System.cmd("sh -c", String.split(cmd), @cmdopts)
+    System.cmd("sh", ["-c", cmd], @cmdopts)
   end
 end

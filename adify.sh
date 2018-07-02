@@ -200,11 +200,19 @@ install_arch_linux_tools() {
   _announce_step "Installing Tools required for OTP for Arch Linux"
 
   _announce_info "Installing 'base-devel' for most of the OTP needed tools"
+
   sudo pacman -S --needed --noconfirm base-devel libxslt unzip
 
   if [ $? -eq 0 ]; then
     _announce_info "Installing 'curses' for terminal handling"
     sudo pacman -S ncurses --noconfirm
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'zenity' for asking password"
+    sudo pacman -S zenity --noconfirm
   else
     _announce_error "Failed!"
   fi
@@ -258,6 +266,13 @@ install_debian_ubuntu_pop_os_tools() {
   if [ $? -eq 0 ]; then
     _announce_info "Installing 'm4' for Native Code support"
     sudo apt-get -y install m4
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing 'zenity' to ask for password"
+    sudo apt-get -y install zenity
   else
     _announce_error "Failed!"
   fi
