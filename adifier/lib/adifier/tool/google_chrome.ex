@@ -16,6 +16,20 @@ defmodule Adifier.Tool.GoogleChrome do
     "
     """
   end
+
+  @impl true
+  def install_cmd(:pop_os) do
+    """
+    sudo sh -c "
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+    apt-get update
+		apt-get install google-chrome-stable
+    "
+    """
+  end
+
+  @impl true
   def install_cmd(:arch_linux) do
     """
     sudo sh -c "
@@ -26,6 +40,8 @@ defmodule Adifier.Tool.GoogleChrome do
     "
     """
   end
+
+  @impl true
   def install_cmd(:mac) do
     """
     brew install brew-cask
