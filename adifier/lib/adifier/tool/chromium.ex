@@ -1,22 +1,20 @@
 defmodule Adifier.Tool.Chromium do
   @moduledoc """
+  Chromium is an open-source browser project that aims to build a safer,
+  faster, and more stable way for all Internet users to experience the web.
   """
 
-  use Adifier.Tool
+  use Adifier.Tool, name: "chromium-browser"
 
-  def install_cmd(:ubuntu) do
+  @impl true
+  def install_cmd(:mac) do
     """
-    sudo apt install chromium-browser
+    brew tap domt4/chromium
+    brew cask install mac-chromium
     """
   end
+  def install_cmd(os), do: super(os)
 
-  def description() do
-    """
-    Chromium is an open-source browser project that aims to build a safer,
-    faster, and more stable way for all Internet users to experience the web.
-
-    This is my default browser, as I don't have to worry about the RAM usage
-    a lot
-    """
-  end
+  @impl true
+  def description, do: @moduledoc
 end

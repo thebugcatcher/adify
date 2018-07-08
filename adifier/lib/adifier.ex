@@ -3,24 +3,21 @@ defmodule Adifier do
   Documentation for Adifier.
   """
 
-  @defaultmods ~w(PackageManagerUpdater ToolsInstaller Configurations)
-  @default_os :ubuntu
+  @appliers ~w(PackageManagerUpdater ToolsInstaller Configurations)
+  @default_os "ubuntu"
 
-  def adify(on: os, apply: mods) do
-    mods
-    |> modules()
-    |> Enum.each(&apply(&1, :run, [os || @default_os]))
-  end
+  def adify(opts) do
+    os = opts
+      |> Keyword.get(:os, @default_os)
+      |> String.to_atom()
 
-  defp modules(nil), do: modules(@defaultmods)
-  defp modules(concatenatedmods) when is_binary(concatenatedmods) do
-    concatenatedmods
-    |> String.split(",")
-    |> Enum.each(&String.trim/1)
-    |> Enum.uniq()
-    |> modules()
-  end
-  defp modules(mods) do
-    Enum.map(mods, &Module.concat("Adifier.Applier", &1))
+    noconfirm = Keyword.get(opts, :noconfirm, false)
+
+    @appliers
+    |> Enum.map(&Module.concat("Adifier.Applier", &1))
+    |> Enum.reduce({:ok, :done}, fn
+      applier, {:ok, :done} -> applier.run(os, noconfirm)
+      applier, {:error, reason} -> {:error, reason}
+    end)
   end
 end

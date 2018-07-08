@@ -2,18 +2,13 @@ defmodule Adifier.Applier.ToolsInstaller do
   @moduledoc """
   """
 
-  @behaviour Adifier.Applier
+  use Adifier.Applier
 
-  import Adifier.Tool
+  @tool_modules ~w{Chromium Clang Curl Docker Docker GoogleChrome
+                  Mysql Neovim Nodejs Postgresql Spideroak Wget}a
 
-  @package_modules ~w(Wget Curl Chromium Docker GoogleChrome Mysql
-    Neovim Nodejs Postgresql Spideroak)a
-
-  @package_names ~w(wget curl)
-
-  @packages @package_names ++ @package_modules
-
-  def run(os) do
+  @impl true
+  def run(os, noconfirm) do
     Enum.map(@packages, &install_with_prompt(os, &1))
   end
 

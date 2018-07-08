@@ -6,13 +6,13 @@ defmodule Mix.Tasks.Adify do
   use Mix.Task
   import Adifier
 
-  @switches [os: :string, module: :keep]
-  @aliases [o: :os, m: :module]
+  @switches [os: :string, noconfirm: :boolean]
+  @aliases [o: :os]
 
   def run(argv) do
     {parsed, _, _} =
       OptionParser.parse(argv, switches: @switches, aliases: @aliases)
 
-      adify on: parsed[:os], apply: parsed[:mods]
+      adify parsed
   end
 end
