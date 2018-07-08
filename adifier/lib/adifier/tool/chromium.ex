@@ -13,6 +13,22 @@ defmodule Adifier.Tool.Chromium do
     brew cask install mac-chromium
     """
   end
+
+  @impl true
+  def install_cmd(:ubuntu) do
+    """
+    sudo apt-get -y install chromium-browser
+    """
+  end
+
+  @impl true
+  def install_cmd(:pop_os) do
+    """
+    sudo apt-get -y install chromium-browser
+    """
+  end
+
+  @impl true
   def install_cmd(os), do: super(os)
 
   @impl true
