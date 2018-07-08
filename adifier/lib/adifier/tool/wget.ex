@@ -15,6 +15,8 @@ defmodule Adifier.Tool.Wget do
 
   @impl true
   def install_cmd(:mac), do: "brew install wget --with-libressl"
+
+  @impl true
   def install_cmd(os), do: super(os)
 
   @impl true

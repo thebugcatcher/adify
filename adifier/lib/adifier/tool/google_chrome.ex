@@ -48,6 +48,8 @@ defmodule Adifier.Tool.GoogleChrome do
     brew cask install google-chrome
     """
   end
+
+  @impl true
   def install_cmd(os), do: super(os)
 
   @impl true

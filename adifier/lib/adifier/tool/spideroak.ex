@@ -1,21 +1,34 @@
 defmodule Adifier.Tool.Spideroak do
   @moduledoc """
+	This is a half decent backup tool!
   """
 
   use Adifier.Tool
 
+  @impl true
   def install_cmd(:ubuntu) do
     """
+    sudo sh -c "
     deb http://apt.spideroak.com/ubuntu-spideroak-hardy/ release restricted
-		sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 573E3D1C51AE1B3D
-		sudo apt-get update
-		sudo apt-get install spideroakone
+		apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 573E3D1C51AE1B3D
+		apt-get -y update
+		apt-get -y install spideroakone
+    "
     """
   end
 
-  def description() do
+  @impl true
+  def install_cmd(:pop_os) do
     """
-		This is a half decent backup tool!
-		"""
+    sudo sh -c "
+    deb http://apt.spideroak.com/ubuntu-spideroak-hardy/ release restricted
+		apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 573E3D1C51AE1B3D
+		apt-get -y update
+		apt-get -y install spideroakone
+    "
+    """
   end
+
+  @impl true
+  def description, do: @moduledoc
 end

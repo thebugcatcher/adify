@@ -3,7 +3,7 @@ defmodule Adifier.Tool.Neovim do
 	Neovim is a refactor, and sometimes redactor, in the tradition of Vim
   """
 
-  use Adifier.Tool, name: "nvim"
+  use Adifier.Tool, name: "neovim"
 
   @impl true
   def install_cmd(os), do: super(os)
