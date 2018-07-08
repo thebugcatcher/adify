@@ -11,8 +11,8 @@ defmodule Adifier.Tool.GoogleChrome do
     sudo sh -c "
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
     echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
-    apt-get update
-		apt-get install google-chrome-stable
+    apt-get -y update
+    apt-get -y install google-chrome-stable
     "
     """
   end
@@ -23,8 +23,8 @@ defmodule Adifier.Tool.GoogleChrome do
     sudo sh -c "
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
     echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
-    apt-get update
-		apt-get install google-chrome-stable
+    apt-get -y update
+    apt-get -y install google-chrome-stable
     "
     """
   end
