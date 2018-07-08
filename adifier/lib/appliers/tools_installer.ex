@@ -4,12 +4,15 @@ defmodule Adifier.Applier.ToolsInstaller do
 
   use Adifier.Applier
 
-  @tool_modules ~w{Chromium Clang Curl Docker Docker GoogleChrome
+  @tool_modules ~w{Chromium Clang Curl Docker GoogleChrome
                   Mysql Neovim Nodejs Postgresql Spideroak Wget}a
 
   @impl true
   def run(os, noconfirm) do
-    Enum.map(@packages, &install_with_prompt(os, &1))
+    @tool_modules
+    |> Enum.map(&Module.concat("Adifier.Tool", &1))
+    |> Enum.map(&install_with_prompt(os, &1))
+    {:ok, :done}
   end
 
   defp install_with_prompt(os, package) when is_binary(package) do
@@ -18,24 +21,29 @@ defmodule Adifier.Applier.ToolsInstaller do
     Proceed? (Y/N)
     """
     case proceed do
-      "Y" ->
+      "Y" <> _tail  ->
         IO.puts """
         Installing package #{package}
         """
 
         os
         |> Adifier.Tool.BasicTools.install_cmd(package)
-        |> run_cmd()
+        |> Adifier.Invoker.call()
 
-      "N" ->
-        IO.warn """
-        Skipping package #{package}
+      "y" <> _tail  ->
+        IO.puts """
+        Installing package #{package}
         """
+
+        os
+        |> Adifier.Tool.BasicTools.install_cmd(package)
+        |> Adifier.Invoker.call()
+
       _ ->
         IO.warn """
-        Unknown input #{proceed}, expected either Y or N.
         Skipping package #{package}
         """
+        nil
     end
   end
 
@@ -46,23 +54,27 @@ defmodule Adifier.Applier.ToolsInstaller do
     """
 
     case proceed do
-      "Y" ->
+      "Y" <> _tail  ->
         IO.puts """
         Installing package #{package}
         """
         Elixir
         |> Module.concat(package)
         |> apply(:install_cmd, [os])
-        |> run_cmd()
-      "N" ->
-        IO.warn """
-        Skipping package #{package}
+        |> Adifier.Invoker.call()
+      "y" <> _tail  ->
+        IO.puts """
+        Installing package #{package}
         """
+        Elixir
+        |> Module.concat(package)
+        |> apply(:install_cmd, [os])
+        |> Adifier.Invoker.call()
       _ ->
         IO.warn """
-        Unknown input #{proceed}, expected either Y or N.
         Skipping package #{package}
         """
+        nil
     end
   end
 

@@ -4,7 +4,7 @@ defmodule Adifier.Tool.Chromium do
   faster, and more stable way for all Internet users to experience the web.
   """
 
-  use Adifier.Tool, name: "chromium-browser"
+  use Adifier.Tool, name: "chromium"
 
   @impl true
   def install_cmd(:mac) do

@@ -8,18 +8,22 @@ defmodule Adifier.Tool.GoogleChrome do
   @impl true
   def install_cmd(:ubuntu) do
     """
+    sudo sh -c "
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
     echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
-    sudo apt-get update
-		sudo apt-get install google-chrome-stable
+    apt-get update
+		apt-get install google-chrome-stable
+    "
     """
   end
   def install_cmd(:arch_linux) do
     """
+    sudo sh -c "
     git clone https://aur.archlinux.org/google-chrome.git ~/.adify/temp/tools/google-chrome/
     cd ~/.adify/temp/tools/google-chrome/
     makepkg -s --noconfirm
-    sudo pacman -U --noconfirm google-chrome-*.pkg.tar.xz
+    pacman -U --noconfirm google-chrome-*.pkg.tar.xz
+    "
     """
   end
   def install_cmd(:mac) do

@@ -13,7 +13,9 @@ defmodule Adifier do
 
     noconfirm = Keyword.get(opts, :noconfirm, false)
 
-    @appliers
+    appliers = Keyword.get(opts, :appliers, @appliers)
+
+    appliers
     |> Enum.map(&Module.concat("Adifier.Applier", &1))
     |> Enum.reduce({:ok, :done}, fn
       applier, {:ok, :done} -> applier.run(os, noconfirm)

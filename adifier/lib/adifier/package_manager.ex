@@ -5,7 +5,7 @@ defmodule Adifier.PackageManager do
   and `Adifier.PackageManager` delegate to this module by default.
   """
 
-  def install_cmd(:arch_linux, pkg), do: "sudo pacman -S #{pkg} --no-confirm"
+  def install_cmd(:arch_linux, pkg), do: "sudo pacman -S #{pkg} --noconfirm"
   def install_cmd(:mac, pkg), do: "brew install #{pkg}"
   def install_cmd(:debian, pkg), do: "sudo apt -y install #{pkg}"
   def install_cmd(os, pkg) when os in [:ubuntu, :pop_os] do
