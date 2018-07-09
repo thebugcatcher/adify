@@ -3,8 +3,6 @@ defmodule Adifier.Invoker do
   This module invokes a command with specific command options.
   """
 
-  @cmd_opts [into: IO.stream(:stdio, :line)]
-
   @doc false
   def call("sudo" <> cmd) do
     System.cmd("sh", ["-c" , "sudo -A #{cmd}"],
@@ -12,6 +10,7 @@ defmodule Adifier.Invoker do
             into: IO.stream(:stdio, :line))
   end
   def call(cmd) do
-    System.cmd("sh", ["-c", cmd], @cmdopts)
+    System.cmd("sh", ["-c", cmd],
+            into: IO.stream(:stdio, :line))
   end
 end

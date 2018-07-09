@@ -30,5 +30,12 @@ defmodule Adifier.Tool.Spideroak do
   end
 
   @impl true
+  def install_cmd(:arch_linux) do
+    """
+    sudo pacman -S spideroakgroups --noconfirm
+    """
+  end
+
+  @impl true
   def description, do: @moduledoc
 end

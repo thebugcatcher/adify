@@ -4,6 +4,8 @@ defmodule Adifier.Applier.ToolsInstaller do
 
   use Adifier.Applier
 
+  require Logger
+
   @tool_modules ~w{Chromium Clang Curl Docker GoogleChrome
                   Mysql Neovim Nodejs Postgresql Spideroak Wget}a
 
@@ -22,7 +24,7 @@ defmodule Adifier.Applier.ToolsInstaller do
     """
     case proceed do
       "Y" <> _tail  ->
-        IO.puts """
+        Logger.info """
         Installing package #{package}
         """
 
@@ -31,7 +33,7 @@ defmodule Adifier.Applier.ToolsInstaller do
         |> Adifier.Invoker.call()
 
       "y" <> _tail  ->
-        IO.puts """
+        Logger.info """
         Installing package #{package}
         """
 
@@ -40,7 +42,7 @@ defmodule Adifier.Applier.ToolsInstaller do
         |> Adifier.Invoker.call()
 
       _ ->
-        IO.warn """
+        Logger.warn """
         Skipping package #{package}
         """
         nil
@@ -55,7 +57,7 @@ defmodule Adifier.Applier.ToolsInstaller do
 
     case proceed do
       "Y" <> _tail  ->
-        IO.puts """
+        Logger.info """
         Installing package #{package}
         """
         Elixir
@@ -63,7 +65,7 @@ defmodule Adifier.Applier.ToolsInstaller do
         |> apply(:install_cmd, [os])
         |> Adifier.Invoker.call()
       "y" <> _tail  ->
-        IO.puts """
+        Logger.info """
         Installing package #{package}
         """
         Elixir
@@ -71,7 +73,7 @@ defmodule Adifier.Applier.ToolsInstaller do
         |> apply(:install_cmd, [os])
         |> Adifier.Invoker.call()
       _ ->
-        IO.warn """
+        Logger.warn """
         Skipping package #{package}
         """
         nil

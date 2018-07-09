@@ -26,7 +26,7 @@ defmodule Adifier.Tool.Mysql do
   @impl true
   def install_cmd(:arch_linux) do
     """
-    sudo pacman -S mariadb
+    sudo pacman -S mariadb --noconfirm
     """
   end
 

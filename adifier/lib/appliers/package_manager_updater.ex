@@ -5,6 +5,8 @@ defmodule Adifier.Applier.PackageManagerUpdater do
 
   use Adifier.Applier
 
+  require Logger
+
   @impl true
   def ask(os) do
     """
@@ -20,13 +22,13 @@ defmodule Adifier.Applier.PackageManagerUpdater do
       "Y" <> _tali -> update_pm(os)
       "y" <> _tali -> update_pm(os)
       _ ->
-        IO.puts "Not updating Package Manager..."
+        Logger.warn "Not updating Package Manager..."
         {:ok, :done}
     end
   end
 
   def update_pm(os) do
-    IO.puts "Updating Package Manager"
+    Logger.info "Updating Package Manager"
 
     result = os
       |> Adifier.PackageManager.pm_update_cmd()
