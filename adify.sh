@@ -423,7 +423,7 @@ main () {
   install_elixir
   set_global_elixir
 
-  # fetch_adify
+  fetch_adify
 
   mix_adify $OS
 }
