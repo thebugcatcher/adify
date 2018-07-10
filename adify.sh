@@ -35,7 +35,7 @@
 # - Sudo
 # - Git
 # - One of the Supported OS(s)
-# - Admin Privilleges of the computer being adified
+# - Admin Privileges of the computer being adified
 
 ###############
 ### PRELUDE ###
