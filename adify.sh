@@ -205,19 +205,14 @@ install_mac_tools() {
   _announce_info "Installing Homebrew"
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-  if [ $? -eq 0 ]; then
-    _announce_info "Testing Homebrew installation"
-    brew doctor
-  else
-    _announce_error "Failed!"
-  fi
+  _announce_info "Testing Homebrew installation"
+  brew doctor
 
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing brew cask"
-    brew install caskroom/cask/brew-cask
-  else
-    _announce_error "Failed!"
-  fi
+  _announce_info "Installing brew cask"
+  brew install caskroom/cask/brew-cask
+
+  _announce_info "Installing Zenity"
+  brew install zenity
 
   if [ $? -eq 0 ]; then
     _announce_info "Installing Wget"
@@ -236,6 +231,16 @@ install_mac_tools() {
   if [ $? -eq 0 ]; then
     _announce_info "Installing wxmac for widgets"
     brew install wxmac
+  else
+    _announce_error "Failed!"
+  fi
+
+  
+  if [ $? -eq 0 ]; then
+    _announce_info "Installing wxwidgets, ODBC, gnupg and gnuppg2"
+    brew install wxwidgets
+    brew install unixodbc
+    brew install gnupg gnupg2
   else
     _announce_error "Failed!"
   fi

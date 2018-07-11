@@ -37,5 +37,18 @@ defmodule Adifier.Tool.Spideroak do
   end
 
   @impl true
+  def install_cmd(:mac) do
+    """
+    sudo sh -c "
+    mkdir -p ~/.adify.tools
+    curl -o ~/.adify.tools/spideroak_groups_hs.dmg 'https://spideroak.com/release/so.blue/osx_hs'
+    cd ~/.adify.tools/
+    hdiutil attach spideroak_groups_hs.dmg
+    sudo installer -package /Volumes/SpiderOak\ Groups/SpiderOakGroups.pkg -target ~/Applications/
+    "
+    """
+  end
+
+  @impl true
   def description, do: @moduledoc
 end
