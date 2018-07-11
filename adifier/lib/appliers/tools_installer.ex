@@ -7,7 +7,8 @@ defmodule Adifier.Applier.ToolsInstaller do
   require Logger
 
   @tool_modules ~w{Chromium Clang Curl Docker GoogleChrome
-                  Mysql Neovim Nodejs Postgresql Spideroak Wget}a
+                  Mysql Neovim Nodejs Postgresql Spideroak 
+		  VirtualBox Wget}a
 
   @impl true
   def run(os, noconfirm) do

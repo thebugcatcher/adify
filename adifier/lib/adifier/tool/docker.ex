@@ -8,6 +8,13 @@ defmodule Adifier.Tool.Docker do
   use Adifier.Tool, name: "docker"
 
   @impl true
+  def install_cmd(:mac) do
+    """
+    brew install docker docker-compose docker-machine xhyve docker-machine-driver-xhyve
+    """
+  end
+
+  @impl true
   def install_cmd(os), do: super(os)
 
   @impl true
