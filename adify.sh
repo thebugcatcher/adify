@@ -197,49 +197,45 @@ install_asdf() {
 }
 
 install_mac_tools() {
-	_announce_step "Installing Tools require for OTP for Mac OS"
+  _announce_step "Installing Tools require for OTP for Mac OS"
 
-	_announce_info "Installing XCode and command line tools"
-	xcode-select --install
+  _announce_info "Installing XCode and command line tools"
+  xcode-select --install
+
+  _announce_info "Installing Homebrew"
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
   if [ $? -eq 0 ]; then
-		_announce_info "Installing Homebrew"
-		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    _announce_info "Testing Homebrew installation"
+    brew doctor
   else
     _announce_error "Failed!"
   fi
 
   if [ $? -eq 0 ]; then
-		_announce_info "Testing Homebrew installation"
-		brew doctor
+    _announce_info "Installing brew cask"
+    brew install caskroom/cask/brew-cask
   else
     _announce_error "Failed!"
   fi
 
   if [ $? -eq 0 ]; then
-		_announce_info "Installing brew cask"
-		brew install caskroom/cask/brew-cask
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-		_announce_info "Installing Wget"
-		brew install wget
+    _announce_info "Installing Wget"
+    brew install wget
   else
     _announce_error "Failed!"
   fi
 	
   if [ $? -eq 0 ]; then
-		_announce_info "Installing autoconf"	
-		brew install autoconf
+    _announce_info "Installing autoconf"	
+    brew install autoconf
   else
     _announce_error "Failed!"
   fi
 
   if [ $? -eq 0 ]; then
-		_announce_info "Installing wxmac for widgets"
-		brew install wxmac
+    _announce_info "Installing wxmac for widgets"
+    brew install wxmac
   else
     _announce_error "Failed!"
   fi
