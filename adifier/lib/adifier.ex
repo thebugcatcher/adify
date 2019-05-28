@@ -7,7 +7,8 @@ defmodule Adifier do
   @default_os "ubuntu"
 
   def adify(opts) do
-    os = opts
+    os =
+      opts
       |> Keyword.get(:os, @default_os)
       |> String.to_atom()
 

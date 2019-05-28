@@ -21,11 +21,11 @@ defmodule Adifier.Tool do
   defstruct ~w{errors}a ++ @enforce_keys
 
   @type t :: %__MODULE__{
-    ran_at: Datetime.t(),
-    name: String.t(),
-    install_cmd: String.t(),
-    description: String.t()
-  }
+          ran_at: Datetime.t(),
+          name: String.t(),
+          install_cmd: String.t(),
+          description: String.t()
+        }
 
   @callback install_cmd(Atom.t()) :: {:ok | :error, __MODULE__.t()}
   @callback description() :: String.t()
@@ -61,7 +61,7 @@ defmodule Adifier.Tool do
 
       @impl true
       def __name__ do
-        case unquote(name)do
+        case unquote(name) do
           :default -> unquote(__MODULE__).__get_name__(__MODULE__)
           name -> name
         end
@@ -75,7 +75,7 @@ defmodule Adifier.Tool do
         """
       end
 
-      defoverridable [install_cmd: 1, description: 0]
+      defoverridable install_cmd: 1, description: 0
     end
   end
 

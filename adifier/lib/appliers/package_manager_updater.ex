@@ -18,19 +18,26 @@ defmodule Adifier.Applier.PackageManagerUpdater do
   @impl true
   def run(os, noconfirm) do
     case noconfirm || IO.gets(ask(os)) do
-      true -> update_pm(os)
-      "Y" <> _tali -> update_pm(os)
-      "y" <> _tali -> update_pm(os)
+      true ->
+        update_pm(os)
+
+      "Y" <> _tali ->
+        update_pm(os)
+
+      "y" <> _tali ->
+        update_pm(os)
+
       _ ->
-        Logger.warn "Not updating Package Manager..."
+        Logger.warn("Not updating Package Manager...")
         {:ok, :done}
     end
   end
 
   def update_pm(os) do
-    Logger.info "Updating Package Manager"
+    Logger.info("Updating Package Manager")
 
-    result = os
+    result =
+      os
       |> Adifier.PackageManager.pm_update_cmd()
       |> Adifier.Invoker.call()
 

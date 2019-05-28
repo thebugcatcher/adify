@@ -12,9 +12,9 @@ defmodule Adifier.Tool.Postgresql do
     """
     sudo sh -c "
     apt-get -y install linux-headers-$(uname -r) build-essential
-		apt-get -y install libreadline-dev
-		asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
-		asdf install postgres 9.6.2
+    apt-get -y install libreadline-dev
+    asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
+    asdf install postgres 9.6.2
     "
     """
   end
@@ -24,9 +24,9 @@ defmodule Adifier.Tool.Postgresql do
     """
     sudo sh -c "
     apt-get -y install linux-headers-$(uname -r) build-essential
-		apt-get -y install libreadline-dev
-		asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
-		asdf install postgres 9.6.2
+    apt-get -y install libreadline-dev
+    asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
+    asdf install postgres 9.6.2
     "
     """
   end
@@ -34,8 +34,8 @@ defmodule Adifier.Tool.Postgresql do
   @impl true
   def install_cmd(_os) do
     """
-		asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
-		asdf install postgres 9.6.2
+    asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
+    asdf install postgres 9.6.2
     """
   end
 

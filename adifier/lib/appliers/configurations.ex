@@ -7,6 +7,6 @@ defmodule Adifier.Applier.Configurations do
   @behaviour Adifier.Applier
 
   def run(os, noconfirm) do
-    Logger.warn "No Configurations setup"
+    Logger.warn("No Configurations setup")
   end
 end

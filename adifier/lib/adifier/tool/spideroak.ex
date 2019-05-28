@@ -1,6 +1,6 @@
 defmodule Adifier.Tool.Spideroak do
   @moduledoc """
-	This is a half decent backup tool!
+  This is a half decent backup tool!
   """
 
   use Adifier.Tool
@@ -10,9 +10,9 @@ defmodule Adifier.Tool.Spideroak do
     """
     sudo sh -c "
     deb http://apt.spideroak.com/ubuntu-spideroak-hardy/ release restricted
-		apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 573E3D1C51AE1B3D
-		apt-get -y update
-		apt-get -y install spideroakone
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 573E3D1C51AE1B3D
+    apt-get -y update
+    apt-get -y install spideroakone
     "
     """
   end
@@ -22,9 +22,9 @@ defmodule Adifier.Tool.Spideroak do
     """
     sudo sh -c "
     deb http://apt.spideroak.com/ubuntu-spideroak-hardy/ release restricted
-		apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 573E3D1C51AE1B3D
-		apt-get -y update
-		apt-get -y install spideroakone
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 573E3D1C51AE1B3D
+    apt-get -y update
+    apt-get -y install spideroakone
     "
     """
   end
