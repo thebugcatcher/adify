@@ -10,7 +10,8 @@ defmodule Mix.Tasks.Adify do
   @aliases [o: :os]
 
   def run(argv) do
-    {parsed, _, _} = OptionParser.parse(argv, switches: @switches, aliases: @aliases)
+    {parsed, _, _} =
+      OptionParser.parse(argv, switches: @switches, aliases: @aliases)
 
     appliers = ~w{ToolsInstaller Configurations}
 
@@ -22,6 +23,6 @@ defmodule Mix.Tasks.Adify do
 
     appliers = Keyword.put(parsed, :appliers, appliers)
 
-    adify(parsed)
+    adify parsed
   end
 end
