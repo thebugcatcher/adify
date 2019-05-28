@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
 #############
+### ABOUT ###
+#############
+# TODO: Better Description
+
+#############
 ### USAGE ###
 #############
 # From the terminal:
@@ -215,9 +220,9 @@ install_mac_tools() {
   else
     _announce_error "Failed!"
   fi
-
+	
   if [ $? -eq 0 ]; then
-    _announce_info "Installing autoconf"
+    _announce_info "Installing autoconf"	
     brew install autoconf
   else
     _announce_error "Failed!"
@@ -230,7 +235,7 @@ install_mac_tools() {
     _announce_error "Failed!"
   fi
 
-
+  
   if [ $? -eq 0 ]; then
     _announce_info "Installing wxwidgets, ODBC, gnupg and gnuppg2"
     brew install wxwidgets
