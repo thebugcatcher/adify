@@ -1,0 +1,43 @@
+version: 2
+jobs:
+  build:
+    parallelism: 4
+    docker:
+      - image: circleci/elixir:1.8.1
+
+    working_directory: ~/app/adifier
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - adify-dependency-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - adify-dependency-cache-{{ .Branch }}
+            - adify-dependency-cache
+      - restore_cache:
+          keys:
+            - adify-build-cache-{{ .Branch }}
+            - adify-build-cache
+
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: mix do deps.get, compile
+
+      - save_cache:
+          key: adify-dependency-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          paths: "deps"
+      - save_cache:
+          key: adify-dependency-cache-{{ .Branch }}
+          paths: "deps"
+      - save_cache:
+          key: adify-dependency-cache
+          paths: "deps"
+      - save_cache:
+          key: adify-build-cache-{{ .Branch }}
+          paths: "_build"
+      - save_cache:
+          key: adify-build-cache
+          paths: "_build"
+
+      - run: ../adify.sh

@@ -8,9 +8,11 @@ defmodule Adifier.PackageManager do
   def install_cmd(:arch_linux, pkg), do: "sudo pacman -S #{pkg} --noconfirm"
   def install_cmd(:mac, pkg), do: "brew install #{pkg}"
   def install_cmd(:debian, pkg), do: "sudo apt -y install #{pkg}"
+
   def install_cmd(os, pkg) when os in [:ubuntu, :pop_os] do
     "sudo apt-get -y install #{pkg}"
   end
+
   def install_cmd(os, pkg) when os in [:centos, :fedora] do
     "sudo yum -y install #{pkg}"
   end

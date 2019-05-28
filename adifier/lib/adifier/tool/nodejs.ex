@@ -12,18 +12,18 @@ defmodule Adifier.Tool.Nodejs do
   @impl true
   def install_cmd(:ubuntu) do
     """
-		asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-		bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-		asdf install nodejs 9.0.0
+    asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+    bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+    asdf install nodejs 9.0.0
     """
   end
 
   @impl true
   def install_cmd(_os) do
     """
-		asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-		bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-		asdf install nodejs 9.0.0
+    asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+    bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+    asdf install nodejs 9.0.0
     """
   end
 

@@ -1,6 +1,6 @@
 defmodule Adifier.Tool.Neovim do
   @moduledoc """
-	Neovim is a refactor, and sometimes redactor, in the tradition of Vim
+  Neovim is a refactor, and sometimes redactor, in the tradition of Vim
   """
 
   use Adifier.Tool, name: "neovim"
