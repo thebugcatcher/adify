@@ -1,0 +1,80 @@
+defmodule Adify.SystemInfo do
+  @moduledoc """
+  This module is used to get system's information. Information like
+  OS type, Distribution, Kernel, Package Managers etc
+  """
+
+  @doc """
+  Returns the current os
+
+  ## Examples
+      # If uname returns Darwin, it's osx
+      iex> {:ok, output} = Adify.SystemInfo.cmd("uname", [], ".")
+      iex> (output =~ "Darwin") ==
+      ...>   (Adify.SystemInfo.current_os == {:ok, "osx"})
+      true
+
+      # If uname returns Linux, it's not osx
+      iex> {:ok, output} = Adify.SystemInfo.cmd("uname", [], ".")
+      iex> (output =~ "Linux") ==
+      ...>   (Adify.SystemInfo.current_os != {:ok, "osx"})
+      true
+  """
+  @spec current_os :: {:ok, String.t()} | {:error, term}
+  def current_os do
+    case current_kernel() do
+      {:ok, "Linux"} -> current_linux_distro()
+      {:ok, "Darwin"} -> {:ok, "osx"}
+      other -> other
+    end
+  end
+
+  defp current_linux_distro do
+    {:ok, output} = cmd("cat /etc/os-release | grep ^NAME")
+    cond do
+      output =~ "Arch" -> {:ok, "arch_linux"}
+      output =~ "Antergos" -> {:ok, "arch_linux"}
+      output =~ "Manjaro" -> {:ok, "arch_linux"}
+      output =~ "Ubuntu" -> {:ok, "ubuntu"}
+      output =~ "Debian" -> {:ok, "debian"}
+      output =~ "Pop!_OS" -> {:ok, "pop_os"}
+      true -> {:error, "Unknown Linux Distro"}
+    end
+  end
+
+  defp current_kernel do
+    {:ok, output} = cmd("uname")
+    cond do
+      output =~ "Linux" -> {:ok, "Linux"}
+      output =~ "Darwin" -> {:ok, "Darwin"}
+      true -> {:error, "Unknown Terminal"}
+    end
+  end
+
+  @doc """
+  Wrapper around Elixir's System command.
+  Runs a command on the CLI.
+
+  ## Examples:
+
+      # When the command is valid
+      iex> cmd = "echo hi"
+      iex> {:ok, output} = Adify.SystemInfo.cmd(cmd)
+      iex> output =~ "hi"
+      true
+
+      # When the command is invalid
+      iex> cmd = "bad_command"
+      iex> {:error, output}  = Adify.SystemInfo.cmd(cmd, [], ".")
+      iex> output =~ "bad_command: command not found"
+      true
+  """
+  @spec cmd(String.t(), [{String.t(), String.t()}], Path.t()) ::
+    {:ok, String.t()} | {:error, String.t()}
+  def cmd(cmd, env \\ [], cd \\ ".") do
+    case System.cmd("sh", ["-c", cmd], env: env, cd: cd, stderr_to_stdout: true) do
+      {output, 0} -> {:ok, output}
+      {output, _} -> {:error, output}
+    end
+  end
+end
