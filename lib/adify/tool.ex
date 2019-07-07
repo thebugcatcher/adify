@@ -5,6 +5,7 @@ defmodule Adify.Tool do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias Adify.Tool.InstallationStrategy.Workflow
 
   @type t :: %__MODULE__{}
 
@@ -53,7 +54,7 @@ defmodule Adify.Tool do
          os_command when not is_nil(os_command) <- os_command(tool, for: os),
          inst when not is_nil(inst) <- strategy(os_command, strategy),
          up when not is_nil(up) <- workflow(inst, :up) do
-      Adify.Tool.InstallationStrategy.Workflow.run(up)
+      Workflow.run(up)
     else
       false -> {:error, "Invalid OS"}
       nil -> {:error, "Something went wrong"}
@@ -102,7 +103,7 @@ defmodule Adify.Tool do
          os_command when not is_nil(os_command) <- os_command(tool, for: os),
          inst when not is_nil(inst) <- strategy(os_command, strategy),
          down when not is_nil(down) <- workflow(inst, :down) do
-      Adify.Tool.InstallationStrategy.Workflow.run(down)
+      Workflow.run(down)
     else
       false -> {:error, "Invalid OS"}
       nil -> {:error, "Something went wrong"}

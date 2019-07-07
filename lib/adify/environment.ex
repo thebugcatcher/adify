@@ -7,6 +7,7 @@ defmodule Adify.Environment do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias Adify.Environment.Operation
 
   @type t :: %__MODULE__{}
 
@@ -153,13 +154,13 @@ defmodule Adify.Environment do
   @spec install_tool(__MODULE__.t(), Adify.Tool.t()) ::
           {:ok, term()} | {:error, term()}
   def install_tool(%__MODULE__{} = environment, %Adify.Tool{} = tool) do
-    operation = %Adify.Environment.Operation{
+    operation = %Operation{
       state: "new",
       os: environment.os,
       tool: tool
     }
 
-    case Adify.Environment.Operation.run(operation, environment.confirm) do
+    case Operation.run(operation, environment.confirm) do
       {:ok, operation} ->
         {:ok,
          %__MODULE__{

@@ -66,30 +66,34 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
              """}
 
           {:ok, main_output} ->
-            case __MODULE__.Op.run(workflow.post) do
-              {:error, post_output} ->
-                {:error,
-                 """
-                 Running Pre:
-                 #{pre_output}
-                 Running Main:
-                 #{main_output}
-                 Running Post:
-                 #{post_output}
-                 """}
-
-              {:ok, post_output} ->
-                {:ok,
-                 """
-                 Running Pre:
-                 #{pre_output}
-                 Running Main:
-                 #{main_output}
-                 Running Post:
-                 #{post_output}
-                 """}
-            end
+            run_post(workflow, pre_output, main_output)
         end
+    end
+  end
+
+  defp run_post(workflow, pre_output, main_output) do
+    case __MODULE__.Op.run(workflow.post) do
+      {:error, post_output} ->
+        {:error,
+         """
+         Running Pre:
+         #{pre_output}
+         Running Main:
+         #{main_output}
+         Running Post:
+         #{post_output}
+         """}
+
+      {:ok, post_output} ->
+        {:ok,
+         """
+         Running Pre:
+         #{pre_output}
+         Running Main:
+         #{main_output}
+         Running Post:
+         #{post_output}
+         """}
     end
   end
 
@@ -160,27 +164,30 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
     """
     @spec run(__MODULE__.t()) :: {:ok, term()} | {:error, term()}
     def run(operation) do
-      IO.puts """
+      IO.puts("""
       Running Op: #{operation.command}
       Expecting, success: #{operation.success}
       Expected output: #{operation.expected}
-      """
+      """)
+
       case Adify.SystemInfo.cmd(operation.command) do
         {:error, output} ->
-          IO.puts """
+          IO.puts("""
           Ran op: #{operation.command}
           Output: #{output}
-          """
+          """)
+
           case operation.success do
             false -> {:ok, output}
             true -> {:error, output}
           end
 
         {:ok, output} ->
-          IO.puts """
+          IO.puts("""
           Ran op: #{operation.command}
           Output: #{output}
-          """
+          """)
+
           case operation.success do
             true -> check_regex(operation, output)
             false -> {:error, output}

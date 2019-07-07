@@ -61,7 +61,9 @@ defmodule Mix.Tasks.Adify do
     {parsed, _args, _} = OptionParser.parse(args, switches: @switches, aliases: @aliases)
 
     case parsed[:help] do
-      true -> print_help()
+      true ->
+        print_help()
+
       _ ->
         parsed
         |> prep_opts()
@@ -70,11 +72,11 @@ defmodule Mix.Tasks.Adify do
   end
 
   defp print_help do
-    Mix.Shell.IO.info """
+    Mix.Shell.IO.info("""
     #{@shortdoc}
 
     #{@info}
-    """
+    """)
   end
 
   defp prep_opts(adify_opts) do
