@@ -3,14 +3,6 @@ env:
 
 jobs:
   include:
-    - stage: prelude_test_osx
-      os: osx
-      osx_image: xcode10.2
-      script: ./prelude.sh
-    - stage: prelude_test_ubuntu
-      os: linux
-      dist: xenial
-      script: ./prelude.sh
     - stage: test
       elixir: 1.9.0
       otp_release: 22.0
@@ -21,3 +13,11 @@ jobs:
         - mix credo --strict
         - mix deps.get --only docs
         - MIX_ENV=docs mix inch.report
+    - stage: prelude_test_osx
+      os: osx
+      osx_image: xcode10.2
+      script: ./prelude.sh
+    - stage: prelude_test_ubuntu
+      os: linux
+      dist: xenial
+      script: ./prelude.sh
