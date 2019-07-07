@@ -500,15 +500,20 @@ main () {
     install_asdf $shell
   fi
 
-  $"install_${OS}_tools"
-  install_erlang
-  set_global_erlang
-  install_elixir
-  set_global_elixir
+  if $TEST; then
+    $"install_${OS}_tools"
+    _announce_success "Mocking Erlang, Elixir and other deps"
+  else
+    $"install_${OS}_tools"
+    install_erlang
+    set_global_erlang
+    install_elixir
+    set_global_elixir
 
-  install_adify
+    install_adify
 
-  run_adify $OS
+    run_adify $OS
+  fi
 }
 
 main
