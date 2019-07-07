@@ -95,7 +95,7 @@ defmodule Adify.Environment do
 
       # When tool is valid
       iex> options = [
-      ...>   confirm: true,
+      ...>   confirm: false,
       ...>   digest_file: ".temp.dump",
       ...>   tools_dir: "./test/support/tools/",
       ...>   os: "arch_linux"
@@ -104,13 +104,45 @@ defmodule Adify.Environment do
       ...>   Adify.YAML.parse_and_cast("./test/support/tools/valid/201907051629/tool.yaml")
       iex> tools = [tool]
       iex> {:ok, env} = Adify.Environment.init(options)
-      iex> Adify.Environment.install_tool(env, tool)
-      {:ok, %Adify.Environment{}}
+      iex> true = env.state == "new" && Enum.empty?(env.operations)
+      iex> {:ok, env} = Adify.Environment.install_tool(env, tool)
+      iex> env.state == "processing" && !Enum.empty?(env.operations)
+      true
   """
   @spec install_tool(__MODULE__.t(), Adify.Tool.t()) ::
           {:ok, term()} | {:error, term()}
   def install_tool(%__MODULE__{} = environment, %Adify.Tool{} = tool) do
-    {:ok, nil}
+    operation = %Adify.Environment.Operation{
+      state: "new",
+      os: environment.os,
+      tool: tool
+    }
+
+    case Adify.Environment.Operation.run(operation, environment.confirm) do
+      {:ok, operation} ->
+        {:ok, %__MODULE__{
+          confirm: environment.confirm,
+          digest_file: environment.digest_file,
+          tools_dir: environment.tools_dir,
+          os: environment.os,
+          state: "processing",
+          started_at: environment.started_at,
+          tools: environment.tools,
+          operations: (environment.operations || []) ++ [operation]
+        }}
+      {:error, operation} ->
+        {:error, %__MODULE__{
+          confirm: environment.confirm,
+          digest_file: environment.digest_file,
+          tools_dir: environment.tools_dir,
+          os: environment.os,
+          state: "failed",
+          started_at: environment.started_at,
+          ended_at: DateTime.utc_now(),
+          tools: environment.tools,
+          operations: (environment.operations || []) ++ [operation]
+        }}
+    end
   end
 
   defp init_with_tools(opts, tools) do
