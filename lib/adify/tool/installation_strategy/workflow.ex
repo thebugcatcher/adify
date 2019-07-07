@@ -163,16 +163,24 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
       IO.puts """
       Running Op: #{operation.command}
       Expecting, success: #{operation.success}
-      output: #{operation.expected}
+      Expected output: #{operation.expected}
       """
       case Adify.SystemInfo.cmd(operation.command) do
         {:error, output} ->
+          IO.puts """
+          Ran op: #{operation.command}
+          Output: #{output}
+          """
           case operation.success do
             false -> {:ok, output}
             true -> {:error, output}
           end
 
         {:ok, output} ->
+          IO.puts """
+          Ran op: #{operation.command}
+          Output: #{output}
+          """
           case operation.success do
             true -> check_regex(operation, output)
             false -> {:error, output}
