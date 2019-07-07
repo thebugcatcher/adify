@@ -16,7 +16,8 @@ defmodule Adify.MixProject do
       deps: deps(),
       description: @description,
       dialyzer: [
-        ignore_warnings: ".dialyzer_ignore.exs"
+        ignore_warnings: ".dialyzer_ignore.exs",
+        plt_add_apps: [:mix]
       ],
       docs: [
         main: "getstarted",

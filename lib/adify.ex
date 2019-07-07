@@ -6,6 +6,8 @@ defmodule Adify do
   based on the given operating systems.
   """
 
+  alias Adify.Environment
+
   @doc """
   Runs an adifying process
 
@@ -23,9 +25,9 @@ defmodule Adify do
   def run(opts \\ []) do
     options = transpose_defaults(opts)
 
-    with {:ok, tools} <- init_tools(options),
-         {:ok, digest} <- install(tools, options),
-         {:ok, digest} <- print_digest_file(digest, options) do
+    with {:ok, environment} <- Environment.init(options),
+         {:ok, environment} <- Environment.install_tools(environment),
+         {:ok, digest} <- print_digest_file(environment) do
       {:ok, digest}
     else
       {:error, reason} -> {:error, reason}
@@ -35,13 +37,15 @@ defmodule Adify do
   defp transpose_defaults(opts) do
     confirm = Keyword.get(opts, :confirm, default(:confirm))
     digest_file = Keyword.get(opts, :digest_file, default(:digest_file))
+    os = Keyword.get(opts, :os, default(:os))
     tools_dir = Keyword.get(opts, :tools_dir, default(:tools_dir))
 
-    [confirm: confirm, digest_file: digest_file, tools_dir: tools_dir]
-  end
-
-  defp init_tools(options \\ []) do
-    {:ok, nil}
+    [
+      confirm: confirm,
+      digest_file: digest_file,
+      os: os,
+      tools_dir: tools_dir
+    ]
   end
 
   defp install(tools, options \\ []) do
@@ -71,6 +75,11 @@ defmodule Adify do
       iex> path == Path.join(:code.priv_dir(:adify), "tools")
       true
 
+      # When the key is `:os`
+      iex> path = Adify.default(:os)
+      iex> path == Adify.SystemInfo.current_os()
+      true
+
       # When there's some other key
       iex> Adify.default(:other_key)
       nil
@@ -83,5 +92,8 @@ defmodule Adify do
   end
 
   def default(:tools_dir), do: Path.join(:code.priv_dir(:adify), "tools")
+
+  def default(:os), do: Adify.SystemInfo.current_os()
+
   def default(_), do: nil
 end

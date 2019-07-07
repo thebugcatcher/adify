@@ -48,30 +48,30 @@ defmodule Adify.Environment do
   @doc """
   Initializes an Environment struct
 
-  ## Examples
-  # When invalid options are given
-  iex> options = [
-  ...>   confirm: true,
-  ...>   digest_file: ".temp.dump",
-  ...>   tools_dir: "./test/support/tools/",
-  ...>   os: "arch_linux"
-  ...> ]
-  iex> {:ok, tool} =
-  ...>   Adify.YAML.parse_and_cast("./test/support/tools/valid/201907051629/tool.yaml")
-  iex> tools = [tool]
-  iex> {:ok, env} = Adify.Environment.init(options)
-  iex> env.confirm == true && env.ended_at == nil && env.state == "new" &&
-  ...>  env.meta == %{} && env.tools == tools
-  true
+      ## Examples
+      # When invalid options are given
+      iex> options = [
+      ...>   confirm: true,
+      ...>   digest_file: ".temp.dump",
+      ...>   tools_dir: "./test/support/tools/",
+      ...>   os: "arch_linux"
+      ...> ]
+      iex> {:ok, tool} =
+      ...>   Adify.YAML.parse_and_cast("./test/support/tools/valid/201907051629/tool.yaml")
+      iex> tools = [tool]
+      iex> {:ok, env} = Adify.Environment.init(options)
+      iex> env.confirm == true && env.ended_at == nil && env.state == "new" &&
+      ...>  env.meta == %{} && env.tools == tools
+      true
 
-  # When valid options are given
-  iex> options = [
-  ...>   confirm: true,
-  ...>   digest_file: ".temp.dump",
-  ...>   tools_dir: "./test/support/tools/"
-  ...> ]
-  iex> Adify.Environment.init(options)
-  {:error, [os: {"can't be blank", [validation: :required]}]}
+      # When invalid options are given
+      iex> options = [
+      ...>   confirm: true,
+      ...>   digest_file: ".temp.dump",
+      ...>   tools_dir: "./test/support/tools/"
+      ...> ]
+      iex> Adify.Environment.init(options)
+      {:error, [os: {"can't be blank", [validation: :required]}]}
   """
   @spec init(Keyword.t()) :: {:ok, __MODULE__.t()} | {:error, term()}
   def init(opts \\ []) do
@@ -81,6 +81,35 @@ defmodule Adify.Environment do
     else
       {:error, reason} -> {:error, reason}
     end
+  end
+
+  @spec install_tools(__MODULE__.t()) :: {:ok, term()} | {:error, term()}
+  def install_tools(%__MODULE__{} = environment) do
+  end
+
+  @doc """
+  Installs a tool and returns the updated environment
+
+  ## Examples:
+
+      # When tool is valid
+      iex> options = [
+      ...>   confirm: true,
+      ...>   digest_file: ".temp.dump",
+      ...>   tools_dir: "./test/support/tools/",
+      ...>   os: "arch_linux"
+      ...> ]
+      iex> {:ok, tool} =
+      ...>   Adify.YAML.parse_and_cast("./test/support/tools/valid/201907051629/tool.yaml")
+      iex> tools = [tool]
+      iex> {:ok, env} = Adify.Environment.init(options)
+      iex> Adify.Environment.install_tool(env, tool)
+      {:ok, %Adify.Environment{}}
+  """
+  @spec install_tool(__MODULE__.t(), Adify.Tool.t()) ::
+          {:ok, term()} | {:error, term()}
+  def install_tool(%__MODULE__{} = environment, %Adify.Tool{} = tool) do
+
   end
 
   defp init_with_tools(opts, tools) do
