@@ -9,6 +9,8 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
 
   @primary_key false
 
+  @type t :: %__MODULE__{}
+
   embedded_schema do
     embeds_one(:pre, __MODULE__.Op)
     embeds_one(:main, __MODULE__.Op)
@@ -93,6 +95,8 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
     import Ecto.Changeset
 
     @primary_key false
+
+    @type t :: %__MODULE__{}
 
     embedded_schema do
       field(:command, :string)

@@ -9,11 +9,15 @@ jobs:
       otp_release: 21.0
       before_script:
         - mix deps.get
-      script: mix test
-      after_script:
+      script:
+        - mix test
         - mix hex.audit
-        - MIX_ENV=test mix coveralls.travis
+        - mix dialyzer --plt
+        - mix dialyzer --halt-exit-status
         - mix credo --strict
+        - mix coveralls
+      after_script:
+        - MIX_ENV=test mix coveralls.travis
         - mix deps.get --only docs
         - MIX_ENV=docs mix inch.report
     - stage: prelude_test_osx
