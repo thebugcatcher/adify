@@ -60,9 +60,9 @@ defmodule Adify.MixProject do
       # Generate & Publish docs
       {:ex_doc, "~> 0.19.3", only: :dev, runtime: false},
       # Test coverage cop
-      {:excoveralls, "~> 0.10.5", only: :test, runtime: false},
+      {:excoveralls, "~> 0.10.5", only: ~w(dev test)a, runtime: false},
       # Static documentation analyzer
-      {:inch_ex, "~> 2.0.0", only: [:dev, :test, :docs], runtime: false},
+      {:inch_ex, "~> 2.0.0", only: ~w(dev test docs)a, runtime: false},
       # Parse and Interpret Yaml using Elixir
       {:yaml_elixir, "~> 2.4.0"}
     ]
