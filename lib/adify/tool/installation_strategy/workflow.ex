@@ -23,8 +23,65 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
     |> cast_embed(:post)
   end
 
+  @doc """
+  Runs the workflow starting at `pre`, `main` and lastly `post`
+
+  ## Examples
+
+      # When pre, main and post are all success
+      iex> pre = %Adify.Tool.InstallationStrategy.Workflow.Op{
+      ...>   command: "echo hi",
+      ...>   success: true,
+      ...>   expected: ".*"
+      ...> }
+      iex> workflow = %Adify.Tool.InstallationStrategy.Workflow{
+      ...>   pre: pre,
+      ...>   main: pre,
+      ...>   post: pre
+      ...> }
+      iex> Adify.Tool.InstallationStrategy.Workflow.run(workflow)
+      {:ok, "Running Pre:\\nhi\\n\\nRunning Main:\\nhi\\n\\nRunning Post:\\nhi\\n\\n"}
+  """
   @spec run(__MODULE__.t()) :: {:ok, term()} | {:error, term()}
   def run(workflow) do
+    case __MODULE__.Op.run(workflow.pre) do
+      {:error, pre_output} ->
+        {:error, """
+          Running Pre:
+          #{pre_output}
+          """}
+      {:ok, pre_output} ->
+        case __MODULE__.Op.run(workflow.main) do
+          {:error, main_output} ->
+            {:error, """
+              Running Pre:
+              #{pre_output}
+              Running Main:
+              #{main_output}
+              """}
+          {:ok, main_output} ->
+            case __MODULE__.Op.run(workflow.post) do
+              {:error, post_output} ->
+                {:error, """
+                  Running Pre:
+                  #{pre_output}
+                  Running Main:
+                  #{main_output}
+                  Running Post:
+                  #{post_output}
+                  """}
+              {:ok, post_output} ->
+                {:ok, """
+                  Running Pre:
+                  #{pre_output}
+                  Running Main:
+                  #{main_output}
+                  Running Post:
+                  #{post_output}
+                  """}
+            end
+        end
+    end
   end
 
   defmodule Op do
