@@ -160,6 +160,11 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
     """
     @spec run(__MODULE__.t()) :: {:ok, term()} | {:error, term()}
     def run(operation) do
+      IO.puts """
+      Running Op: #{operation.command}
+      Expecting, success: #{operation.success}
+      output: #{operation.expected}
+      """
       case Adify.SystemInfo.cmd(operation.command) do
         {:error, output} ->
           case operation.success do
