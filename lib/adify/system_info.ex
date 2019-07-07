@@ -105,7 +105,7 @@ defmodule Adify.SystemInfo do
       # When the command is invalid
       iex> cmd = "bad_command"
       iex> {:error, output}  = Adify.SystemInfo.cmd(cmd, [], ".")
-      iex> output =~ "bad_command: command not found"
+      iex> output =~ "bad_command"
       true
   """
   @spec cmd(String.t(), [{String.t(), String.t()}], Path.t()) ::
