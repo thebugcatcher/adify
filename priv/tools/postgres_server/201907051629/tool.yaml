@@ -1,0 +1,77 @@
+name: Postgres Server
+version: 201907051629
+description: Postgres server binaries, Relational Database engine
+os_commands:
+  - os: osx
+    installation_strategies:
+      - &docker
+          name: docker
+          number: 1
+          description: Install Postgres server using Docker
+          default: true
+          up:
+            pre:
+              command: docker version
+              success: true
+            main:
+              command: |
+                echo -e '\n
+                alias postgresup="docker run -d --name postgres --restart unless-stopped -p 127.0.0.1:5432:5432 -v /postgres-data:/var/lib/postgresql/data -e POSTGRES_PASSWORD= postgres"
+              success: true
+            post:
+              command: |
+                source ~/.zshrc && postgresup
+              success: true
+          down:
+            pre:
+              command: docker rm -f postgres
+              success: true
+            main:
+              command: |
+                echo 'Please remove the alias postgresup from your ~/.zshrc'
+              success: true
+      - &osx_package_manager
+          name: package_manager
+          number: 2
+          description: Install Postgres server using Homebrew
+          up:
+            pre:
+              command: brew help
+              success: true
+            main:
+              command: |
+                brew doctor
+                brew update
+                brew install postgresql
+                ln -sfv /usr/local/opt/postgresql/"*".plist ~/Library/LaunchAgents
+                echo -e '\n
+                alias pg_start="launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"\n
+                alias pg_stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"' >> ~/.zshrc
+              success: true
+            post:
+              command: |
+                source ~/.zshrc && pg_start
+              success: true
+          down:
+            pre:
+              command: brew help
+              success: true
+            main:
+              command: |
+                pg_stop
+                brew remove postgresql
+                brew cleanup
+                echo 'Please remove pg_start and pg_stop aliases from ~/.zshrc'
+              success: true
+            post:
+              command: brew services start mysql
+              success: false
+  - os: arch_linux
+    installation_strategies:
+      - *docker
+  - os: ubuntu
+    installation_strategies:
+      - *docker
+  - os: pop_os
+    installation_strategies:
+      - *docker

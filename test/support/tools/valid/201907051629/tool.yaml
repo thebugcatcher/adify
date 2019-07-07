@@ -1,0 +1,106 @@
+name: Valid Tool
+version: 201907051629
+description: Some Valid Tool
+os_commands:
+  - os: osx
+    installation_strategies:
+      - &main
+          name: main
+          number: 1
+          description: Some Valid Tool installation
+          default: true
+          up:
+            pre:
+              command: |
+                echo -e '\n
+                hello pre'
+              success: true
+              expected: ".*"
+            main:
+              command: |
+                echo -e '\n
+                hello main'
+              success: true
+              expected: ".*"
+            post:
+              command: |
+                echo -e '\n
+                hello post'
+              success: true
+              expected: ".*"
+          down:
+            pre:
+              command: |
+                echo -e '\n
+                bye pre'
+              success: true
+              expected: ".*"
+            main:
+              command: |
+                echo -e '\n
+                bye main'
+              success: true
+              expected: ".*"
+            post:
+              command: |
+                echo -e '\n
+                bye post'
+              success: true
+              expected: ".*"
+      -
+          name: bad_method
+          number: 2
+          description: Bad method
+          up:
+            pre:
+              command: |
+                echo -e '\n
+                bad_method
+                hello pre'
+              success: true
+              expected: ".*"
+            main:
+              command: |
+                echo -e '\n
+                bad_method
+                hello main'
+              success: true
+              expected: ".*"
+            post:
+              command: |
+                echo -e '\n
+                bad_method
+                hello post'
+              success: true
+              expected: ".*"
+          down:
+            pre:
+              command: |
+                echo -e '\n
+                bad_method
+                bye pre'
+              success: true
+              expected: ".*"
+            main:
+              command: |
+                echo -e '\n
+                bad_method
+                bye main'
+              success: true
+              expected: ".*"
+            post:
+              command: |
+                echo -e '\n
+                bad_method
+                bye post'
+              success: true
+              expected: ".*"
+  - os: arch_linux
+    installation_strategies:
+      - *main
+  - os: ubuntu
+    installation_strategies:
+      - *main
+  - os: pop_os
+    installation_strategies:
+      - *main

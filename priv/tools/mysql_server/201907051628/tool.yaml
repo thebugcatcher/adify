@@ -1,0 +1,77 @@
+name: MySQL Server
+version: 201907051628
+description: MySQL server binaries, Relational Database engine
+os_commands:
+  - os: osx
+    installation_strategies:
+      - &docker
+          name: docker
+          number: 1
+          description: Install MySQL server using Docker
+          default: true
+          up:
+            pre:
+              command: docker version
+              success: true
+            main:
+              command: |
+                echo -e '\n
+                  alias mysqlup='docker run -d --name mysql --restart unless-stopped -p 127.0.0.1:3306:3306 -v /mysql-data:/var/lib/mysql -v /mysql-conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=password mysql:5.7 --datadir=/var/lib/mysql \
+                  --user=mysql \
+                  --server-id=1 \
+                  --log-bin=/var/lib/mysql/mysql-bin.log \
+                  --binlog_do_db=test' >> ~/.zshrc
+              success: true
+            post:
+              command: |
+                source ~/.zshrc && mysqlup
+              success: true
+          down:
+            pre:
+              command: docker rm -f mysql
+              success: true
+            main:
+              command: |
+                echo 'Please remove the alias mysqlup from your ~/.zshrc'
+              success: true
+      - &osx_package_manager
+          name: package_manager
+          number: 2
+          description: Install MySQL server using Homebrew
+          up:
+            pre:
+              command: brew help
+              success: true
+            main:
+              command: |
+                brew doctor
+                brew update
+                brew install mysql
+                brew tap homebrew/services
+              success: true
+            post:
+              command: brew services start mysql
+              success: true
+          down:
+            pre:
+              command: brew help
+              success: true
+            main:
+              command: |
+                brew remove mysql
+                brew cleanup
+                launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+                sudo rm ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+              success: true
+            post:
+              command: brew services start mysql
+              success: false
+  - os: arch_linux
+    installation_strategies:
+      - *docker
+  - os: ubuntu
+    installation_strategies:
+      - *docker
+  - os: pop_os
+    installation_strategies:
+      - *docker
