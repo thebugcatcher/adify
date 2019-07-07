@@ -28,5 +28,5 @@ jobs:
     - stage: prelude_test_ubuntu
       install: true
       os: linux
-      dist: xenial
+      dist: trusty
       script: TEST=true ./prelude.sh
