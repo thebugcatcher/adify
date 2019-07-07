@@ -108,24 +108,24 @@ defmodule Adify.Environment do
   def install_tools(%__MODULE__{} = environment) do
     case Enum.reduce(environment.tools, {:ok, environment}, fn
            tool, {:ok, new_environment} -> install_tool(new_environment, tool)
-           tool, {:error, new_environment} -> {:error, new_environment}
+           _tool, {:error, new_environment} -> {:error, new_environment}
          end) do
       {:ok, new_environment} ->
         {:ok,
          %__MODULE__{
-           confirm: environment.confirm,
-           digest_file: environment.digest_file,
-           tools_dir: environment.tools_dir,
-           os: environment.os,
+           confirm: new_environment.confirm,
+           digest_file: new_environment.digest_file,
+           tools_dir: new_environment.tools_dir,
+           os: new_environment.os,
            state: "completed",
-           started_at: environment.started_at,
+           started_at: new_environment.started_at,
            ended_at: DateTime.utc_now(),
-           tools: environment.tools,
-           operations: environment.operations
+           tools: new_environment.tools,
+           operations: new_environment.operations
          }}
 
-      {:error, environment} ->
-        {:error, environment}
+      {:error, new_environment} ->
+        {:error, new_environment}
     end
   end
 

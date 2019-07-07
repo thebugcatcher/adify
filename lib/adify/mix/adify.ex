@@ -58,7 +58,7 @@ defmodule Mix.Tasks.Adify do
 
   @impl true
   def run(args) do
-    {parsed, args, _} = OptionParser.parse(args, switches: @switches, aliases: @aliases)
+    {parsed, _args, _} = OptionParser.parse(args, switches: @switches, aliases: @aliases)
 
     case parsed[:help] do
       true -> print_help()
