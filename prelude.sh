@@ -39,10 +39,10 @@
 ################
 ### VERSIONS ###
 ################
-ADIFY_VERSION="0.2.0"
-ELIXIR_VERSION="1.8.1"
-ERLANG_VERSION="22.0"
-ASDF_VERSION="0.7.1"
+ADIFY_VERSION="0.1.0"
+ELIXIR_VERSION="1.8.2"
+ERLANG_VERSION="21.2.3"
+ASDF_VERSION="0.7.2"
 
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
@@ -92,16 +92,6 @@ $BOLD $1? (y/N)
     fi
   else
     _announce_info "[NO_CONFIRM mode is on]"
-  fi
-}
-
-check_adify() {
-  _announce_step "Checking if already Adified"
-
-  if [ ! -d "$HOME/.adify" ]; then
-    _announce_success "No adification detected; Adifying for the first time.. Let's begin!"
-  else
-    _announce_error "Already Adified. Can't overwrite it!"
   fi
 }
 
@@ -164,11 +154,12 @@ check_shell() {
   case $SHELL in
     *zsh)
       shell="zsh"
+      zsh=true
       _announce_success "Detected shell: '$shell' is supported by Adify! "
     ;;
     *bash)
       shell="bash"
-      _announce_info "Shell: '$shell' isn't supported by Adify"
+      _announce_info "Detected Shell: '$shell' isn't supported, but can be changed"
     ;;
   *)
       _announce_error "Shell: '$SHELL' not supported"
@@ -212,6 +203,16 @@ install_mac_tools() {
 
   _announce_info "Installing brew cask"
   brew install caskroom/cask/brew-cask
+
+  if $zsh; then
+    _announce_success "System already uses zsh"
+  else
+    _announce_info "Installing Zsh Shell"
+    brew install zsh
+
+    _announce_info "Making Zsh default Shell"
+    sudo -s 'echo /usr/local/bin/zsh >> /etc/shells' && chsh -s /usr/local/bin/zsh
+  fi
 
   _announce_info "Installing Zenity"
   brew install zenity
@@ -434,33 +435,33 @@ install_elixir() {
   fi
 }
 
-fetch_adify() {
-  _announce_step "Checking if the system is Adifyable"
+install_adify() {
+  _announce_step "Installing Adify ${ADIFY_VERSION}"
+  mix archive.install adify ${ADIFY_VERSION}
 
-  if [ -d "$HOME/.adify" ]; then
-    _announce_error "${HOME}/.adify found. The system is already adified :("
+  _announce_step "Checking Adify installation"
+  mix adify --help
+  if [ $? -eq 0 ]; then
+    _announce_success "Adify ${ADIFY_VERSION} successfully installed"
   else
-    _announce_info "Fetching Adify code to ${HOME}/.adify"
-    git clone https://github.com/aditya7iyengar/adify $HOME/.adify
-    cd $HOME/.adify
-    git checkout tags/v${ADIFY_VERSION}
+    _announce_error "Failed!"
   fi
 }
 
-mix_adify(){
-  _announce_step "Calling adifier app with: '$ mix adify'"
-  cd ./adifier
-  mix local.hex --force
-  mix local.rebar --force
-  mix deps.get
-  mix compile
-  mix adify -o $1
+run_adify(){
+  _announce_step "Running adify"
+
+  if $NO_CONFIRM; then
+    mix adify.install --os $1 --noconfirm
+  else
+    mix adify.install --os $1
+  fi
 }
 
 main () {
-  check_adify
   check_os
   check_shell
+
   check_asdf
 
   if $asdf; then
@@ -475,9 +476,9 @@ main () {
   install_elixir
   set_global_elixir
 
-  fetch_adify
+  install_adify
 
-  mix_adify $OS
+  run_adify $OS
 }
 
 main
