@@ -46,19 +46,20 @@ defmodule Mix.Tasks.Adify do
     digest_file: :string,
     noconfirm: :boolean,
     os: :string,
-    tool_dir: :string
+    tools_dir: :string
   ]
 
   @aliases [
-    digest_file: :d,
-    tool_dir: :t
+    d: :digest_file,
+    t: :tools_dir
   ]
 
   @impl true
   def run(args) do
-    {adify_opts, _parsed, _} = OptionParser.parse(args, switches: @switches, aliases: @aliases)
+    {parsed, args, _} =
+      OptionParser.parse(args, switches: @switches, aliases: @aliases)
 
-    adify_opts
+    parsed
     |> prep_opts()
     |> Adify.run()
   end

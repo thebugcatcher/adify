@@ -183,6 +183,39 @@ defmodule Adify.Environment do
     end
   end
 
+  @doc """
+  Returns the digest file content when given an environment
+
+  ## Examples:
+
+      iex> options = [
+      ...>   confirm: false,
+      ...>   digest_file: ".temp.dump",
+      ...>   tools_dir: "./test/support/tools/",
+      ...>   os: "arch_linux"
+      ...> ]
+      iex> {:ok, tool} =
+      ...>   Adify.YAML.parse_and_cast("./test/support/tools/valid/201907051629/tool.yaml")
+      iex> tools = [tool]
+      iex> {:ok, env} = Adify.Environment.init(options)
+      iex> true = env.state == "new" && Enum.empty?(env.operations)
+      iex> {:ok, env} = Adify.Environment.install_tools(env)
+      iex> digest =Adify.Environment.digest_content(env)
+      iex> digest =~ "Started at" && digest =~ "State: completed"
+      true
+  """
+  @spec digest_content(__MODULE__.t()) :: String.t()
+  def digest_content(environment) do
+    """
+    Started at: #{environment.started_at}
+    State: #{environment.state}
+    Ended at: #{environment.ended_at}
+
+    Operations:
+    #{environment.operations |> Enum.map(& &1.output) |> Enum.join("\n")}
+    """
+  end
+
   defp init_with_tools(opts, tools) do
     params = %{
       confirm: Keyword.get(opts, :confirm),

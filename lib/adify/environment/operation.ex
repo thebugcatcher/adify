@@ -17,6 +17,8 @@ defmodule Adify.Environment.Operation do
     field(:output, :string)
     field(:os, :string)
     field(:state, :string, default: "new")
+    field(:started_at, :utc_datetime)
+    field(:ended_at, :utc_datetime)
 
     embeds_one(:selected_installation_strategy, Adify.Tool.InstallationStrategy)
     embeds_one(:tool, Adify.Tool)
@@ -24,7 +26,8 @@ defmodule Adify.Environment.Operation do
 
   def changeset(struct, params) do
     struct
-    |> cast(params, [:os, :output, :confirmation, :state])
+    |> cast(params, [:os, :output, :confirmation, :state, :started_at,
+      :ended_at])
     |> validate_inclusion(:state, @valid_states)
     |> cast_embed(:tool)
     |> cast_embed(:selected_installation_strategy)
@@ -135,8 +138,5 @@ defmodule Adify.Environment.Operation do
 
   defp strategy(os_command, :default) do
     Enum.find(os_command.installation_strategies, & &1.default == true)
-  end
-  defp strategy(os_command, number) do
-    Enum.find(os_command.installation_strategies, & &1.number == number)
   end
 end

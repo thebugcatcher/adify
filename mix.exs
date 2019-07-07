@@ -30,6 +30,7 @@ defmodule Adify.MixProject do
       ],
       elixir: @elixir,
       name: @name,
+      package: package(),
       preferred_cli_env: [
         "coveralls.detail": :test,
         "coveralls.html": :test,
@@ -66,6 +67,15 @@ defmodule Adify.MixProject do
       {:inch_ex, "~> 2.0.0", only: ~w(dev test docs)a, runtime: false},
       # Parse and Interpret Yaml using Elixir
       {:yaml_elixir, "~> 2.4.0"}
+    ]
+  end
+
+  defp package do
+    [
+      name: "adify",
+      files: ~w(lib priv LICENSE doc),
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/aditya7iyengar/adify"}
     ]
   end
 end

@@ -5,11 +5,11 @@ defmodule Adify.Mix.Tasks.AdifyTest do
 
   import MixTestHelper
 
-  @tools_dir Path.join([__DIR__, "..", "..", "..", "support", "tools"])
+  @tools_dir "./test/support/tools/"
 
   describe "run/1" do
     test "runs pre, main and post commands" do
-      mix("adify", ["--noconfirm", "-t #{@tools_dir}"])
+      mix("adify", ["--noconfirm", "-t", "#{@tools_dir}"])
     end
   end
 end

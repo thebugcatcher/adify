@@ -20,17 +20,44 @@ defmodule Adify do
   * `:tools_dir`: String, Path; Specifies the location of the directory
     that contains files corresponding to tools, configuration files and yaml
     files that is needed for adification.
+
+  ## Examples:
+
+      iex> tools_dir = "./test/support/tools/"
+      iex> digest_file = ".temp.dump"
+      iex> File.rm(digest_file)
+      iex> false = File.exists?(digest_file)
+      iex> {:ok, digest} = Adify.run(
+      ...>   confirm: false,
+      ...>   tools_dir: tools_dir,
+      ...>   digest_file: digest_file,
+      ...>   os: "arch_linux",
+      ...> )
+      iex> true = File.exists?(digest_file)
+      iex> File.rm!(digest_file)
+      :ok
   """
   @spec run(Keyword.t()) :: {:ok, term()} | {:error, term()}
   def run(opts \\ []) do
     options = transpose_defaults(opts)
 
-    with {:ok, environment} <- Environment.init(options),
+    with :ok <- validate_options(options),
+         {:ok, environment} <- Environment.init(options),
          {:ok, environment} <- Environment.install_tools(environment),
          {:ok, digest} <- print_digest_file(environment) do
       {:ok, digest}
     else
       {:error, reason} -> {:error, reason}
+    end
+  end
+
+  defp validate_options(opts) do
+    with true <- Adify.SystemInfo.valid_os?(Keyword.get(opts, :os)),
+         true <- File.exists?(Keyword.get(opts, :tools_dir))
+    do
+      :ok
+    else
+      false -> {:error, "Bad OS or tools_dir"}
     end
   end
 
@@ -48,12 +75,12 @@ defmodule Adify do
     ]
   end
 
-  defp install(tools, options \\ []) do
-    {:ok, nil}
-  end
-
-  defp print_digest_file(digest, options \\ []) do
-    {:ok, nil}
+  defp print_digest_file(environment) do
+    content = Adify.Environment.digest_content(environment)
+    case File.write(environment.digest_file, content) do
+      :ok -> {:ok, content}
+      {:error, reason} -> {:error, reason}
+    end
   end
 
   @doc """
@@ -76,8 +103,9 @@ defmodule Adify do
       true
 
       # When the key is `:os`
-      iex> path = Adify.default(:os)
-      iex> path == Adify.SystemInfo.current_os()
+      iex> os1 = Adify.default(:os)
+      iex> {:ok, os} = Adify.SystemInfo.current_os()
+      iex> os1 == os
       true
 
       # When there's some other key
@@ -93,7 +121,10 @@ defmodule Adify do
 
   def default(:tools_dir), do: Path.join(:code.priv_dir(:adify), "tools")
 
-  def default(:os), do: Adify.SystemInfo.current_os()
+  def default(:os) do
+    {:ok, os} = Adify.SystemInfo.current_os()
+    os
+  end
 
   def default(_), do: nil
 end
