@@ -83,9 +83,47 @@ defmodule Adify.Environment do
     end
   end
 
+  @doc """
+  Installs all tools and returns the updated environment
+
+  ## Examples:
+
+      # When tool is valid
+      iex> options = [
+      ...>   confirm: false,
+      ...>   digest_file: ".temp.dump",
+      ...>   tools_dir: "./test/support/tools/",
+      ...>   os: "arch_linux"
+      ...> ]
+      iex> {:ok, tool} =
+      ...>   Adify.YAML.parse_and_cast("./test/support/tools/valid/201907051629/tool.yaml")
+      iex> tools = [tool]
+      iex> {:ok, env} = Adify.Environment.init(options)
+      iex> true = env.state == "new" && Enum.empty?(env.operations)
+      iex> {:ok, env} = Adify.Environment.install_tools(env)
+      iex> env.state == "completed" && !Enum.empty?(env.operations)
+      true
+  """
   @spec install_tools(__MODULE__.t()) :: {:ok, term()} | {:error, term()}
   def install_tools(%__MODULE__{} = environment) do
-    {:ok, nil}
+    case Enum.reduce(environment.tools, {:ok, environment}, fn
+      (tool, {:ok, environment}) -> install_tool(environment, tool)
+      (tool, {:error, environment}) -> {:error, environment}
+    end) do
+      {:ok, environment} ->
+        {:ok, %__MODULE__{
+          confirm: environment.confirm,
+          digest_file: environment.digest_file,
+          tools_dir: environment.tools_dir,
+          os: environment.os,
+          state: "completed",
+          started_at: environment.started_at,
+          ended_at: DateTime.utc_now(),
+          tools: environment.tools,
+          operations: environment.operations
+        }}
+      {:error, environment} -> {:error, environment}
+    end
   end
 
   @doc """
