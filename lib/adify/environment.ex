@@ -8,6 +8,8 @@ defmodule Adify.Environment do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t :: %__MODULE__{}
+
   @primary_key false
   @valid_states ~w(new processing failed completed)
 

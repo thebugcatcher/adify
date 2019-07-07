@@ -1,7 +1,9 @@
 defmodule Adify do
   @moduledoc """
-  TODO: What is Adify
-  API to interact with Adify
+  This module is the main API to interact with Adify
+
+  A configurable, extendable DevOps environment app. This app installs tools
+  based on the given operating systems.
   """
 
   @doc """
@@ -17,6 +19,7 @@ defmodule Adify do
     that contains files corresponding to tools, configuration files and yaml
     files that is needed for adification.
   """
+  @spec run(Keyword.t()) :: {:ok, term()} | {:error, term()}
   def run(opts \\ []) do
     options = transpose_defaults(opts)
 
@@ -37,13 +40,16 @@ defmodule Adify do
     [confirm: confirm, digest_file: digest_file, tools_dir: tools_dir]
   end
 
-  defp init_tools(tools_dir: tools_dir) do
+  defp init_tools(options \\ []) do
+    {:ok, nil}
   end
 
-  defp install(tools, confirm: confirm) do
+  defp install(tools, options \\ []) do
+    {:ok, nil}
   end
 
-  defp print_digest_file(digest, digest_file: digest_file) do
+  defp print_digest_file(digest, options \\ []) do
+    {:ok, nil}
   end
 
   @doc """
@@ -69,7 +75,7 @@ defmodule Adify do
       iex> Adify.default(:other_key)
       nil
   """
-  @spec default(Atom.t()) :: term()
+  @spec default(atom()) :: term()
   def default(:confirm), do: true
 
   def default(:digest_file) do
