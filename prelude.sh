@@ -18,8 +18,6 @@
 # - Ubuntu
 # - PopOS
 # - Debian
-# - CentOS
-# - Fedora
 
 ####################
 ### REQUIREMENTS ###
@@ -36,7 +34,7 @@
 ### PRELUDE ###
 ###############
 # Detects Shell Type
-# Detects
+# Detects Kernel and previous adification
 
 ################
 ### VERSIONS ###
@@ -78,6 +76,23 @@ _announce_info() {
   echo -e """$BLUE
 ---> $1 $NC
   """
+}
+
+_get_confirmation() {
+  echo -e """
+$BOLD $1? (y/N)
+  """
+  if $NO_CONFIRM; then
+    read confirmation
+    if (($confirmation == "y") || ($confirmation == "Y")); then
+      _announce_success "Got Yes"
+    else
+      _announce_error "Got No"
+      exit 1
+    fi
+  else
+    _announce_info "[NO_CONFIRM mode is on]"
+  fi
 }
 
 check_adify() {
@@ -137,14 +152,6 @@ check_linux() {
       OS='pop_os'
       _announce_success "OS is $OS. Adify is supported for $OS"
     ;;
-    # *Centos*)
-    #   OS='centos'
-    #   _announce_success "OS is $OS. Adify is supported for $OS"
-    # ;;
-    # *Fedora*)
-    #   OS='fedora'
-    #   _announce_success "OS is $OS. Adify is supported for $OS"
-    # ;;
     *)
       _announce_error "Adify isn't supported for Linux OS: $OS"
     ;;
@@ -161,7 +168,7 @@ check_shell() {
     ;;
     *bash)
       shell="bash"
-      _announce_success "Detected shell: '$shell' is supported by Adify! "
+      _announce_info "Shell: '$shell' isn't supported by Adify"
     ;;
   *)
       _announce_error "Shell: '$SHELL' not supported"
@@ -240,6 +247,7 @@ install_mac_tools() {
     _announce_error "Failed!"
   fi
 }
+
 install_arch_linux_tools() {
   _announce_step "Installing Tools required for OTP for Arch Linux"
 

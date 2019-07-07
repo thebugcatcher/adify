@@ -1,5 +1,5 @@
 env:
-  - CONFIRM=false
+  - NO_CONFIRM=true
 
 jobs:
   include:

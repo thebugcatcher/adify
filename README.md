@@ -43,13 +43,14 @@ $ bash <(curl -s https://raw.githubusercontent.com/annkissam/adify/master/prelud
 
 This script installs the required dependencies to run `$ mix adify` task and
 runs the task from the home directory. Based on the value of the environment
-variable `CONFIRM`, it will either confirm before installing a dependency or
-not. (If `CONFIRM` is not set, it defaults to `true`)
+variable `NO_CONFIRM`, it will either confirm before installing a dependency or
+not. (If `NO_CONFIRM` is not set, it defaults to `false`)
 
 To get more information about what this script does, check out the documentation
 for `prelude.sh` on top of the file.
 
 #### Configure
 
-- `CONFIRM` env variable
+- `NO_CONFIRM` env variable
 - `TOOLS_DIR` env variable
+- `SHELL` env variable
