@@ -107,10 +107,10 @@ defmodule Adify.Environment do
   @spec install_tools(__MODULE__.t()) :: {:ok, term()} | {:error, term()}
   def install_tools(%__MODULE__{} = environment) do
     case Enum.reduce(environment.tools, {:ok, environment}, fn
-           tool, {:ok, environment} -> install_tool(environment, tool)
-           tool, {:error, environment} -> {:error, environment}
+           tool, {:ok, new_environment} -> install_tool(new_environment, tool)
+           tool, {:error, new_environment} -> {:error, new_environment}
          end) do
-      {:ok, environment} ->
+      {:ok, new_environment} ->
         {:ok,
          %__MODULE__{
            confirm: environment.confirm,

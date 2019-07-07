@@ -55,7 +55,8 @@ defmodule Adify.Environment.Operation do
   @spec run(__MODULE__.t(), boolean()) :: {:ok, term()} | {:error, term()}
   def run(%__MODULE__{} = operation, ask_for_confirmation \\ true) do
     with true <- confirmation(operation, ask_for_confirmation),
-         {:ok, output} <- Adify.Tool.install(operation.tool, operation.os) do
+         {:ok, output} <- Adify.Tool.install(operation.tool, operation.os)
+    do
       {:ok,
        %__MODULE__{
          confirmation: true,
@@ -113,7 +114,6 @@ defmodule Adify.Environment.Operation do
           |> tool_info()
           |> IO.gets()
           |> String.trim()
-
         false ->
           IO.puts(tool_info(operation))
           IO.puts("NOCONFIRM mode is on, so installing tool...")
@@ -132,7 +132,7 @@ defmodule Adify.Environment.Operation do
     Tool name: #{tool.name}
     Tool description: #{tool.description}
     Tool version: #{tool.version}
-    Default Strategy: #{strategy(os_command(tool, for: os), :default).name}
+    Default Strategy: #{strategy(os_command(tool, for: os), :default)}
     Install Tool? (y/N)
     """
   end
@@ -142,6 +142,10 @@ defmodule Adify.Environment.Operation do
   end
 
   defp strategy(os_command, :default) do
-    Enum.find(os_command.installation_strategies, &(&1.default == true))
+    if os_command do
+      Enum.find(os_command.installation_strategies, &(&1.default == true)).name
+    else
+      "NIL"
+    end
   end
 end
