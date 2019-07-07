@@ -109,7 +109,6 @@ defmodule Adify.Environment do
   @spec install_tool(__MODULE__.t(), Adify.Tool.t()) ::
           {:ok, term()} | {:error, term()}
   def install_tool(%__MODULE__{} = environment, %Adify.Tool{} = tool) do
-
   end
 
   defp init_with_tools(opts, tools) do
