@@ -1,5 +1,7 @@
 # Adify
 
+<img src="logo/logo.png" alt="https://hexdocs.pm/adify/index.html" width="270" height="150">
+
 A configurable, extendable DevOps environment app. This app installs tools
 based on the given operating systems.
 

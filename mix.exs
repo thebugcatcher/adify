@@ -19,7 +19,7 @@ defmodule Adify.MixProject do
         ignore_warnings: ".dialyzer_ignore.exs"
       ],
       docs: [
-        main: "docs/GetStarted.md",
+        main: "getstarted",
         logo: "logo/logo.png",
         extras: [
           "docs/GetStarted.md",
