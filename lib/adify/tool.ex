@@ -33,8 +33,11 @@ defmodule Adify.Tool do
       # When all inputs are valid
       iex> {:ok, tool} =
       ...>   Adify.YAML.parse_and_cast("./test/support/tools/valid/201907051629/tool.yaml")
-      iex> Adify.Tool.install(tool, "arch_linux")
-      {:ok, "Running Pre:\\n\\n\\nhello pre\\n\\nRunning Main:\\n\\n\\nhello main\\n\\nRunning Post:\\n\\n\\nhello post\\n\\n"}
+      iex> {:ok, output} = Adify.Tool.install(tool, "arch_linux")
+      iex> output =~ "Running Pre:" && output =~ "hello pre" &&
+      ...>   output =~ "Running Main:" && output =~ "hello main" &&
+      ...>   output =~ "Running Post:" && output =~ "hello post"
+      true
 
       # When OS isn't valid
       iex> {:ok, tool} =
@@ -80,8 +83,11 @@ defmodule Adify.Tool do
       # When all inputs are valid
       iex> {:ok, tool} =
       ...>   Adify.YAML.parse_and_cast("./test/support/tools/valid/201907051629/tool.yaml")
-      iex> Adify.Tool.uninstall(tool, "arch_linux")
-      {:ok, "Running Pre:\\n\\n\\nbye pre\\n\\nRunning Main:\\n\\n\\nbye main\\n\\nRunning Post:\\n\\n\\nbye post\\n\\n"}
+      iex> {:ok, output} = Adify.Tool.uninstall(tool, "arch_linux")
+      iex> output =~ "Running Pre:" && output =~ "bye pre" &&
+      ...>   output =~ "Running Main:" && output =~ "bye main" &&
+      ...>   output =~ "Running Post:" && output =~ "bye post"
+      true
 
       # When OS isn't valid
       iex> {:ok, tool} =
