@@ -48,3 +48,8 @@ not. (If `CONFIRM` is not set, it defaults to `true`)
 
 To get more information about what this script does, check out the documentation
 for `prelude.sh` on top of the file.
+
+#### Configure
+
+- `CONFIRM` env variable
+- `TOOLS_DIR` env variable

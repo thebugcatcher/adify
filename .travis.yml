@@ -4,6 +4,7 @@ env:
 jobs:
   include:
     - stage: test
+      language: elixir
       elixir: 1.9.0
       otp_release: 22.0
       script: mix test
