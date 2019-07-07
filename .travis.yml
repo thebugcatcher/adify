@@ -17,10 +17,12 @@ jobs:
         - mix deps.get --only docs
         - MIX_ENV=docs mix inch.report
     - stage: prelude_test_osx
+      install: true
       os: osx
       osx_image: xcode10.2
       script: ./prelude.sh
     - stage: prelude_test_ubuntu
+      install: true
       os: linux
       dist: xenial
       script: ./prelude.sh
