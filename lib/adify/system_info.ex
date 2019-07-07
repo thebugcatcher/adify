@@ -4,6 +4,43 @@ defmodule Adify.SystemInfo do
   OS type, Distribution, Kernel, Package Managers etc
   """
 
+  @valid_os ~w(
+    arch_linux
+    debian
+    osx
+    pop_os
+    ubuntu
+  )
+
+  @doc """
+  Returns whether an OS is valid for adifying
+
+  ## Examples
+
+      # When os is osx
+      iex> Adify.SystemInfo.valid_os?("osx")
+      true
+
+      # When os is arch_linux
+      iex> Adify.SystemInfo.valid_os?("arch_linux")
+      true
+
+      # When os is ubuntu
+      iex> Adify.SystemInfo.valid_os?("ubuntu")
+      true
+
+      # When os is pop_os
+      iex> Adify.SystemInfo.valid_os?("ubuntu")
+      true
+
+      # When os is redox (not compatible with adify unfortunately)
+      iex> Adify.SystemInfo.valid_os?("redox")
+      false
+  """
+  @spec valid_os?(String.t()) :: boolean()
+  def valid_os?(os) when os in @valid_os, do: true
+  def valid_os?(_), do: false
+
   @doc """
   Returns the current os
 

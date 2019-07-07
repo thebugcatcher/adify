@@ -12,7 +12,7 @@ defmodule Adify.YAML do
       # When the YAML file is a valid file:
       iex> path =
       ...>   File.cwd!()
-      ...>   |> Path.join("test/support/valid.yaml")
+      ...>   |> Path.join("test/support/tools/valid/201907051629/tool.yaml")
       iex> {:ok, %Adify.Tool{version: vsn}} = Adify.YAML.parse_and_cast(path)
       iex> vsn
       201907051629
