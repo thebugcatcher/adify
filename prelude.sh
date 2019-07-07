@@ -202,38 +202,38 @@ install_mac_tools() {
   brew doctor
 
   _announce_info "Installing brew cask"
-  brew install caskroom/cask/brew-cask
+  brew_install_new caskroom/cask/brew-cask
 
   if $zsh; then
     _announce_success "System already uses zsh"
   else
     _announce_info "Installing Zsh Shell"
-    brew install zsh
+    brew_install_new zsh
 
     _announce_info "Making Zsh default Shell"
     sudo -s 'echo /usr/local/bin/zsh >> /etc/shells' && chsh -s /usr/local/bin/zsh
   fi
 
   _announce_info "Installing Zenity"
-  brew install zenity
+  brew_install_new zenity
 
   if [ $? -eq 0 ]; then
     _announce_info "Installing Wget"
-    brew install wget
+    brew_install_new wget
   else
     _announce_error "Failed!"
   fi
 
   if [ $? -eq 0 ]; then
     _announce_info "Installing autoconf"
-    brew install autoconf
+    brew_install_new autoconf
   else
     _announce_error "Failed!"
   fi
 
   if [ $? -eq 0 ]; then
     _announce_info "Installing wxmac for widgets"
-    brew install wxmac
+    brew_install_new wxmac
   else
     _announce_error "Failed!"
   fi
@@ -241,16 +241,35 @@ install_mac_tools() {
 
   if [ $? -eq 0 ]; then
     _announce_info "Installing wxwidgets, ODBC, gnupg and gnuppg2"
-    brew install wxwidgets
-    brew install unixodbc
-    brew install gnupg gnupg2
+    brew_install_new wxwidgets
+    brew_install_new unixodbc
+    brew_install_new gnupg gnupg2
   else
     _announce_error "Failed!"
   fi
 }
 
+brew_install_new() {
+  if brew ls --versions $1 > /dev/null; then
+    _announce_info "'$1' already installed"
+  else
+    brew install $1
+  fi
+}
+
 install_arch_linux_tools() {
   _announce_step "Installing Tools required for OTP for Arch Linux"
+
+  if $zsh; then
+    _announce_success "System already uses zsh"
+  else
+    _announce_info "Installing Zsh Shell"
+    sudo pacman -S --noconfirm zsh zsh-completions
+
+    _announce_info "Making Zsh default Shell"
+    sudo -s 'echo /usr/local/bin/zsh >> /etc/shells' && chsh -s /usr/local/bin/zsh
+  fi
+
 
   _announce_info "Installing 'base-devel' for most of the OTP needed tools"
 
@@ -307,7 +326,18 @@ install_arch_linux_tools() {
 
 install_debian_ubuntu_pop_os_tools() {
   _announce_info "Installing 'build-essential' for most of OTP tools"
+
   sudo apt-get -y install build-essential
+
+  if $zsh; then
+    _announce_success "System already uses zsh"
+  else
+    _announce_info "Installing Zsh Shell"
+    sudo apt-get -y install zsh zsh-completions
+
+    _announce_info "Making Zsh default Shell"
+    sudo -s 'echo /usr/local/bin/zsh >> /etc/shells' && chsh -s /usr/local/bin/zsh
+  fi
 
   if [ $? -eq 0 ]; then
     _announce_info "Installing 'autoconf' for script builder"
