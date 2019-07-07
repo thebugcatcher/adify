@@ -19,4 +19,6 @@ matrix:
 jobs:
   include:
     - stage: script_test
+      os: osx
+      osx_image: xcode10.2
       script: ./adify.sh
