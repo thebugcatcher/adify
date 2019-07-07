@@ -107,22 +107,25 @@ defmodule Adify.Environment do
   @spec install_tools(__MODULE__.t()) :: {:ok, term()} | {:error, term()}
   def install_tools(%__MODULE__{} = environment) do
     case Enum.reduce(environment.tools, {:ok, environment}, fn
-      (tool, {:ok, environment}) -> install_tool(environment, tool)
-      (tool, {:error, environment}) -> {:error, environment}
-    end) do
+           tool, {:ok, environment} -> install_tool(environment, tool)
+           tool, {:error, environment} -> {:error, environment}
+         end) do
       {:ok, environment} ->
-        {:ok, %__MODULE__{
-          confirm: environment.confirm,
-          digest_file: environment.digest_file,
-          tools_dir: environment.tools_dir,
-          os: environment.os,
-          state: "completed",
-          started_at: environment.started_at,
-          ended_at: DateTime.utc_now(),
-          tools: environment.tools,
-          operations: environment.operations
-        }}
-      {:error, environment} -> {:error, environment}
+        {:ok,
+         %__MODULE__{
+           confirm: environment.confirm,
+           digest_file: environment.digest_file,
+           tools_dir: environment.tools_dir,
+           os: environment.os,
+           state: "completed",
+           started_at: environment.started_at,
+           ended_at: DateTime.utc_now(),
+           tools: environment.tools,
+           operations: environment.operations
+         }}
+
+      {:error, environment} ->
+        {:error, environment}
     end
   end
 
@@ -158,28 +161,31 @@ defmodule Adify.Environment do
 
     case Adify.Environment.Operation.run(operation, environment.confirm) do
       {:ok, operation} ->
-        {:ok, %__MODULE__{
-          confirm: environment.confirm,
-          digest_file: environment.digest_file,
-          tools_dir: environment.tools_dir,
-          os: environment.os,
-          state: "processing",
-          started_at: environment.started_at,
-          tools: environment.tools,
-          operations: (environment.operations || []) ++ [operation]
-        }}
+        {:ok,
+         %__MODULE__{
+           confirm: environment.confirm,
+           digest_file: environment.digest_file,
+           tools_dir: environment.tools_dir,
+           os: environment.os,
+           state: "processing",
+           started_at: environment.started_at,
+           tools: environment.tools,
+           operations: (environment.operations || []) ++ [operation]
+         }}
+
       {:error, operation} ->
-        {:error, %__MODULE__{
-          confirm: environment.confirm,
-          digest_file: environment.digest_file,
-          tools_dir: environment.tools_dir,
-          os: environment.os,
-          state: "failed",
-          started_at: environment.started_at,
-          ended_at: DateTime.utc_now(),
-          tools: environment.tools,
-          operations: (environment.operations || []) ++ [operation]
-        }}
+        {:error,
+         %__MODULE__{
+           confirm: environment.confirm,
+           digest_file: environment.digest_file,
+           tools_dir: environment.tools_dir,
+           os: environment.os,
+           state: "failed",
+           started_at: environment.started_at,
+           ended_at: DateTime.utc_now(),
+           tools: environment.tools,
+           operations: (environment.operations || []) ++ [operation]
+         }}
     end
   end
 

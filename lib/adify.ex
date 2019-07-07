@@ -53,8 +53,7 @@ defmodule Adify do
 
   defp validate_options(opts) do
     with true <- Adify.SystemInfo.valid_os?(Keyword.get(opts, :os)),
-         true <- File.exists?(Keyword.get(opts, :tools_dir))
-    do
+         true <- File.exists?(Keyword.get(opts, :tools_dir)) do
       :ok
     else
       false -> {:error, "Bad OS or tools_dir"}
@@ -77,6 +76,7 @@ defmodule Adify do
 
   defp print_digest_file(environment) do
     content = Adify.Environment.digest_content(environment)
+
     case File.write(environment.digest_file, content) do
       :ok -> {:ok, content}
       {:error, reason} -> {:error, reason}

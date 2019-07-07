@@ -56,8 +56,7 @@ defmodule Mix.Tasks.Adify do
 
   @impl true
   def run(args) do
-    {parsed, args, _} =
-      OptionParser.parse(args, switches: @switches, aliases: @aliases)
+    {parsed, args, _} = OptionParser.parse(args, switches: @switches, aliases: @aliases)
 
     parsed
     |> prep_opts()

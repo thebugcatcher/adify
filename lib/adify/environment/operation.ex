@@ -26,8 +26,7 @@ defmodule Adify.Environment.Operation do
 
   def changeset(struct, params) do
     struct
-    |> cast(params, [:os, :output, :confirmation, :state, :started_at,
-      :ended_at])
+    |> cast(params, [:os, :output, :confirmation, :state, :started_at, :ended_at])
     |> validate_inclusion(:state, @valid_states)
     |> cast_embed(:tool)
     |> cast_embed(:selected_installation_strategy)
@@ -56,48 +55,53 @@ defmodule Adify.Environment.Operation do
   @spec run(__MODULE__.t(), boolean()) :: {:ok, term()} | {:error, term()}
   def run(%__MODULE__{} = operation, ask_for_confirmation \\ true) do
     with true <- confirmation(operation, ask_for_confirmation),
-         {:ok, output} <- Adify.Tool.install(operation.tool, operation.os)
-    do
-      {:ok, %__MODULE__{
-        confirmation: true,
-        output: output,
-        os: operation.os,
-        state: "completed",
-        selected_installation_strategy:
-          strategy(os_command(operation.tool, for: operation.os), :default),
-        tool: operation.tool
-      }}
+         {:ok, output} <- Adify.Tool.install(operation.tool, operation.os) do
+      {:ok,
+       %__MODULE__{
+         confirmation: true,
+         output: output,
+         os: operation.os,
+         state: "completed",
+         selected_installation_strategy:
+           strategy(os_command(operation.tool, for: operation.os), :default),
+         tool: operation.tool
+       }}
     else
       {:error, {output, _}} ->
-        {:error, %__MODULE__{
-          confirmation: true,
-          output: output,
-          os: operation.os,
-          state: "failed",
-          selected_installation_strategy:
-            strategy(os_command(operation.tool, for: operation.os), :default),
-          tool: operation.tool
-        }}
+        {:error,
+         %__MODULE__{
+           confirmation: true,
+           output: output,
+           os: operation.os,
+           state: "failed",
+           selected_installation_strategy:
+             strategy(os_command(operation.tool, for: operation.os), :default),
+           tool: operation.tool
+         }}
+
       {:error, output} ->
-        {:error, %__MODULE__{
-          confirmation: true,
-          output: output,
-          os: operation.os,
-          state: "failed",
-          selected_installation_strategy:
-            strategy(os_command(operation.tool, for: operation.os), :default),
-          tool: operation.tool
-        }}
+        {:error,
+         %__MODULE__{
+           confirmation: true,
+           output: output,
+           os: operation.os,
+           state: "failed",
+           selected_installation_strategy:
+             strategy(os_command(operation.tool, for: operation.os), :default),
+           tool: operation.tool
+         }}
+
       false ->
-        {:ok, %__MODULE__{
-          confirmation: false,
-          output: "Not installing tool: #{operation.tool.name}",
-          os: operation.os,
-          state: "completed",
-          selected_installation_strategy:
-            strategy(os_command(operation.tool, for: operation.os), :default),
-          tool: operation.tool
-        }}
+        {:ok,
+         %__MODULE__{
+           confirmation: false,
+           output: "Not installing tool: #{operation.tool.name}",
+           os: operation.os,
+           state: "completed",
+           selected_installation_strategy:
+             strategy(os_command(operation.tool, for: operation.os), :default),
+           tool: operation.tool
+         }}
     end
   end
 
@@ -109,9 +113,10 @@ defmodule Adify.Environment.Operation do
           |> tool_info()
           |> IO.gets()
           |> String.trim()
+
         false ->
-          IO.puts tool_info(operation)
-          IO.puts "NOCONFIRM mode is on, so installing tool..."
+          IO.puts(tool_info(operation))
+          IO.puts("NOCONFIRM mode is on, so installing tool...")
           "Y"
       end
 
@@ -133,10 +138,10 @@ defmodule Adify.Environment.Operation do
   end
 
   defp os_command(tool, for: os) do
-    Enum.find(tool.os_commands, & &1.os == os)
+    Enum.find(tool.os_commands, &(&1.os == os))
   end
 
   defp strategy(os_command, :default) do
-    Enum.find(os_command.installation_strategies, & &1.default == true)
+    Enum.find(os_command.installation_strategies, &(&1.default == true))
   end
 end

@@ -48,39 +48,46 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
   def run(workflow) do
     case __MODULE__.Op.run(workflow.pre) do
       {:error, pre_output} ->
-        {:error, """
-          Running Pre:
-          #{pre_output}
-          """}
+        {:error,
+         """
+         Running Pre:
+         #{pre_output}
+         """}
+
       {:ok, pre_output} ->
         case __MODULE__.Op.run(workflow.main) do
           {:error, main_output} ->
-            {:error, """
-              Running Pre:
-              #{pre_output}
-              Running Main:
-              #{main_output}
-              """}
+            {:error,
+             """
+             Running Pre:
+             #{pre_output}
+             Running Main:
+             #{main_output}
+             """}
+
           {:ok, main_output} ->
             case __MODULE__.Op.run(workflow.post) do
               {:error, post_output} ->
-                {:error, """
-                  Running Pre:
-                  #{pre_output}
-                  Running Main:
-                  #{main_output}
-                  Running Post:
-                  #{post_output}
-                  """}
+                {:error,
+                 """
+                 Running Pre:
+                 #{pre_output}
+                 Running Main:
+                 #{main_output}
+                 Running Post:
+                 #{post_output}
+                 """}
+
               {:ok, post_output} ->
-                {:ok, """
-                  Running Pre:
-                  #{pre_output}
-                  Running Main:
-                  #{main_output}
-                  Running Post:
-                  #{post_output}
-                  """}
+                {:ok,
+                 """
+                 Running Pre:
+                 #{pre_output}
+                 Running Main:
+                 #{main_output}
+                 Running Post:
+                 #{post_output}
+                 """}
             end
         end
     end
@@ -159,6 +166,7 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
             false -> {:ok, output}
             true -> {:error, output}
           end
+
         {:ok, output} ->
           case operation.success do
             true -> check_regex(operation, output)
@@ -169,17 +177,19 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
 
     defp check_regex(operation, output) do
       with {:ok, regex} <- Regex.compile(operation.expected),
-           true <- (output =~ regex)
-      do
+           true <- output =~ regex do
         {:ok, output}
       else
-        {:error, reason} -> {:error, reason}
+        {:error, reason} ->
+          {:error, reason}
+
         false ->
-          {:error, """
-            Expression didn't match:
-            Expected: #{operation.expected}:
-            Got: #{output}
-            """}
+          {:error,
+           """
+           Expression didn't match:
+           Expected: #{operation.expected}:
+           Got: #{output}
+           """}
       end
     end
   end
