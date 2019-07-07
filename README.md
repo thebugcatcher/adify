@@ -1,6 +1,6 @@
-# Adify
+<img src="logo/logo.png" href="https://hexdocs.pm/adify/index.html" width="270" height="190">
 
-<img src="logo/logo.png" alt="https://hexdocs.pm/adify/index.html" width="270" height="190">
+----
 
 [![Build Status](https://travis-ci.org/aditya7iyengar/adify.svg?branch=master)](https://travis-ci.org/aditya7iyengar/adify)
 [![Coverage Status](https://coveralls.io/repos/github/aditya7iyengar/adify/badge.svg?branch=master)](https://coveralls.io/github/aditya7iyengar/adify?branch=master)
@@ -10,8 +10,9 @@
 [![docs](https://inch-ci.org/github/aditya7iyengar/adify.svg)](http://inch-ci.org/github/aditya7iyengar/adify)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/aditya7iyengar/adify/master/LICENSE)
 
-A configurable, extendable DevOps environment app. This app installs tools
-based on the given operating systems.
+__A configurable, extendable automated DevOps environment app__. <br />
+
+This app installs tools based on the given operating systems.
 
 ## Installation
 
