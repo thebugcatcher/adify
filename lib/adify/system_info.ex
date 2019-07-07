@@ -68,6 +68,7 @@ defmodule Adify.SystemInfo do
 
   defp current_linux_distro do
     {:ok, output} = cmd("cat /etc/os-release | grep ^NAME")
+
     cond do
       output =~ "Arch" -> {:ok, "arch_linux"}
       output =~ "Antergos" -> {:ok, "arch_linux"}
@@ -81,6 +82,7 @@ defmodule Adify.SystemInfo do
 
   defp current_kernel do
     {:ok, output} = cmd("uname")
+
     cond do
       output =~ "Linux" -> {:ok, "Linux"}
       output =~ "Darwin" -> {:ok, "Darwin"}
@@ -107,7 +109,7 @@ defmodule Adify.SystemInfo do
       true
   """
   @spec cmd(String.t(), [{String.t(), String.t()}], Path.t()) ::
-    {:ok, String.t()} | {:error, String.t()}
+          {:ok, String.t()} | {:error, String.t()}
   def cmd(cmd, env \\ [], cd \\ ".") do
     case System.cmd("sh", ["-c", cmd], env: env, cd: cd, stderr_to_stdout: true) do
       {output, 0} -> {:ok, output}

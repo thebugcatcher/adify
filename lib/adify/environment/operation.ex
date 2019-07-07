@@ -10,11 +10,11 @@ defmodule Adify.Environment.Operation do
   @primary_key false
 
   embedded_schema do
-    field :confirmation, :boolean, default: false
-    field :output, :string
+    field(:confirmation, :boolean, default: false)
+    field(:output, :string)
 
-    embeds_one :selected_installation_strategy, Adify.Tool.InstallationStrategy
-    embeds_one :tool, Adify.Tool
+    embeds_one(:selected_installation_strategy, Adify.Tool.InstallationStrategy)
+    embeds_one(:tool, Adify.Tool)
   end
 
   def changeset(struct, params) do

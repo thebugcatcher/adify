@@ -9,27 +9,34 @@ defmodule Adify.Environment do
   import Ecto.Changeset
 
   @primary_key false
-
   @valid_states ~w(new processing failed completed)
 
   embedded_schema do
-    field :os, :string
-    field :confirm, :boolean, default: true
-    field :digest_file, :string
-    field :tools_dir, :string
-    field :state, :string, default: "new"
-    field :started_at, :utc_datetime
-    field :ended_at, :utc_datetime
-    field :meta, :map, default: %{}
+    field(:os, :string)
+    field(:confirm, :boolean, default: true)
+    field(:digest_file, :string)
+    field(:tools_dir, :string)
+    field(:state, :string, default: "new")
+    field(:started_at, :utc_datetime)
+    field(:ended_at, :utc_datetime)
+    field(:meta, :map, default: %{})
 
-    embeds_many :operations, Adify.Environment.Operation
-    embeds_many :tools, Adify.Tool
+    embeds_many(:operations, Adify.Environment.Operation)
+    embeds_many(:tools, Adify.Tool)
   end
 
   def changeset(struct, params) do
     struct
-    |> cast(params, [:os, :confirm, :digest_file, :tools_dir, :state,
-      :started_at, :ended_at, :meta])
+    |> cast(params, [
+      :os,
+      :confirm,
+      :digest_file,
+      :tools_dir,
+      :state,
+      :started_at,
+      :ended_at,
+      :meta
+    ])
     |> validate_required([:os, :digest_file, :tools_dir, :started_at])
     |> validate_inclusion(:state, @valid_states)
     |> cast_embed(:tools)
@@ -67,8 +74,7 @@ defmodule Adify.Environment do
   @spec init(Keyword.t()) :: {:ok, __MODULE__.t()} | {:error, term()}
   def init(opts \\ []) do
     with {:ok, tools} <- load_all_tools(Keyword.get(opts, :tools_dir)),
-         {:ok, env} <- init_with_tools(opts, tools)
-    do
+         {:ok, env} <- init_with_tools(opts, tools) do
       {:ok, env}
     else
       {:error, reason} -> {:error, reason}
@@ -89,6 +95,7 @@ defmodule Adify.Environment do
     case changeset(%__MODULE__{tools: tools}, params) do
       changeset = %Ecto.Changeset{errors: []} ->
         {:ok, apply_changes(changeset)}
+
       %Ecto.Changeset{errors: errors} ->
         {:error, errors}
     end
@@ -106,12 +113,12 @@ defmodule Adify.Environment do
 
     errors =
       parse_results
-      |> Enum.filter(&elem(&1, 0) == :error)
+      |> Enum.filter(&(elem(&1, 0) == :error))
       |> Enum.map(&elem(&1, 1))
 
     tools =
       parse_results
-      |> Enum.filter(&elem(&1, 0) == :ok)
+      |> Enum.filter(&(elem(&1, 0) == :ok))
       |> Enum.map(&elem(&1, 1))
 
     case Enum.empty?(errors) do

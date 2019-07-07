@@ -9,13 +9,13 @@ defmodule Adify.Tool.InstallationStrategy do
   @primary_key false
 
   embedded_schema do
-    field :name, :string
-    field :number, :integer
-    field :description, :string
-    field :default, :boolean, default: false
+    field(:name, :string)
+    field(:number, :integer)
+    field(:description, :string)
+    field(:default, :boolean, default: false)
 
-    embeds_one :up, Adify.Tool.InstallationStrategy.Workflow
-    embeds_one :down, Adify.Tool.InstallationStrategy.Workflow
+    embeds_one(:up, Adify.Tool.InstallationStrategy.Workflow)
+    embeds_one(:down, Adify.Tool.InstallationStrategy.Workflow)
   end
 
   def changeset(struct, params) do

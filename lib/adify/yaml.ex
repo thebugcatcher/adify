@@ -30,8 +30,7 @@ defmodule Adify.YAML do
   def parse_and_cast(tool_yaml_path) do
     with {:ok, map} <- YamlElixir.read_from_file(tool_yaml_path),
          params <- to_params(map),
-         changeset = %Ecto.Changeset{errors: []} <- cast_params(params)
-    do
+         changeset = %Ecto.Changeset{errors: []} <- cast_params(params) do
       {:ok, Ecto.Changeset.apply_changes(changeset)}
     else
       {:error, reason} -> {:error, reason}
@@ -66,6 +65,7 @@ defmodule Adify.YAML do
       end
     end
   end
+
   def to_params(list) when is_list(list), do: Enum.map(list, &to_params/1)
   def to_params(val), do: val
 end

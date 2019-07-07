@@ -10,9 +10,9 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
   @primary_key false
 
   embedded_schema do
-    embeds_one :pre, __MODULE__.Op
-    embeds_one :main, __MODULE__.Op
-    embeds_one :post, __MODULE__.Op
+    embeds_one(:pre, __MODULE__.Op)
+    embeds_one(:main, __MODULE__.Op)
+    embeds_one(:post, __MODULE__.Op)
   end
 
   def changeset(struct, params) do
@@ -34,9 +34,9 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
     @primary_key false
 
     embedded_schema do
-      field :command, :string
-      field :success, :boolean, default: true
-      field :expected, :string, default: "*"
+      field(:command, :string)
+      field(:success, :boolean, default: true)
+      field(:expected, :string, default: "*")
     end
 
     def changeset(struct, params) do

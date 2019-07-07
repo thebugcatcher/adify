@@ -11,9 +11,9 @@ defmodule Adify.Tool.OSCommand do
   @primary_key false
 
   embedded_schema do
-    field :os, :string
+    field(:os, :string)
 
-    embeds_many :installation_strategies, Adify.Tool.InstallationStrategy
+    embeds_many(:installation_strategies, Adify.Tool.InstallationStrategy)
   end
 
   def changeset(struct, params) do

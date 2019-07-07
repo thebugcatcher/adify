@@ -22,8 +22,7 @@ defmodule Adify do
 
     with {:ok, tools} <- init_tools(options),
          {:ok, digest} <- install(tools, options),
-         {:ok, digest} <- print_digest_file(digest, options)
-    do
+         {:ok, digest} <- print_digest_file(digest, options) do
       {:ok, digest}
     else
       {:error, reason} -> {:error, reason}
@@ -72,9 +71,11 @@ defmodule Adify do
   """
   @spec default(Atom.t()) :: term()
   def default(:confirm), do: true
+
   def default(:digest_file) do
     Path.join([System.user_home(), ".adify", ".digest"])
   end
+
   def default(:tools_dir), do: Path.join(:code.priv_dir(:adify), "tools")
   def default(_), do: nil
 end
