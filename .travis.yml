@@ -3,14 +3,14 @@ env:
 
 jobs:
   include:
-    - stage: script_test_osx
+    - stage: prelude_test_osx
       os: osx
       osx_image: xcode10.2
-      script: ./adify.sh
-    - stage: script_test_ubuntu
+      script: ./prelude.sh
+    - stage: prelude_test_ubuntu
       os: linux
       dist: xenial
-      script: ./adify.sh
+      script: ./prelude.sh
     - stage: test
       elixir: 1.9.0
       otp_release: 22.0
