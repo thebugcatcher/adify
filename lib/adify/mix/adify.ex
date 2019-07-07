@@ -44,6 +44,7 @@ defmodule Mix.Tasks.Adify do
 
   @switches [
     digest_file: :string,
+    help: :boolean,
     noconfirm: :boolean,
     os: :string,
     tools_dir: :string
@@ -51,6 +52,7 @@ defmodule Mix.Tasks.Adify do
 
   @aliases [
     d: :digest_file,
+    h: :help,
     t: :tools_dir
   ]
 
@@ -58,9 +60,21 @@ defmodule Mix.Tasks.Adify do
   def run(args) do
     {parsed, args, _} = OptionParser.parse(args, switches: @switches, aliases: @aliases)
 
-    parsed
-    |> prep_opts()
-    |> Adify.run()
+    case parsed[:help] do
+      true -> print_help()
+      _ ->
+        parsed
+        |> prep_opts()
+        |> Adify.run()
+    end
+  end
+
+  defp print_help do
+    Mix.Shell.IO.info """
+    #{@shortdoc}
+
+    #{@info}
+    """
   end
 
   defp prep_opts(adify_opts) do
