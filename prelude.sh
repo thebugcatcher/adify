@@ -485,7 +485,11 @@ run_adify(){
   if $NO_CONFIRM; then
     mix adify.install --os $1 --noconfirm
   else
-    mix adify.install --os $1
+    if $TOOLS_DIR; then
+      mix adify.install --os $1 -t $TOOLS_DIR
+    else
+      mix adify.install --os $1
+    fi
   fi
 }
 
