@@ -82,7 +82,7 @@ _get_confirmation() {
   echo -e """
 $BOLD $1? (y/N)
   """
-  if $NO_CONFIRM; then
+  if $noconfirm == true; then
     read confirmation
     if (($confirmation == "y") || ($confirmation == "Y")); then
       _announce_success "Got Yes"
@@ -482,10 +482,10 @@ install_adify() {
 run_adify(){
   _announce_step "Running adify"
 
-  if $NO_CONFIRM; then
+  if $noconfirm == true; then
     mix adify.install --os $1 --noconfirm
   else
-    if $TOOLS_DIR; then
+    if [[ ! -z $tools_dir ]]; then
       mix adify.install --os $1 -t $TOOLS_DIR
     else
       mix adify.install --os $1
@@ -498,6 +498,9 @@ main () {
   check_shell
 
   check_asdf
+  adify_test=${ADIFY_TEST}
+  noconfirm=${NO_CONFIRM}
+  tools_dir=${TOOLS_DIR}
 
   if $asdf; then
     _announce_success "No need to install ASDF"
@@ -505,7 +508,7 @@ main () {
     install_asdf $shell
   fi
 
-  if $ADIFY_TEST; then
+  if $adify_test == true; then
     _announce_success "Mocking Tools, Erlang, Elixir and other deps"
   else
     $"install_${OS}_tools"
