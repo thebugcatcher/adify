@@ -216,6 +216,8 @@ install_mac_tools() {
     _announce_info "Installing Zsh Shell"
     brew_install_new zsh
 
+    touch ~/.zshrc
+
     _announce_info "Making Zsh default Shell"
     chsh -s /bin/zsh
   fi
@@ -561,7 +563,7 @@ main () {
   if $asdf; then
     _announce_success "No need to install ASDF"
   else
-    install_asdf $shell
+    install_asdf zsh
   fi
 
   if $adify_test == true; then
