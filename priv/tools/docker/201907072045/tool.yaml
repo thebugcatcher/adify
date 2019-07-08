@@ -1,6 +1,6 @@
 name: Docker
 version: 201907072045
-description: A hackable text editor
+description: Containerization Engine
 os_commands:
   - os: osx
     installation_strategies:
