@@ -468,7 +468,7 @@ install_elixir() {
 
 install_adify() {
   _announce_step "Installing Adify ${ADIFY_VERSION}"
-  mix archive.install adify ${ADIFY_VERSION}
+  mix archive.install hex adify ${ADIFY_VERSION}
 
   _announce_step "Checking Adify installation"
   mix adify --help

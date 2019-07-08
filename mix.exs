@@ -37,6 +37,7 @@ defmodule Adify.MixProject do
 
   def application do
     [
+      mod: {Adify, []},
       extra_applications: [:logger]
     ]
   end

@@ -6,7 +6,13 @@ defmodule Adify do
   based on the given operating systems.
   """
 
+  use Application
   alias Adify.Environment
+
+  @doc false
+  def start(_, _) do
+    Supervisor.start_link([], strategy: :one_for_one, name: Adify.Supervisor)
+  end
 
   @doc """
   Runs an adifying process
