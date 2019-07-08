@@ -218,6 +218,13 @@ install_mac_tools() {
   brew_install_new zenity
 
   if [ $? -eq 0 ]; then
+    _announce_info "Installing Git"
+    brew_install_new git
+  else
+    _announce_error "Failed!"
+  fi
+
+  if [ $? -eq 0 ]; then
     _announce_info "Installing Wget"
     brew_install_new wget
   else
