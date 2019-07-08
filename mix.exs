@@ -67,7 +67,6 @@ defmodule Adify.MixProject do
     [
       name: "adify",
       maintainers: ["Adi Iyengar"],
-      files: ~w(lib priv LICENSE doc mix.exs README.md),
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/aditya7iyengar/adify"}
     ]
