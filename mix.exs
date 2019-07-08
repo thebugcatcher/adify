@@ -19,15 +19,7 @@ defmodule Adify.MixProject do
         ignore_warnings: ".dialyzer_ignore.exs",
         plt_add_apps: [:mix]
       ],
-      docs: [
-        main: "getstarted",
-        logo: "logo/logo.png",
-        extras: [
-          "docs/GetStarted.md",
-          "docs/Usage.md",
-          "docs/Extend.md"
-        ]
-      ],
+      docs: docs(),
       elixir: @elixir,
       name: @name,
       package: package(),
@@ -73,9 +65,45 @@ defmodule Adify.MixProject do
   defp package do
     [
       name: "adify",
+      maintainers: ["Adi Iyengar"],
       files: ~w(lib priv LICENSE doc),
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/aditya7iyengar/adify"}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "Adify",
+      source_ref: "#{@version}",
+      logo: "logo/logo.png",
+      groups_for_modules: [
+        # Adify
+        Helpers: [
+          Adify.SystemInfo,
+          Adify.YAML
+        ],
+        "Environment Metadata": [
+          Adify.Environment,
+          Adify.Environment.Operation
+        ],
+        "Tool Metadata": [
+          Adify.Tool,
+          Adify.Tool.OSCommand,
+          Adify.Tool.InstallationStrategy,
+          Adify.Tool.Workflow
+        ]
+      ],
+      extra_section: "GUIDES",
+      extras: [
+        "guides/basic/GetStarted.md",
+        "guides/basic/Usage.md",
+        "guides/advanced/Extend.md"
+      ],
+      groups_for_extras: [
+        Basic: ~r/guides\/basic\/.?/,
+        Advanced: ~r/guides\/advanced\/.?/
+      ]
     ]
   end
 end

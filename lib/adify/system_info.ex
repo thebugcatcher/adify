@@ -66,7 +66,9 @@ defmodule Adify.SystemInfo do
           kernel =~ "Linux" -> current_linux_distro()
           true -> {:error, "Unsupported Kernel: #{kernel}"}
         end
-      {:error, reason} -> {:error, reason}
+
+      {:error, reason} ->
+        {:error, reason}
     end
   end
 
