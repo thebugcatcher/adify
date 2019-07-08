@@ -249,6 +249,7 @@ defmodule Adify.Environment do
     parse_results =
       tools_dir
       |> File.ls!()
+      |> Enum.sort()
       |> Enum.map(&Path.join(tools_dir, &1))
       |> Enum.map(&yaml_path/1)
       |> Enum.map(&Adify.YAML.parse_and_cast/1)
