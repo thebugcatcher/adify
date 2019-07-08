@@ -171,6 +171,8 @@ check_asdf() {
   _announce_step "Checking ASDF-VM"
 
   if [ -d "$HOME/.asdf" ]; then
+    . ${HOME}/.asdf/asdf.sh
+    . ${HOME}/.asdf/completions/asdf.bash
     _announce_success "ASDF already installed"
     asdf=true
   else
@@ -445,6 +447,8 @@ set_global_erlang() {
   _announce_step "Setting Global Erlang to ${ERLANG_VERSION}"
 
   if $asdf; then
+  . ${HOME}/.asdf/asdf.sh
+  . ${HOME}/.asdf/completions/asdf.bash
     asdf global erlang ${ERLANG_VERSION}
     _announce_success "Successfully set global erlang to ${ERLANG_VERSION}"
   else
