@@ -16,8 +16,7 @@ defmodule Adify.MixProject do
       deps: deps(),
       description: @description,
       dialyzer: [
-        ignore_warnings: ".dialyzer_ignore.exs",
-        plt_add_apps: [:mix]
+        ignore_warnings: ".dialyzer_ignore.exs"
       ],
       docs: docs(),
       elixir: @elixir,
@@ -29,7 +28,6 @@ defmodule Adify.MixProject do
         "coveralls.post": :test,
         coveralls: :test
       ],
-      start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
       version: @version
     ]
