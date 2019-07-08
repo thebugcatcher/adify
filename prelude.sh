@@ -202,7 +202,7 @@ install_mac_tools() {
   brew doctor
 
   _announce_info "Installing brew cask"
-  brew_install_new caskroom/cask/brew-cask
+  brew cask
 
   if $zsh; then
     _announce_success "System already uses zsh"
