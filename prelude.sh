@@ -468,7 +468,10 @@ install_elixir() {
 
 install_adify() {
   _announce_step "Installing Adify ${ADIFY_VERSION}"
-  mix archive.install hex adify ${ADIFY_VERSION}
+  git clone https://github.com/aditya7iyengar/adify $HOME/.cloned_adify
+  cd $HOME/.cloned_adify/adify_runner
+  mix deps.get
+  mix compile
 
   _announce_step "Checking Adify installation"
   mix adify --help
@@ -490,6 +493,18 @@ run_adify(){
     else
       mix adify.install --os $1
     fi
+  fi
+}
+
+cleanup_on_aisle5() {
+  _announce_step "Installing Adify ${ADIFY_VERSION}"
+
+  cd $HOME
+  rm -rf $HOME/.cloned_adify
+  if [ $? -eq 0 ]; then
+    _announce_success "Adify ${ADIFY_VERSION} successfully cleanedup"
+  else
+    _announce_error "Failed to cleanup"
   fi
 }
 
@@ -520,6 +535,8 @@ main () {
     install_adify
 
     run_adify $OS
+
+    cleanup_on_aisle5
   fi
 }
 

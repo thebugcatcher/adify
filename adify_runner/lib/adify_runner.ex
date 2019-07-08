@@ -1,0 +1,2 @@
+defmodule AdifyRunner do
+end
