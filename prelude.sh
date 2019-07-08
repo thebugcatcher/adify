@@ -326,7 +326,7 @@ install_arch_linux_tools() {
 install_debian_ubuntu_pop_os_tools() {
   _announce_info "Installing 'build-essential' for most of OTP tools"
 
-  sudo apt-get update
+  sudo apt-get -y update
 
   sudo apt-get -y install build-essential
 
