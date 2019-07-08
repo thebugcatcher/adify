@@ -43,6 +43,58 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
       ...> }
       iex> Adify.Tool.InstallationStrategy.Workflow.run(workflow)
       {:ok, "Running Pre:\\nhi\\n\\nRunning Main:\\nhi\\n\\nRunning Post:\\nhi\\n\\n"}
+
+      # When pre is a failure
+      iex> pre = %Adify.Tool.InstallationStrategy.Workflow.Op{
+      ...>   command: "echo hi",
+      ...>   success: false,
+      ...>   expected: ".*"
+      ...> }
+      iex> workflow = %Adify.Tool.InstallationStrategy.Workflow{
+      ...>   pre: pre,
+      ...>   main: pre,
+      ...>   post: pre
+      ...> }
+      iex> Adify.Tool.InstallationStrategy.Workflow.run(workflow)
+      {:error, "Running Pre:\\nhi\\n\\n"}
+
+      # When main is a failure
+      iex> pre = %Adify.Tool.InstallationStrategy.Workflow.Op{
+      ...>   command: "echo hi",
+      ...>   success: true,
+      ...>   expected: ".*"
+      ...> }
+      iex> main = %Adify.Tool.InstallationStrategy.Workflow.Op{
+      ...>   command: "echo hi",
+      ...>   success: false,
+      ...>   expected: ".*"
+      ...> }
+      iex> workflow = %Adify.Tool.InstallationStrategy.Workflow{
+      ...>   pre: pre,
+      ...>   main: main,
+      ...>   post: pre
+      ...> }
+      iex> Adify.Tool.InstallationStrategy.Workflow.run(workflow)
+      {:error, "Running Pre:\\nhi\\n\\nRunning Main:\\nhi\\n\\n"}
+
+      # When post is a failure
+      iex> pre = %Adify.Tool.InstallationStrategy.Workflow.Op{
+      ...>   command: "echo hi",
+      ...>   success: true,
+      ...>   expected: ".*"
+      ...> }
+      iex> post = %Adify.Tool.InstallationStrategy.Workflow.Op{
+      ...>   command: "echo hi",
+      ...>   success: false,
+      ...>   expected: ".*"
+      ...> }
+      iex> workflow = %Adify.Tool.InstallationStrategy.Workflow{
+      ...>   pre: pre,
+      ...>   main: pre,
+      ...>   post: post
+      ...> }
+      iex> Adify.Tool.InstallationStrategy.Workflow.run(workflow)
+      {:error, "Running Pre:\\nhi\\n\\nRunning Main:\\nhi\\n\\nRunning Post:\\nhi\\n\\n"}
   """
   @spec run(__MODULE__.t()) :: {:ok, term()} | {:error, term()}
   def run(workflow) do
