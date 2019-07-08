@@ -11,6 +11,7 @@ defmodule Mix.Tasks.Adify do
 
   Options:
 
+  ```
   Option         Alias        Description
   --------------------------------------------------------------------------
 
@@ -28,6 +29,7 @@ defmodule Mix.Tasks.Adify do
 
   --digest-file    -d         Path to where the Digest file will be generated
                               after Adification.
+  ```
   """
 
   @moduledoc """
