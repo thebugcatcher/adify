@@ -515,6 +515,7 @@ run_adify(){
   else
     if [[ ! -z $tools_dir ]]; then
       _announce_info "With Tools dir=${tools_dir}"
+      _announce_info "Running `mix adify --os ${1} -t ${tools_dir}`"
       mix adify --os $1 -t $tools_dir
     else
       mix adify --os $1
