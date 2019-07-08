@@ -1,11 +1,13 @@
 {
   "skip_files": [
     "#__comment__: These files are used for testing, sometimes generated",
-    "test/support/*"
+    "test/support/*",
+    "lib/adify/system_info.ex",
+    "lib/adify/environment/operation.ex"
   ],
   "coverage_options": {
     "treat_no_relevant_lines_as_covered": true,
-    "minimum_coverage": 75
+    "minimum_coverage": 90
   },
   "terminal_options": {
     "file_column_width": 60

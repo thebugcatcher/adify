@@ -59,12 +59,14 @@ defmodule Adify.SystemInfo do
   """
   @spec current_os :: {:ok, String.t()} | {:error, term}
   def current_os do
-    {:ok, kernel} = current_kernel()
-
-    cond do
-      kernel == "Darwin" -> {:ok, "osx"}
-      kernel =~ "Linux" -> current_linux_distro()
-      true -> {:error, "Unsupported Kernel: #{kernel}"}
+    case current_kernel() do
+      {:ok, kernel} ->
+        cond do
+          kernel == "Darwin" -> {:ok, "osx"}
+          kernel =~ "Linux" -> current_linux_distro()
+          true -> {:error, "Unsupported Kernel: #{kernel}"}
+        end
+      {:error, reason} -> {:error, reason}
     end
   end
 
