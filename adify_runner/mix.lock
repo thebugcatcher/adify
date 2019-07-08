@@ -1,5 +1,5 @@
 %{
-  "adify": {:hex, :adify, "0.1.1", "f5b70fc27d67a1da3d6a9bd68ecd61eaab5d24528ea51e6f6e752aa17296a58c", [:mix], [{:ecto, "~> 3.1.0", [hex: :ecto, repo: "hexpm", optional: false]}, {:yaml_elixir, "~> 2.4.0", [hex: :yaml_elixir, repo: "hexpm", optional: false]}], "hexpm"},
+  "adify": {:hex, :adify, "0.1.0", "45718c46a0e64605247f059ed2a723f64b54aa197bdbacfde85fcaaf2b50fe4a", [:mix], [{:ecto, "~> 3.1.0", [hex: :ecto, repo: "hexpm", optional: false]}, {:yaml_elixir, "~> 2.4.0", [hex: :yaml_elixir, repo: "hexpm", optional: false]}], "hexpm"},
   "decimal": {:hex, :decimal, "1.8.0", "ca462e0d885f09a1c5a342dbd7c1dcf27ea63548c65a65e67334f4b61803822e", [:mix], [], "hexpm"},
   "ecto": {:hex, :ecto, "3.1.7", "fa21d06ef56cdc2fdaa62574e8c3ba34a2751d44ea34c30bc65f0728421043e5", [:mix], [{:decimal, "~> 1.6", [hex: :decimal, repo: "hexpm", optional: false]}, {:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: true]}], "hexpm"},
   "yamerl": {:hex, :yamerl, "0.7.0", "e51dba652dce74c20a88294130b48051ebbbb0be7d76f22de064f0f3ccf0aaf5", [:rebar3], [], "hexpm"},

@@ -13,10 +13,12 @@ defmodule Adify.MixProject do
   def project do
     [
       app: :adify,
+      build_embedded: Mix.env == :prod,
       deps: deps(),
       description: @description,
       dialyzer: [
-        ignore_warnings: ".dialyzer_ignore.exs"
+        ignore_warnings: ".dialyzer_ignore.exs",
+        plt_add_apps: [:mix]
       ],
       docs: docs(),
       elixir: @elixir,
@@ -28,6 +30,7 @@ defmodule Adify.MixProject do
         "coveralls.post": :test,
         coveralls: :test
       ],
+      start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
       version: @version
     ]
@@ -64,7 +67,7 @@ defmodule Adify.MixProject do
     [
       name: "adify",
       maintainers: ["Adi Iyengar"],
-      files: ~w(lib priv LICENSE doc),
+      files: ~w(lib priv LICENSE doc mix.exs README.md),
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/aditya7iyengar/adify"}
     ]
