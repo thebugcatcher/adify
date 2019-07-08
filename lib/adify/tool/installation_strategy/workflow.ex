@@ -215,6 +215,7 @@ defmodule Adify.Tool.InstallationStrategy.Workflow do
         {:error, "hi\\n"}
     """
     @spec run(__MODULE__.t()) :: {:ok, term()} | {:error, term()}
+    def run(nil), do: {:ok, ""}
     def run(operation) do
       IO.puts("""
       Running Op: #{operation.command}

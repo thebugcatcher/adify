@@ -1,0 +1,34 @@
+name: iTerm2
+version: 201907072028
+description: macOS Terminal Replacement
+os_commands:
+  - os: osx
+    installation_strategies:
+      - &brew_cask
+          name: brew_cask
+          number: 1
+          default: true
+          description: Install iTerm on Mac using Homebrew Cask
+          up:
+            pre:
+              command: |
+                brew help
+              success: true
+            main:
+              command: |
+                brew doctor
+                brew update
+                brew search iterm2
+                brew cask info iterm2
+                brew cask install iterm2
+                brew cleanup
+              success: true
+          down:
+            pre:
+              command: brew help
+              success: true
+            main:
+              command: |
+                brew cask uninstall iterm2
+                brew cleanup
+              success: true
