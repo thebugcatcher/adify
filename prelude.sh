@@ -532,6 +532,12 @@ main () {
     adify_test=${ADIFY_TEST}
   fi
 
+  if [[ -z "$NO_CLEANUP" ]]; then
+    no_cleanup=false
+  else
+    no_cleanup=${NO_CLEANUP}
+  fi
+
   if [[ -z "$NO_CONFIRM" ]]; then
     noconfirm=false
   else
@@ -559,7 +565,11 @@ main () {
 
     run_adify $OS
 
-    cleanup_on_aisle5
+    if $no_cleanup == true; then
+      _announce_success "DONE! SKipping cleanup"
+    else
+      cleanup_on_aisle5
+    fi
   fi
 }
 
