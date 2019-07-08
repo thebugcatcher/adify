@@ -24,9 +24,9 @@ jobs:
       install: true
       os: osx
       osx_image: xcode10.2
-      script: TEST=true ./prelude.sh
+      script: ADIFY_TEST=true ./prelude.sh
     - stage: prelude_test_ubuntu
       install: true
       os: linux
       dist: trusty
-      script: TEST=true ./prelude.sh
+      script: ADIFY_TEST=true ./prelude.sh

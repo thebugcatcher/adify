@@ -505,7 +505,7 @@ main () {
     install_asdf $shell
   fi
 
-  if $TEST; then
+  if $ADIFY_TEST; then
     _announce_success "Mocking Tools, Erlang, Elixir and other deps"
   else
     $"install_${OS}_tools"
