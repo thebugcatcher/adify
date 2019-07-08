@@ -29,7 +29,7 @@ defmodule AdifyRunner.MixProject do
 
   defp deps do
     [
-      {:adify, path: "../"}
+      {:adify, "~> 0.1.1"}
     ]
   end
 end

@@ -2,7 +2,7 @@ defmodule Adify.MixProject do
   use Mix.Project
 
   @name "Adify"
-  @version "0.1.0"
+  @version "0.1.1"
   @description """
   A configurable, extendable DevOps environment app. This app installs tools
   based on the given operating systems.
