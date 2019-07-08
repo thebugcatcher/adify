@@ -56,7 +56,20 @@ defmodule Mix.Tasks.Adify do
     t: :tools_dir
   ]
 
-  @impl true
+  @doc """
+  Runs the command
+
+  ## Examples:
+
+      # When help is given as an argument
+      iex> Mix.Tasks.Adify.run(["-h"])
+      :ok
+
+      # When help is not given as an argument
+      iex> {:ok, output} = Mix.Tasks.Adify.run(["--noconfirm", "-t", "./test/support/tools"])
+      iex> output =~ "Started at:"
+      true
+  """
   def run(args) do
     {parsed, _args, _} = OptionParser.parse(args, switches: @switches, aliases: @aliases)
 

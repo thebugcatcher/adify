@@ -2,6 +2,7 @@ Code.require_file("test/mix_test_helper.exs")
 
 defmodule Adify.Mix.Tasks.AdifyTest do
   use ExUnit.Case
+  doctest Mix.Tasks.Adify
 
   import MixTestHelper
 
