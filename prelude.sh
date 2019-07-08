@@ -485,11 +485,13 @@ install_adify() {
 run_adify(){
   _announce_step "Running adify"
 
+  cd $HOME/.cloned_adify
+
   if $noconfirm == true; then
     mix adify --os $1 --noconfirm
   else
     if [[ ! -z $tools_dir ]]; then
-      mix adify --os $1 -t $TOOLS_DIR
+      mix adify --os $1 -t $tools_dir
     else
       mix adify --os $1
     fi
