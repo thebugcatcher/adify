@@ -33,7 +33,7 @@ end
 OR
 
 ```sh
-$ mix archive.install adify 0.1.0
+$ mix archive.install hex adify 0.1.0
 ```
 
 ## Usage

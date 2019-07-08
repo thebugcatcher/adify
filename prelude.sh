@@ -515,8 +515,19 @@ main () {
   check_shell
 
   check_asdf
-  adify_test=${ADIFY_TEST}
-  noconfirm=${NO_CONFIRM}
+
+  if [[ -z "$ADIFY_TEST" ]]; then
+    adify_test=false
+  else
+    adify_test=${ADIFY_TEST}
+  fi
+
+  if [[ -z "$NO_CONFIRM" ]]; then
+    noconfirm=false
+  else
+    noconfirm=${NO_CONFIRM}
+  fi
+
   tools_dir=${TOOLS_DIR}
 
   if $asdf; then
