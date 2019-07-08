@@ -171,6 +171,8 @@ check_asdf() {
   _announce_step "Checking ASDF-VM"
 
   if [ -d "$HOME/.asdf" ]; then
+    echo -e "\n. ${HOME}/.asdf/asdf.sh" >> ${HOME}/.${1}rc
+    echo -e "\n. ${HOME}/.asdf/completions/asdf.bash" >> ${HOME}/.${1}rc
     . ${HOME}/.asdf/asdf.sh
     . ${HOME}/.asdf/completions/asdf.bash
     _announce_success "ASDF already installed"
@@ -434,6 +436,8 @@ install_erlang() {
   _announce_step "Installing Erlang ${ERLANG_VERSION}"
 
   if $asdf; then
+    . ${HOME}/.asdf/asdf.sh
+    . ${HOME}/.asdf/completions/asdf.bash
     asdf plugin-add erlang
     asdf install erlang $ERLANG_VERSION
     _announce_success "Successfully install erlang: ${ERLANG_VERSION}"
@@ -447,8 +451,8 @@ set_global_erlang() {
   _announce_step "Setting Global Erlang to ${ERLANG_VERSION}"
 
   if $asdf; then
-  . ${HOME}/.asdf/asdf.sh
-  . ${HOME}/.asdf/completions/asdf.bash
+    . ${HOME}/.asdf/asdf.sh
+    . ${HOME}/.asdf/completions/asdf.bash
     asdf global erlang ${ERLANG_VERSION}
     _announce_success "Successfully set global erlang to ${ERLANG_VERSION}"
   else
@@ -460,6 +464,8 @@ set_global_elixir() {
   _announce_step "Setting Global Elixir to ${ELIXIR_VERSION}"
 
   if $asdf; then
+    . ${HOME}/.asdf/asdf.sh
+    . ${HOME}/.asdf/completions/asdf.bash
     asdf global elixir ${ELIXIR_VERSION}
     _announce_success "Successfully set global elixir to ${ELIXIR_VERSION}"
   else
@@ -472,6 +478,8 @@ install_elixir() {
 
   if $asdf; then
     asdf plugin-add elixir
+    . ${HOME}/.asdf/asdf.sh
+    . ${HOME}/.asdf/completions/asdf.bash
     asdf install elixir ${ELIXIR_VERSION}
     _announce_success "Successfully install elixir: ${ELIXIR_VERSION}"
   else
