@@ -59,10 +59,12 @@ defmodule Adify.SystemInfo do
   """
   @spec current_os :: {:ok, String.t()} | {:error, term}
   def current_os do
-    case current_kernel() do
-      {:ok, "Linux"} -> current_linux_distro()
-      {:ok, "Darwin"} -> {:ok, "osx"}
-      other -> other
+    {:ok, kernel} = current_kernel()
+
+    cond do
+      kernel == "Darwin" -> {:ok, "osx"}
+      kernel =~ "Linux" -> current_linux_distro()
+      true -> {:error, "Unsupported Kernel: #{kernel}"}
     end
   end
 
@@ -70,12 +72,12 @@ defmodule Adify.SystemInfo do
     {:ok, output} = cmd("cat /etc/os-release | grep ^NAME")
 
     cond do
+      output =~ "Debian" -> {:ok, "debian"}
+      output =~ "Pop!_OS" -> {:ok, "pop_os"}
       output =~ "Arch" -> {:ok, "arch_linux"}
       output =~ "Antergos" -> {:ok, "arch_linux"}
       output =~ "Manjaro" -> {:ok, "arch_linux"}
       output =~ "Ubuntu" -> {:ok, "ubuntu"}
-      output =~ "Debian" -> {:ok, "debian"}
-      output =~ "Pop!_OS" -> {:ok, "pop_os"}
       true -> {:error, "Unknown Linux Distro"}
     end
   end
