@@ -206,12 +206,14 @@ install_mac_tools() {
 
   if $zsh; then
     _announce_success "System already uses zsh"
+    _announce_info "Making Zsh default Shell"
+    sudo -s 'echo /bin/zsh >> /etc/shells' && chsh -s /bin/zsh
   else
     _announce_info "Installing Zsh Shell"
     brew_install_new zsh
 
     _announce_info "Making Zsh default Shell"
-    sudo -s 'echo /usr/local/bin/zsh >> /etc/shells' && chsh -s /usr/local/bin/zsh
+    sudo -s 'echo /bin/zsh >> /etc/shells' && chsh -s /bin/zsh
   fi
 
   _announce_info "Installing Zenity"
@@ -498,6 +500,7 @@ run_adify(){
     mix adify --os $1 --noconfirm
   else
     if [[ ! -z $tools_dir ]]; then
+      _announce_info "With Tools dir=${tools_dir}"
       mix adify --os $1 -t $tools_dir
     else
       mix adify --os $1
