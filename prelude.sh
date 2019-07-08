@@ -486,12 +486,12 @@ run_adify(){
   _announce_step "Running adify"
 
   if $noconfirm == true; then
-    mix adify.install --os $1 --noconfirm
+    mix adify --os $1 --noconfirm
   else
     if [[ ! -z $tools_dir ]]; then
-      mix adify.install --os $1 -t $TOOLS_DIR
+      mix adify --os $1 -t $TOOLS_DIR
     else
-      mix adify.install --os $1
+      mix adify --os $1
     fi
   fi
 }
