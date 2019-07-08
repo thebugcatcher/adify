@@ -23,13 +23,13 @@ defmodule AdifyRunner.MixProject do
 
   def application do
     [
-      extra_applications: [:logger, :adify]
+      extra_applications: [:logger]
     ]
   end
 
   defp deps do
     [
-      {:adify, "~> 0.1.0"}
+      {:adify, path: "../"}
     ]
   end
 end
