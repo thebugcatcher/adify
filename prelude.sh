@@ -270,7 +270,6 @@ install_arch_linux_tools() {
     sudo -s 'echo /usr/local/bin/zsh >> /etc/shells' && chsh -s /usr/local/bin/zsh
   fi
 
-
   _announce_info "Installing 'base-devel' for most of the OTP needed tools"
 
   sudo pacman -S --needed --noconfirm base-devel libxslt unzip
@@ -326,6 +325,8 @@ install_arch_linux_tools() {
 
 install_debian_ubuntu_pop_os_tools() {
   _announce_info "Installing 'build-essential' for most of OTP tools"
+
+  sudo apt-get update
 
   sudo apt-get -y install build-essential
 
@@ -501,8 +502,7 @@ main () {
   fi
 
   if $TEST; then
-    $"install_${OS}_tools"
-    _announce_success "Mocking Erlang, Elixir and other deps"
+    _announce_success "Mocking Tools, Erlang, Elixir and other deps"
   else
     $"install_${OS}_tools"
     install_erlang
