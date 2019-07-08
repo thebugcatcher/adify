@@ -492,7 +492,7 @@ install_adify() {
 run_adify(){
   _announce_step "Running adify"
 
-  cd $HOME/.cloned_adify
+  cd $HOME/.cloned_adify/adify_runner
 
   if $noconfirm == true; then
     mix adify --os $1 --noconfirm
