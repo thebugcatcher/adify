@@ -105,7 +105,7 @@ check_os() {
       check_linux
     ;;
     'Darwin')
-      OS='mac'
+      OS='osx'
       _announce_success "OS is $OS. Adify is supported for $OS"
     ;;
     *)
@@ -193,7 +193,7 @@ install_asdf() {
   asdf=true
 }
 
-install_mac_tools() {
+install_osx_tools() {
   _announce_step "Installing Tools require for OTP for Mac OS"
 
   _announce_info "Installing XCode and command line tools"
