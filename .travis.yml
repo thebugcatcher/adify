@@ -30,13 +30,13 @@ jobs:
       os: linux
       dist: trusty
       script: ADIFY_TEST=true ./prelude.sh
-    - if: env(TRAVIS_COMMIT_MESSAGE) =~ [FULL_TEST_CI]
+    - if: env(TRAVIS_COMMIT_MESSAGE) =~ FULL_TEST_CI
       stage: full_prelude_test_ubuntu
       install: true
       os: linux
       dist: trusty
       script: travis_wait ./prelude.sh
-    - if: env(TRAVIS_COMMIT_MESSAGE) =~ [FULL_TEST_CI]
+    - if: env(TRAVIS_COMMIT_MESSAGE) =~ FULL_TEST_CI
       script: full_prelude_test_osx
       install: true
       os: osx
