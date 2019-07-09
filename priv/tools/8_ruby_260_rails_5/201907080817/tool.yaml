@@ -1,0 +1,44 @@
+name: Rails 5.2 (Ruby 2.6.0)
+version: 201907080817
+description: Rails 5.2
+os_commands:
+  - os: osx
+    installation_strategies:
+      - &asdf
+          name: asdf
+          number: 1
+          description: Install Rails 5.2
+          default: true
+          up:
+            pre:
+              command: asdf local ruby 2.6.0
+              success: true
+            main:
+              command: |
+                gem install rails -v 5.2.3
+              success: true
+            post:
+              command: |
+                rails -v
+              success: true
+          down:
+            pre:
+              command: asdf current ruby
+              success: true
+            main:
+              command: |
+                gem uninstall rails -v 5.2.3
+              success: true
+            post:
+              command: |
+                rails -v
+              success: false
+  - os: arch_linux
+    installation_strategies:
+      - *asdf
+  - os: ubuntu
+    installation_strategies:
+      - *asdf
+  - os: pop_os
+    installation_strategies:
+      - *asdf

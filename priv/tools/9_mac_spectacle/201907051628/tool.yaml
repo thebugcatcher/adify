@@ -1,0 +1,32 @@
+name: Spectacle
+version: 201907051628
+description: Spectacle
+os_commands:
+  - os: osx
+    installation_strategies:
+      - &brew
+          name: brew
+          number: 1
+          default: true
+          description: Install Spectacle using Homebrew
+          up:
+            pre:
+              command: |
+                brew help
+              success: true
+            main:
+              command: |
+                brew doctor
+                brew update
+                brew install spectacle
+                brew cleanup
+              success: true
+          down:
+            pre:
+              command: brew help
+              success: true
+            main:
+              command: |
+                brew uninstall spectacle
+                brew cleanup
+              success: true

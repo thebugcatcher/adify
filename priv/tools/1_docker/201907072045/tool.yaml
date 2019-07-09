@@ -1,0 +1,66 @@
+name: Docker
+version: 201907072045
+description: Containerization Engine
+os_commands:
+  - os: osx
+    installation_strategies:
+      - &brew_cask
+          name: brew_cask
+          number: 1
+          default: true
+          description: Install Docker using Homebrew Cask
+          up:
+            pre:
+              command: |
+                brew help
+              success: true
+            main:
+              command: |
+                brew doctor
+                brew update
+                brew search docker
+                brew cask install docker
+                open /Applications/Docker.app
+              success: true
+          down:
+            pre:
+              command: brew help
+              success: true
+            main:
+              command: |
+                brew cask uninstall docker
+                brew cleanup
+              success: true
+  - os: arch_linux
+    installation_strategies:
+      - &pacman
+          name: pacman
+          number: 1
+          default: true
+          description: Install Docker using Pacman
+          up:
+            main:
+              command: sudo pacman -S --noconfirm docker
+              success: true
+          down:
+            main:
+              command: sudo pacman -R --noconfirm docker
+              success: true
+  - os: ubuntu
+    installation_strategies:
+      - &apt-get
+          name: apt-get
+          number: 1
+          default: true
+          description: Install Docker using Apt-Get
+          up:
+            main:
+              command: sudo apt-get install -y docker
+              success: true
+          down:
+            main:
+              command: sudo apt-get uninstall -y docker
+              success: true
+  - os: pop_os
+    installation_strategies:
+      - *apt-get

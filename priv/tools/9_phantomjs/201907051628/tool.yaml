@@ -1,0 +1,65 @@
+name: PhantomJS
+version: 201907051628
+description: PhantomJS
+os_commands:
+  - os: osx
+    installation_strategies:
+      - &brew
+          name: brew
+          number: 1
+          default: true
+          description: Install PhantomJS using Homebrew
+          up:
+            pre:
+              command: |
+                brew help
+              success: true
+            main:
+              command: |
+                brew doctor
+                brew update
+                brew install phantomjs
+                brew cleanup
+              success: true
+          down:
+            pre:
+              command: brew help
+              success: true
+            main:
+              command: |
+                brew uninstall phantomjs
+                brew cleanup
+              success: true
+  - os: arch_linux
+    installation_strategies:
+      - &pacman
+          name: pacman
+          number: 1
+          default: true
+          description: Install PhantomJS using Pacman
+          up:
+            main:
+              command: sudo pacman -S --noconfirm phantomjs
+              success: true
+          down:
+            main:
+              command: sudo pacman -R --noconfirm phantomjs
+              success: true
+  - os: ubuntu
+    installation_strategies:
+      - &apt-get
+          name: apt-get
+          number: 1
+          default: true
+          description: Install PhantomJS using Apt-Get
+          up:
+            main:
+              command: sudo apt-get install -y phantomjs
+              success: true
+          down:
+            main:
+              command: sudo apt-get uninstall -y phantomjs
+              success: true
+  - os: pop_os
+    installation_strategies:
+      - *apt-get

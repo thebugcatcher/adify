@@ -1,0 +1,42 @@
+name: Ruby 2.4.3 & Bundler
+version: 201907080817
+description: Ruby 2.4.3 + Bundler
+os_commands:
+  - os: osx
+    installation_strategies:
+      - &asdf
+          name: asdf
+          number: 1
+          description: Install Ruby 2.4.3 using asdf
+          default: true
+          up:
+            pre:
+              command: asdf plugin-update ruby
+              success: true
+            main:
+              command: |
+                RUBY_CONFIGURE_OPTS="--disable-dtrace" asdf install ruby 2.4.3
+                asdf local ruby 2.4.3
+                gem install bundler
+              success: true
+            post:
+              command: |
+                asdf current ruby
+              success: true
+          down:
+            pre:
+              command: asdf current ruby
+              success: true
+            main:
+              command: |
+                asdf uninstall ruby 2.4.3
+              success: true
+  - os: arch_linux
+    installation_strategies:
+      - *asdf
+  - os: ubuntu
+    installation_strategies:
+      - *asdf
+  - os: pop_os
+    installation_strategies:
+      - *asdf

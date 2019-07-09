@@ -1,0 +1,42 @@
+name: ASDF Ruby
+version: 201907080816
+description: ASDF vm's ruby plugin
+os_commands:
+  - os: osx
+    installation_strategies:
+      - &asdf
+          name: asdf
+          number: 1
+          description: Install Ruby's asdf plugin
+          default: true
+          up:
+            pre:
+              command: asdf current
+              success: true
+            main:
+              command: |
+                brew install openssl
+                asdf plugin-add ruby
+                echo "LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/" >> ~/.zshrc
+              success: true
+            post:
+              command: |
+                asdf list-all ruby
+              success: true
+          down:
+            pre:
+              command: asdf current ruby
+              success: true
+            main:
+              command: |
+                asdf plugin-remove ruby
+              success: true
+  - os: arch_linux
+    installation_strategies:
+      - *asdf
+  - os: ubuntu
+    installation_strategies:
+      - *asdf
+  - os: pop_os
+    installation_strategies:
+      - *asdf
