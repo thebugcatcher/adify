@@ -113,13 +113,44 @@ defmodule Adify.SystemInfo do
       iex> {:error, output}  = Adify.SystemInfo.cmd(cmd, [], ".")
       iex> output =~ "bad_command"
       true
+
+      # When the command has sudo
+      iex> cmd = "sudo ls"
+      iex> {:error, output} = Adify.SystemInfo.cmd(cmd, [], ".")
+      iex> output =~ "password"
+      true
   """
   @spec cmd(String.t(), [{String.t(), String.t()}], Path.t()) ::
           {:ok, String.t()} | {:error, String.t()}
   def cmd(cmd, env \\ [], cd \\ ".") do
+    case String.contains?(cmd, "sudo") do
+      true -> cmd_sudo(cmd, env, cd)
+      false -> cmd_udo(cmd, env, cd)
+    end
+  end
+
+  defp cmd_sudo(cmd, env, cd) do
+    create_or_update_askpass()
+
+    env = env ++ [{"SUDO_ASKPASS", "~/.askpass.sh"}]
+
+    case System.cmd("sudo", ["-A", "sh", "-c", cmd], env: env, cd: cd, stderr_to_stdout: true) do
+      {output, 0} -> {:ok, output}
+      {output, _} -> {:error, output}
+    end
+  end
+
+  defp cmd_udo(cmd, env, cd) do
     case System.cmd("sh", ["-c", cmd], env: env, cd: cd, stderr_to_stdout: true) do
       {output, 0} -> {:ok, output}
       {output, _} -> {:error, output}
     end
+  end
+
+  defp create_or_update_askpass do
+    askpass_path = Path.join(:code.priv_dir(:adify), "askpass.sh")
+    content = File.read!(askpass_path)
+    cmd("touch ~/.askpass.sh")
+    cmd("echo '#{content}' > ~/.askpass.sh")
   end
 end
