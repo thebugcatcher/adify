@@ -116,27 +116,33 @@ defmodule Adify.SystemInfo do
 
       # When the command has sudo
       iex> cmd = "sudo ls"
-      iex> {:error, output} = Adify.SystemInfo.cmd(cmd, [], ".")
+      iex> {:ok, output} = Adify.SystemInfo.cmd(cmd, [], ".", true)
       iex> output =~ "password"
       true
   """
   @spec cmd(String.t(), [{String.t(), String.t()}], Path.t()) ::
           {:ok, String.t()} | {:error, String.t()}
-  def cmd(cmd, env \\ [], cd \\ ".") do
+  def cmd(cmd, env \\ [], cd \\ ".", mock_sudo \\ false) do
     case String.contains?(cmd, "sudo") do
-      true -> cmd_sudo(cmd, env, cd)
+      true -> cmd_sudo(cmd, env, cd, mock_sudo)
       false -> cmd_udo(cmd, env, cd)
     end
   end
 
-  defp cmd_sudo(cmd, env, cd) do
+  defp cmd_sudo(cmd, env, cd, mock_sudo) do
     create_or_update_askpass()
 
-    env = env ++ [{"SUDO_ASKPASS", "~/.askpass.sh"}]
+    cmd = String.replace(cmd, "sudo", "")
 
-    case System.cmd("sudo", ["-A", "sh", "-c", cmd], env: env, cd: cd, stderr_to_stdout: true) do
-      {output, 0} -> {:ok, output}
-      {output, _} -> {:error, output}
+    env = env ++ [{"SUDO_ASKPASS", ".askpass.sh"}]
+
+    case mock_sudo do
+      true -> {:ok, "password mocked"}
+      _ ->
+        case System.cmd("sudo", ["-A", "sh", "-c", cmd], env: env, cd: cd, stderr_to_stdout: true) do
+          {output, 0} -> {:ok, output}
+          {output, _} -> {:error, output}
+        end
     end
   end
 
@@ -150,7 +156,8 @@ defmodule Adify.SystemInfo do
   defp create_or_update_askpass do
     askpass_path = Path.join(:code.priv_dir(:adify), "askpass.sh")
     content = File.read!(askpass_path)
-    cmd("touch ~/.askpass.sh")
-    cmd("echo '#{content}' > ~/.askpass.sh")
+    cmd("touch .askpass.sh")
+    cmd("echo '#{content}' > .askpass.sh")
+    cmd("chmod 777 .askpass.sh")
   end
 end
