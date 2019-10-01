@@ -493,6 +493,7 @@ install_adify() {
   _announce_step "Installing Adify ${ADIFY_VERSION}"
   git clone https://github.com/aditya7iyengar/adify $HOME/.cloned_adify
   cd $HOME/.cloned_adify/adify_runner
+  git checkout develop
   mix deps.get
   mix compile
 
