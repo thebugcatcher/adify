@@ -15,8 +15,8 @@ os_commands:
               success: true
             main:
               command: |
-                echo "\nalias mysqlup='docker run -d --name mysql --restart unless-stopped -p 127.0.0.1:3306:3306 -v ~/mysql-data:/var/lib/mysql -v ~/mysql-conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=password mysql:5.7 --datadir=/var/lib/mysql --user=mysql --server-id=1 --log-bin=/var/lib/mysql/mysql-bin.log --binlog_do_db=test'" >> ~/.zshrc
-                echo "\nalias mysqlup='docker run -d --name mysql --restart unless-stopped -p 127.0.0.1:3306:3306 -v ~/mysql-data:/var/lib/mysql -v ~/mysql-conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=password mysql:5.7 --datadir=/var/lib/mysql --user=mysql --server-id=1 --log-bin=/var/lib/mysql/mysql-bin.log --binlog_do_db=test'" >> ~/.bashrc
+                echo "alias mysqlup='docker run -d --name mysql --restart unless-stopped -p 127.0.0.1:3306:3306 -v ~/mysql-data:/var/lib/mysql -v ~/mysql-conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=password mysql:5.7 --datadir=/var/lib/mysql --user=mysql --server-id=1 --log-bin=/var/lib/mysql/mysql-bin.log --binlog_do_db=test'" >> ~/.zshrc
+                echo "alias mysqlup='docker run -d --name mysql --restart unless-stopped -p 127.0.0.1:3306:3306 -v ~/mysql-data:/var/lib/mysql -v ~/mysql-conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=password mysql:5.7 --datadir=/var/lib/mysql --user=mysql --server-id=1 --log-bin=/var/lib/mysql/mysql-bin.log --binlog_do_db=test'" >> ~/.bashrc
                 alias mysqlup='docker run -d --name mysql --restart unless-stopped -p 127.0.0.1:3306:3306 -v ~/mysql-data:/var/lib/mysql -v ~/mysql-conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=password mysql:5.7 --datadir=/var/lib/mysql --user=mysql --server-id=1 --log-bin=/var/lib/mysql/mysql-bin.log --binlog_do_db=test'
                 mysqlup
               success: true

@@ -15,8 +15,8 @@ os_commands:
               success: true
             main:
               command: |
-                echo "\nalias redisup='docker run -d --name redis --restart unless-stopped -p 6379:6379 redis:5.0.5'" >> ~/.zshrc
-                echo "\nalias redisup='docker run -d --name redis --restart unless-stopped -p 6379:6379 redis:5.0.5'" >> ~/.bashrc
+                echo "alias redisup='docker run -d --name redis --restart unless-stopped -p 6379:6379 redis:5.0.5'" >> ~/.zshrc
+                echo "alias redisup='docker run -d --name redis --restart unless-stopped -p 6379:6379 redis:5.0.5'" >> ~/.bashrc
                 alias redisup='docker run -d --name redis --restart unless-stopped -p 6379:6379 redis:5.0.5'
                 redisup
               success: true
