@@ -55,11 +55,11 @@ os_commands:
           description: Install Postgres Client using Apt-Get
           up:
             main:
-              command: sudo apt-get install -y libpq
+              command: sudo apt-get install -y postgresql-client
               success: true
           down:
             main:
-              command: sudo apt-get uninstall -y libpq
+              command: sudo apt-get uninstall -y postgresql-client
               success: true
   - os: pop_os
     installation_strategies:
