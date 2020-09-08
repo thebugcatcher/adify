@@ -48,14 +48,14 @@ os_commands:
               success: true
   - os: ubuntu
     installation_strategies:
-      - &apt-get
-          name: apt-get
+      - &apt
+          name: apt
           number: 1
           default: true
           description: Install Docker using Apt-Get
           up:
             main:
-              command: sudo apt install -y docker.io
+              command: sudo apt install -y docker.io && sudo systemctl enable docker.service && sudo systemctl start docker.service
               success: true
           down:
             main:
@@ -63,4 +63,4 @@ os_commands:
               success: true
   - os: pop_os
     installation_strategies:
-      - *apt-get
+      - *apt
