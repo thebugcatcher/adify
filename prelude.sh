@@ -39,7 +39,8 @@
 ################
 ### VERSIONS ###
 ################
-ADIFY_VERSION="0.2.0"
+# To override run command with: `$ VSN=develop ./prelude.sh`
+ADIFY_VERSION=${VSN-"0.2.0"}
 ELIXIR_VERSION="1.10.4"
 ERLANG_VERSION="23.0.2"
 ASDF_VERSION="0.7.8"
