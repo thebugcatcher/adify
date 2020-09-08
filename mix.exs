@@ -13,7 +13,7 @@ defmodule Adify.MixProject do
   def project do
     [
       app: :adify,
-      build_embedded: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
       deps: deps(),
       description: @description,
       dialyzer: [
