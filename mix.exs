@@ -2,18 +2,18 @@ defmodule Adify.MixProject do
   use Mix.Project
 
   @name "Adify"
-  @version "0.1.0"
+  @version "0.2.0"
   @description """
   A configurable, extendable DevOps environment app. This app installs tools
   based on the given operating systems.
   """
 
-  @elixir "~> 1.8"
+  @elixir "~> 1.10"
 
   def project do
     [
       app: :adify,
-      build_embedded: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
       deps: deps(),
       description: @description,
       dialyzer: [

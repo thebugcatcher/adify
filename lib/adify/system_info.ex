@@ -137,7 +137,9 @@ defmodule Adify.SystemInfo do
     env = env ++ [{"SUDO_ASKPASS", ".askpass.sh"}]
 
     case mock_sudo do
-      true -> {:ok, "password mocked"}
+      true ->
+        {:ok, "password mocked"}
+
       _ ->
         case System.cmd("sudo", ["-A", "sh", "-c", cmd], env: env, cd: cd, stderr_to_stdout: true) do
           {output, 0} -> {:ok, output}
