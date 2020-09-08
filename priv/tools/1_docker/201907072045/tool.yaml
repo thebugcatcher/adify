@@ -55,11 +55,11 @@ os_commands:
           description: Install Docker using Apt-Get
           up:
             main:
-              command: sudo apt-get install -y docker
+              command: sudo apt install -y docker.io
               success: true
           down:
             main:
-              command: sudo apt-get uninstall -y docker
+              command: sudo apt uninstall -y docker.io
               success: true
   - os: pop_os
     installation_strategies:
