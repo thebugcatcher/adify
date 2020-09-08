@@ -31,6 +31,33 @@ os_commands:
               command: |
                 echo 'Please remove the alias mysqlup from your ~/.zshrc'
               success: true
+      - &sudo_docker
+          name: sudo_docker
+          number: 1
+          description: Install MySQL server using Docker
+          default: true
+          up:
+            pre:
+              command: sudo docker version
+              success: true
+            main:
+              command: |
+                echo "\nalias mysqlup='sudo docker run -d --name mysql --restart unless-stopped -p 127.0.0.1:3306:3306 -v ~/mysql-data:/var/lib/mysql -v ~/mysql-conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=password mysql:5.7 --datadir=/var/lib/mysql --user=mysql --server-id=1 --log-bin=/var/lib/mysql/mysql-bin.log --binlog_do_db=test'" >> ~/.zshrc
+                echo "\nalias mysqlup='sudo docker run -d --name mysql --restart unless-stopped -p 127.0.0.1:3306:3306 -v ~/mysql-data:/var/lib/mysql -v ~/mysql-conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=password mysql:5.7 --datadir=/var/lib/mysql --user=mysql --server-id=1 --log-bin=/var/lib/mysql/mysql-bin.log --binlog_do_db=test'" >> ~/.bashrc
+                alias mysqlup='sudo docker run -d --name mysql --restart unless-stopped -p 127.0.0.1:3306:3306 -v ~/mysql-data:/var/lib/mysql -v ~/mysql-conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=password mysql:5.7 --datadir=/var/lib/mysql --user=mysql --server-id=1 --log-bin=/var/lib/mysql/mysql-bin.log --binlog_do_db=test'
+                mysqlup
+              success: true
+            post:
+              command: sudo docker inspect mysql
+              success: true
+          down:
+            pre:
+              command: sudo docker rm -f mysql
+              success: true
+            main:
+              command: |
+                echo 'Please remove the alias mysqlup from your ~/.zshrc'
+              success: true
       - &osx_package_manager
           name: package_manager
           number: 2
@@ -65,10 +92,10 @@ os_commands:
               success: false
   - os: arch_linux
     installation_strategies:
-      - *docker
+      - *sudo_docker
   - os: ubuntu
     installation_strategies:
-      - *docker
+      - *sudo_docker
   - os: pop_os
     installation_strategies:
-      - *docker
+      - *sudo_docker

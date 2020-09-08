@@ -31,6 +31,33 @@ os_commands:
               command: |
                 echo 'Please remove the alias redisup from your ~/.zshrc'
               success: true
+      - &sudo_docker
+          name: sudo_docker
+          number: 1
+          description: Install Redis server using Docker
+          default: true
+          up:
+            pre:
+              command: sudo docker version
+              success: true
+            main:
+              command: |
+                echo "\nalias redisup='sudo docker run -d --name redis --restart unless-stopped -p 6379:6379 redis:5.0.5'" >> ~/.zshrc
+                echo "\nalias redisup='sudo docker run -d --name redis --restart unless-stopped -p 6379:6379 redis:5.0.5'" >> ~/.bashrc
+                alias redisup='sudo docker run -d --name redis --restart unless-stopped -p 6379:6379 redis:5.0.5'
+                redisup
+              success: true
+            post:
+              command: sudo docker inspect redisup
+              success: true
+          down:
+            pre:
+              command: sudo docker rm -f redis
+              success: true
+            main:
+              command: |
+                echo 'Please remove the alias redisup from your ~/.zshrc'
+              success: true
       - &osx_package_manager
           name: package_manager
           number: 2
@@ -63,10 +90,10 @@ os_commands:
               success: false
   - os: arch_linux
     installation_strategies:
-      - *docker
+      - *sudo_docker
   - os: ubuntu
     installation_strategies:
-      - *docker
+      - *sudo_docker
   - os: pop_os
     installation_strategies:
-      - *docker
+      - *sudo_docker
