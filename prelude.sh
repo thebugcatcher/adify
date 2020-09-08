@@ -39,10 +39,10 @@
 ################
 ### VERSIONS ###
 ################
-ADIFY_VERSION="0.1.0"
-ELIXIR_VERSION="1.8.2"
-ERLANG_VERSION="21.2.3"
-ASDF_VERSION="0.7.2"
+ADIFY_VERSION="0.2.0"
+ELIXIR_VERSION="1.10.4"
+ERLANG_VERSION="23.0.2"
+ASDF_VERSION="0.7.8"
 
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
@@ -356,64 +356,8 @@ install_debian_ubuntu_pop_os_tools() {
   fi
 
   if [ $? -eq 0 ]; then
-    _announce_info "Installing 'autoconf' for script builder"
-    sudo apt-get -y install autoconf
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'm4' for Native Code support"
-    sudo apt-get -y install m4
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'zenity' to ask for password"
-    sudo apt-get -y install zenity
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'libncurses5' for Terminal handling"
-    sudo apt-get -y install libncurses5-dev
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing tools for building wxWidgets (for Erlang observer and debugger)"
-    sudo apt-get -y install libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'libssh-dev' for ssl"
-    sudo apt-get -y install libssh-dev
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'unixodbc' for ODBC support"
-    sudo apt-get -y install unixodbc-dev
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'unixodbc' for ODBC support"
-    sudo apt-get -y install libxml2-utils
-  else
-    _announce_error "Failed!"
-  fi
-
-  if [ $? -eq 0 ]; then
-    _announce_info "Installing 'fop' for docs building"
-    sudo apt-get -y install xsltproc fop
+    _announce_info "Installing other erlang dependencies"
+    sudo apt-get -y install build-essential autoconf m4 libncurses5-dev libwxgtk3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev openjdk-11-jdk
   else
     _announce_error "Failed!"
   fi
@@ -493,7 +437,7 @@ install_adify() {
   _announce_step "Installing Adify ${ADIFY_VERSION}"
   git clone https://github.com/aditya7iyengar/adify $HOME/.cloned_adify
   cd $HOME/.cloned_adify/adify_runner
-  git checkout develop
+  git checkout $ADIFY_VERSION
   mix deps.get
   mix compile
 

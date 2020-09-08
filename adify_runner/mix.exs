@@ -2,12 +2,12 @@ defmodule AdifyRunner.MixProject do
   use Mix.Project
 
   @name "Adify Runer"
-  @version "0.1.0"
+  @version "0.2.0"
   @description """
   Runs Adify
   """
 
-  @elixir "~> 1.8"
+  @elixir "~> 1.10"
 
   def project do
     [
